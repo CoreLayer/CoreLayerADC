@@ -1,4 +1,8 @@
+# Pre-installation commands
+/src/system/backup/BACKUP_CL01_00_PRE_INSTALL.conf
+
 # System - Settings
+/src/system/settings/FEATURES_CL01_00.conf
 /src/system/settings/PARAM_CL01_00_HTTP.conf
 
 # Traffic Management - Load Balancing
@@ -6,3 +10,8 @@
 /src/trafficmanagement/loadbalancing/servicegroups/SVG_CL01_00_DUMMY_HTTP.conf
 /src/trafficmanagement/loadbalancing/servicegroups/SVG_CL01_00_DUMMY_TCP.conf
 /src/trafficmanagement/loadbalancing/servicegroups/SVG_CL01_00_DUMMY_UDP.conf
+
+
+
+# Post-Installation commands
+/src/system/backup/BACKUP_CL01_00_POST_INSTALL.conf

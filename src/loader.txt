@@ -1,5 +1,5 @@
 # System - Settings
-/src/system/PARAM_CL01_00_HTTP.conf
+/src/system/settings/PARAM_CL01_00_HTTP.conf
 
 # Traffic Management - Load Balancing
 /src/trafficmanagement/loadbalancing/servers/SRV_CL01_00_DUMMY.conf

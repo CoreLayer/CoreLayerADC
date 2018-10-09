@@ -12,30 +12,21 @@
 # Responder - Policy Labels - HTTP
 /src/appexpert/responder/policylabels/RSPL_CL01_00_HTTP_REQ.conf
 
-
-# Traffic Management - Load Balancing - Servers
-/src/trafficmanagement/loadbalancing/servers/SRV_CL01_00_DUMMY.conf
-
-# Traffic Management - Load Balancing - ServiceGroups
-/src/trafficmanagement/loadbalancing/servicegroups/SVG_CL01_00_DUMMY_HTTP.conf
-/src/trafficmanagement/loadbalancing/servicegroups/SVG_CL01_00_DUMMY_TCP.conf
-/src/trafficmanagement/loadbalancing/servicegroups/SVG_CL01_00_DUMMY_UDP.conf
-
 # Traffic Management - Load Balancing - Virtual Servers
-/src/trafficmanagement/loadbalancing/virtualservers/LVS_CL01_00_HTTP_BLOCKED.conf
-/src/trafficmanagement/loadbalancing/virtualservers/LVS_CL01_00_HTTP_DROP.conf
-/src/trafficmanagement/loadbalancing/virtualservers/LVS_CL01_00_HTTP_NO_SERVICE.conf
-/src/trafficmanagement/loadbalancing/virtualservers/LVS_CL01_00_HTTP_REDIR_301.conf
-/src/trafficmanagement/loadbalancing/virtualservers/LVS_CL01_00_HTTP_REDIR_301_KEEPPATH.conf
-/src/trafficmanagement/loadbalancing/virtualservers/LVS_CL01_00_HTTP_REDIR_301_KEEPPATHANDQUERY.conf
-/src/trafficmanagement/loadbalancing/virtualservers/LVS_CL01_00_HTTP_REDIR_301_KEEPQUERY.conf
-/src/trafficmanagement/loadbalancing/virtualservers/LVS_CL01_00_HTTP_REDIR_301_SWITCH.conf
-/src/trafficmanagement/loadbalancing/virtualservers/LVS_CL01_00_HTTP_REDIR_302.conf
-/src/trafficmanagement/loadbalancing/virtualservers/LVS_CL01_00_HTTP_REDIR_302_KEEPPATH.conf
-/src/trafficmanagement/loadbalancing/virtualservers/LVS_CL01_00_HTTP_REDIR_302_KEEPPATHANDQUERY.conf
-/src/trafficmanagement/loadbalancing/virtualservers/LVS_CL01_00_HTTP_REDIR_302_KEEPQUERY.conf
-/src/trafficmanagement/loadbalancing/virtualservers/LVS_CL01_00_HTTP_REDIR_302_SWITCH.conf
-/src/trafficmanagement/loadbalancing/virtualservers/LVS_CL01_00_HTTP_RESET.conf
+/src/trafficmanagement/loadbalancing/virtualservers/ACTION_CL01_00_HTTP_BLOCKED.conf
+/src/trafficmanagement/loadbalancing/virtualservers/ACTION_CL01_00_HTTP_DROP.conf
+/src/trafficmanagement/loadbalancing/virtualservers/ACTION_CL01_00_HTTP_NO_SERVICE.conf
+/src/trafficmanagement/loadbalancing/virtualservers/ACTION_CL01_00_HTTP_REDIR_301.conf
+/src/trafficmanagement/loadbalancing/virtualservers/ACTION_CL01_00_HTTP_REDIR_301_KEEPPATH.conf
+/src/trafficmanagement/loadbalancing/virtualservers/ACTION_CL01_00_HTTP_REDIR_301_KEEPPATHANDQUERY.conf
+/src/trafficmanagement/loadbalancing/virtualservers/ACTION_CL01_00_HTTP_REDIR_301_KEEPQUERY.conf
+/src/trafficmanagement/loadbalancing/virtualservers/ACTION_CL01_00_HTTP_REDIR_301_SWITCH.conf
+/src/trafficmanagement/loadbalancing/virtualservers/ACTION_CL01_00_HTTP_REDIR_302.conf
+/src/trafficmanagement/loadbalancing/virtualservers/ACTION_CL01_00_HTTP_REDIR_302_KEEPPATH.conf
+/src/trafficmanagement/loadbalancing/virtualservers/ACTION_CL01_00_HTTP_REDIR_302_KEEPPATHANDQUERY.conf
+/src/trafficmanagement/loadbalancing/virtualservers/ACTION_CL01_00_HTTP_REDIR_302_KEEPQUERY.conf
+/src/trafficmanagement/loadbalancing/virtualservers/ACTION_CL01_00_HTTP_REDIR_302_SWITCH.conf
+/src/trafficmanagement/loadbalancing/virtualservers/ACTION_CL01_00_HTTP_RESET.conf
 
 # Post-Installation commands
 /src/system/backup/BACKUP_CL01_00_POST_INSTALL.conf

@@ -40,5 +40,7 @@
 /src/trafficmanagement/loadbalancing/virtualservers/ACTION_CL01_00_HTTP_REDIR_302_SWITCH.conf
 /src/trafficmanagement/loadbalancing/virtualservers/ACTION_CL01_00_HTTP_RESET.conf
 
+# DEMO OBJECTS
+/src/trafficmanagement/contentswitching/virtualservers/CS_CL01_00_DEMO.conf
 # Post-Installation commands
 /src/system/backup/BACKUP_CL01_00_POST_INSTALL.conf

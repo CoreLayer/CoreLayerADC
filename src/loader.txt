@@ -9,8 +9,9 @@
 /src/system/auditing/syslog/SYSLOG_CL01_00.conf
 
 # AppExpert - Pattern Sets
-/src/appexpert/patternsets/PS_CL01_00_CS_PREFIX.conf
 /src/appexpert/patternsets/PS_CL01_00_L4_PROTOCOL.conf
+/src/appexpert/patternsets/PS_CL01_00_L8_CS_PREFIX.conf
+/src/appexpert/patternsets/PS_CL01_00_L8_LB_PREFIX.conf
 /src/appexpert/patternsets/PS_CL01_00_L8_USERAGENTS.conf
 
 # AppExpert - Stringmaps

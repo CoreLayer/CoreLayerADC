@@ -5,6 +5,8 @@
 /src/system/settings/FEATURES_CL01_00.conf
 /src/system/settings/PARAM_CL01_00_HTTP.conf
 
+# System - Auditing
+/src/system/auditing/syslog/SYSLOG_CL01_00.conf
 
 
 # Responder - Policy Labels - HTTP

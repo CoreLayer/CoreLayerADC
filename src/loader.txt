@@ -10,7 +10,7 @@
 
 
 # Responder - Policy Labels - HTTP
-/src/appexpert/responder/policylabels/RSPL_CL01_00_HTTP_CS_START.conf
+/src/appexpert/responder/policylabels/RSPL_CL01_00_HTTP_REQ.conf
 
 
 # Traffic Management - Load Balancing - Servers

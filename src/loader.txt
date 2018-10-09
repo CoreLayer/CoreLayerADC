@@ -8,6 +8,17 @@
 # System - Auditing
 /src/system/auditing/syslog/SYSLOG_CL01_00.conf
 
+# AppExpert - Pattern Sets
+/src/appexpert/patternsets/PS_CL01_00_CS_PREFIX.conf
+/src/appexpert/patternsets/PS_CL01_00_L4_PROTOCOL.conf
+/src/appexpert/patternsets/PS_CL01_00_L8_USERAGENTS.conf
+
+# AppExpert - Stringmaps
+/src/appexpert/stringmaps/SM_CL01_00_CS_CONFIG.conf
+/src/appexpert/stringmaps/SM_CL01_00_LB_CONFIG.conf
+
+/src/appexpert/stringmaps/SM_CL01_00_CS_FLOW.conf
+/src/appexpert/stringmaps/SM_CL01_00_L3_CONFIG.conf
 
 # Responder - Policy Labels - HTTP
 /src/appexpert/responder/policylabels/RSPL_CL01_00_HTTP_REQ.conf

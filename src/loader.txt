@@ -22,6 +22,8 @@
 /src/appexpert/stringmaps/SM_CL01_00_L3_CONFIG.conf
 
 /src/appexpert/stringmaps/SM_CL01_00_L8_DEBUG_KEYS.conf
+/src/appexpert/stringmaps/SM_CL01_00_L8_APPS.conf
+/src/appexpert/stringmaps/SM_CL01_00_L8_APPGROUPS.conf
 
 # Responder - Policy Labels - HTTP
 /src/appexpert/responder/policylabels/RSPL_CL01_00_HTTP_REQ.conf

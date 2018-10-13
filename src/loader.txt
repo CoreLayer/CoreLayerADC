@@ -15,15 +15,17 @@
 /src/appexpert/patternsets/PS_CL01_00_L8_USERAGENTS.conf
 
 # AppExpert - Stringmaps
-/src/appexpert/stringmaps/SM_CL01_00_CS_CONFIG.conf
-/src/appexpert/stringmaps/SM_CL01_00_LB_CONFIG.conf
+/src/appexpert/stringmaps/SM_CL01_00_L3_ZONE.conf
+/src/appexpert/stringmaps/SM_CL01_00_L3_FILTER.conf
 
-/src/appexpert/stringmaps/SM_CL01_00_CS_FLOW.conf
-/src/appexpert/stringmaps/SM_CL01_00_L3_CONFIG.conf
+/src/appexpert/stringmaps/SM_CL01_00_L8_CS_CONFIG.conf
+/src/appexpert/stringmaps/SM_CL01_00_L8_LB_CONFIG.conf
+/src/appexpert/stringmaps/SM_CL01_00_L8_LBGROUP_CONFIG.conf
+/src/appexpert/stringmaps/SM_CL01_00_L8_CSGROUP_CONFIG.conf
 
+/src/appexpert/stringmaps/SM_CL01_00_L8_FLOW.conf
 /src/appexpert/stringmaps/SM_CL01_00_L8_DEBUG_KEYS.conf
-/src/appexpert/stringmaps/SM_CL01_00_L8_APPS.conf
-/src/appexpert/stringmaps/SM_CL01_00_L8_APPGROUPS.conf
+
 
 # Responder - Policy Labels - HTTP
 /src/appexpert/responder/policylabels/RSPL_CL01_00_HTTP_REQ.conf

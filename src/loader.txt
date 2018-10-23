@@ -15,39 +15,26 @@
 /src/appexpert/patternsets/PS_CL01_00_L8_USERAGENTS.conf
 
 # AppExpert - Stringmaps
-/src/appexpert/stringmaps/SM_CL01_00_L3_ZONE.conf
-/src/appexpert/stringmaps/SM_CL01_00_L3_FILTER.conf
+/src/appexpert/stringmaps/SM_CL01_00_CSGROUP_CONFIG.conf
+/src/appexpert/stringmaps/SM_CL01_00_CS_CONFIG.conf
 
-/src/appexpert/stringmaps/SM_CL01_00_L8_CS_CONFIG.conf
-/src/appexpert/stringmaps/SM_CL01_00_L8_LB_CONFIG.conf
-/src/appexpert/stringmaps/SM_CL01_00_L8_LBGROUP_CONFIG.conf
-/src/appexpert/stringmaps/SM_CL01_00_L8_CSGROUP_CONFIG.conf
+/src/appexpert/stringmaps/SM_CL01_00_LBGROUP_CONFIG.conf
+/src/appexpert/stringmaps/SM_CL01_00_LB_CONFIG.conf
 
-/src/appexpert/stringmaps/SM_CL01_00_L8_FLOW.conf
-/src/appexpert/stringmaps/SM_CL01_00_L8_DEBUG_KEYS.conf
+/src/appexpert/stringmaps/SM_CL01_00_IP_ZONE.conf
+/src/appexpert/stringmaps/SM_CL01_00_IP_FILTER.conf
+
+/src/appexpert/stringmaps/SM_CL01_00_APP_CONFIG.conf
+/src/appexpert/stringmaps/SM_CL01_00_SYS_DEBUG_KEYS.conf
 
 
 # Responder - Policy Labels - HTTP
 /src/appexpert/responder/policylabels/RSPL_CL01_00_HTTP_REQ.conf
 
 # Traffic Management - Load Balancing - ACTIONS
-/src/trafficmanagement/loadbalancing/virtualservers/VS_CL01_00_HTTP_ACTION.conf
-#/src/trafficmanagement/loadbalancing/virtualservers/VS_CL01_00_HTTP_BLOCKED.conf
-#/src/trafficmanagement/loadbalancing/virtualservers/VS_CL01_00_HTTP_DROP.conf
-#/src/trafficmanagement/loadbalancing/virtualservers/VS_CL01_00_HTTP_REDIR_301.conf
-#/src/trafficmanagement/loadbalancing/virtualservers/VS_CL01_00_HTTP_REDIR_301_KEEPPATH.conf
-#/src/trafficmanagement/loadbalancing/virtualservers/VS_CL01_00_HTTP_REDIR_301_KEEPPATHANDQUERY.conf
-#/src/trafficmanagement/loadbalancing/virtualservers/VS_CL01_00_HTTP_REDIR_301_KEEPQUERY.conf
-#/src/trafficmanagement/loadbalancing/virtualservers/VS_CL01_00_HTTP_REDIR_301_SWITCH.conf
-#/src/trafficmanagement/loadbalancing/virtualservers/VS_CL01_00_HTTP_REDIR_302.conf
-#/src/trafficmanagement/loadbalancing/virtualservers/VS_CL01_00_HTTP_REDIR_302_KEEPPATH.conf
-#/src/trafficmanagement/loadbalancing/virtualservers/VS_CL01_00_HTTP_REDIR_302_KEEPPATHANDQUERY.conf
-#/src/trafficmanagement/loadbalancing/virtualservers/VS_CL01_00_HTTP_REDIR_302_KEEPQUERY.conf
-#/src/trafficmanagement/loadbalancing/virtualservers/VS_CL01_00_HTTP_REDIR_302_SWITCH.conf
-#/src/trafficmanagement/loadbalancing/virtualservers/VS_CL01_00_HTTP_RESET.conf
-
-# Traffic Management - Load Balancing - Default Virtual Servers for Content-Switching Virtual Servers
-#/src/trafficmanagement/loadbalancing/virtualservers/VS_CL01_00_HTTP_NO_SERVICE.conf
+/src/trafficmanagement/loadbalancing/virtualservers/VS_CL01_00_ACTION_HTTP.conf
+/src/trafficmanagement/loadbalancing/virtualservers/VS_CL01_00_ACTION_TCP.conf
+/src/trafficmanagement/loadbalancing/virtualservers/VS_CL01_00_ACTION_UDP.conf
 
 # DEMO OBJECTS
 /src/trafficmanagement/contentswitching/virtualservers/CS_CL01_00_DEMO.conf

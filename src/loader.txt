@@ -15,17 +15,17 @@
 /src/appexpert/patternsets/PS_CL01_00_HTTP_USERAGENTS.conf
 
 # AppExpert - Stringmaps
-/src/appexpert/stringmaps/SM_CL01_00_CSGROUP_CONFIG.conf
-/src/appexpert/stringmaps/SM_CL01_00_CS_CONFIG.conf
+/src/appexpert/stringmaps/SM_CL01_00_CSGROUP.conf
+/src/appexpert/stringmaps/SM_CL01_00_CS.conf
 
-/src/appexpert/stringmaps/SM_CL01_00_LBGROUP_CONFIG.conf
-/src/appexpert/stringmaps/SM_CL01_00_LB_CONFIG.conf
+/src/appexpert/stringmaps/SM_CL01_00_LBGROUP.conf
+/src/appexpert/stringmaps/SM_CL01_00_LB.conf
 
 /src/appexpert/stringmaps/SM_CL01_00_IP_ZONE.conf
 /src/appexpert/stringmaps/SM_CL01_00_IP_FILTER.conf
 
-/src/appexpert/stringmaps/SM_CL01_00_APP_CONFIG.conf
-/src/appexpert/stringmaps/SM_CL01_00_SYS_DEBUG_KEYS.conf
+/src/appexpert/stringmaps/SM_CL01_00_CSCONTROL.conf
+/src/appexpert/stringmaps/SM_CL01_00_KEYS.conf
 
 
 # Responder - Policy Labels - HTTP

@@ -21,8 +21,8 @@
 /src/appexpert/stringmaps/SM_CL01_00_LBGROUP.conf
 /src/appexpert/stringmaps/SM_CL01_00_LB.conf
 
-/src/appexpert/stringmaps/SM_CL01_00_IP_ZONE.conf
-/src/appexpert/stringmaps/SM_CL01_00_IP_FILTER.conf
+/src/appexpert/stringmaps/SM_CL01_00_IPZONE.conf
+/src/appexpert/stringmaps/SM_CL01_00_IPFILTER.conf
 
 /src/appexpert/stringmaps/SM_CL01_00_CSCONTROL.conf
 /src/appexpert/stringmaps/SM_CL01_00_KEYS.conf

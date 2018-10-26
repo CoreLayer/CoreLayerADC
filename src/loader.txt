@@ -31,10 +31,10 @@
 # Responder - Policy Labels - HTTP
 /src/appexpert/responder/policylabels/RSPL_CL01_00_HTTP_REQ.conf
 
-# Traffic Management - Load Balancing - ACTIONS
-/src/trafficmanagement/loadbalancing/virtualservers/VS_CL01_00_ACTION_HTTP.conf
-/src/trafficmanagement/loadbalancing/virtualservers/VS_CL01_00_ACTION_TCP.conf
-/src/trafficmanagement/loadbalancing/virtualservers/VS_CL01_00_ACTION_UDP.conf
+# Traffic Management - Load Balancing - Default load-balancing virtual servers for content-switching virtual servers
+/src/trafficmanagement/loadbalancing/virtualservers/VS_CL01_00_DEFAULT_HTTP.conf
+/src/trafficmanagement/loadbalancing/virtualservers/VS_CL01_00_DEFAULT_TCP.conf
+/src/trafficmanagement/loadbalancing/virtualservers/VS_CL01_00_DEFAULT_UDP.conf
 
 # DEMO OBJECTS
 /src/trafficmanagement/contentswitching/virtualservers/CS_CL01_00_DEMO.conf

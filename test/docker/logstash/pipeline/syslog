@@ -1,0 +1,75 @@
+input {
+  udp {
+    port => 8514
+    type => "syslog"
+  }
+#  udp {
+#    port => 2055
+#    codec => netflow
+#    type => netflow
+#  }
+}
+
+filter {
+  if [type] == "syslog" {
+    grok {
+      id => "netscaler"
+      add_tag => ["netscaler"]
+      tag_on_failure => []
+      patterns_dir => ["./patterns"]
+      match => { "message" => "\A<\d\d\d> %{DATE_US:AdcLogdate}:%{TIME:AdcLogtime}  %{WORD:AdcHostname} %{PACKETENGINE:AdcPacketEngine} : %{WORD} %{WORD:AdcModule} %{WORD:AdcEventType} %{WORD:AdcEventId} \d :  %{GREEDYDATA:netscaler_log_data}" }
+    }
+    if "netscaler" in [tags] {
+      grok {
+        id => "corelayer"
+        add_tag => ["corelayer"]
+        tag_on_failure => []
+        match => { "netscaler_log_data" => "\"CORELAYER_LOG:%{GREEDYDATA:corelayer_log_data}\"" }
+      }
+      grok {
+        id => "admin"
+        add_tag => ["admin"]
+        tag_on_failure => []
+        match => { "netscaler_log_data" => "User %{WORD:AdminUsername} - Remote_ip %{IP:AdminIp} - Command %{DATA:Command} - Status %{DATA:Status}\n" }
+      }
+      if "corelayer" in [tags] {
+        json {
+          source => "corelayer_log_data"
+          target => "CoreLayer"
+        }
+        mutate {
+          rename => {"host" => "LogSource"}
+          remove_field => ["netscaler_log_data", "corelayer_log_data"]
+          remove_field => ["type", "message", "@version", "@timestamp"]
+          remove_field => ["AdcModule", "AdcEventType", "AdcEventId"]
+        }
+      }
+      if "admin" in [tags] {
+        mutate {
+          rename => {"host" => "LogSource"}
+          remove_field => ["netscaler_log_data"]
+          remove_field => ["type", "message", "@version", "@timestamp"]
+        }
+      }
+    }
+  }
+}
+
+output {
+  stdout {}
+  if "netscaler" in [tags] {
+    if "corelayer" in [tags] {
+      http {
+        http_method => "post"
+        url => "http://vipdmz60.tytgat.org/"
+        format => "json_batch" 
+      }
+    } else if "admin" in [tags] {
+      http {
+        http_method => "post"
+        url => "http://vipdmz60.tytgat.org/"
+        format => "json_batch" 
+      }
+    }
+  }
+}

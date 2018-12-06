@@ -1,0 +1,140 @@
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    
+    <title>CoreLayer Debug - Content-Switching</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1362.09 338.53"><defs><style>.cls-1{fill:#0081c6;}.cls-2{fill:#0082c7;}.cls-11,.cls-3{fill:#fefefe;}.cls-4{fill:#a3caef;}.cls-5{fill:#5ea5de;}.cls-11,.cls-5,.cls-6,.cls-7,.cls-8,.cls-9{fill-rule:evenodd;}.cls-6{fill:#8cbee9;}.cls-7{fill:#75b1e4;}.cls-8{fill:#b9d6f2;}.cls-9{fill:#4199d7;}.cls-10{fill:#3f98d1;}</style></defs><title>corelayer_logotype</title><g id="Laag_1" data-name="Laag 1"><line class="cls-1" x1="157.61" y1="123.77" x2="157.59" y2="123.79"/><line class="cls-1" x1="157.95" y1="114.35" x2="157.92" y2="114.36"/></g><g id="Laag_3" data-name="Laag 3"><rect class="cls-2" width="1362.09" height="338.53"/><circle class="cls-3" cx="174.61" cy="169.58" r="125.52"/><path class="cls-2" d="M125.16,219.07,64.32,133c-.76,2.29-1.46,4.61-2.08,7a116.22,116.22,0,0,0,206.23,98.16H162A45.1,45.1,0,0,1,125.16,219.07Z"/><path class="cls-2" d="M204.22,57.21A116.23,116.23,0,0,0,67.4,124.75l12.86-2.38,55.09,78a45.09,45.09,0,0,0,36.84,19.08h94.6l6.17,12a116.26,116.26,0,0,0-68.74-174.3Zm-25.88,46.92.84,1.14s5.58,8.41,15.45,11.72c0,0,6.09,2.39,16.64,2.5h4.79l2.7,5.77-4.55-.05c-15-.17-26.23-4-35-16.24L176,104.55ZM161,107.46l7.88,11.13a45.1,45.1,0,0,0,36.79,19h18.94l2.86,5.55H206.78a45.11,45.11,0,0,1-36.8-19L158.5,107.92Zm-17.52,3.23,18,25.44a45.08,45.08,0,0,0,36.8,19h35.36l2.86,5.55H199.38a45.09,45.09,0,0,1-36.8-19L141,111.16Zm-18,3.33,28.23,39.85a45.1,45.1,0,0,0,36.79,19H242.8l2.86,5.55H191.59a45.09,45.09,0,0,1-36.79-19L123,114.48Zm-18.41,3.4,38.48,54.25a45.07,45.07,0,0,0,36.77,19H252l2.86,5.56H183.42a45.1,45.1,0,0,1-36.79-19l-42-59.32Zm67.8,97.71a45.09,45.09,0,0,1-36.8-19L85.22,121.46l2.46-.46L137,190.58a45.1,45.1,0,0,0,36.77,19h87.87l2.86,5.55Z"/><path class="cls-4" d="M182.34,190.67H252l-4.16-8.07H191.08a45.1,45.1,0,0,1-36.83-19.08L120,115l-12.9,2.39,38.48,54.25A45.07,45.07,0,0,0,182.34,190.67Z"/><path class="cls-5" d="M205.7,137.61h18.94l-4.15-8.08h-6a45.1,45.1,0,0,1-36.83-19.07l-3.79-5.37L161,107.46l7.88,11.13A45.1,45.1,0,0,0,205.7,137.61Z"/><path class="cls-6" d="M190.52,172.89H242.8l-4.16-8.08H199.26a45.09,45.09,0,0,1-36.83-19.07l-24.08-34.1L125.5,114l28.23,39.85A45.1,45.1,0,0,0,190.52,172.89Z"/><path class="cls-7" d="M198.32,155.17h35.36l-4.16-8.08H207.06A45.07,45.07,0,0,1,170.23,128l-13.91-19.69-12.81,2.37,18,25.44A45.08,45.08,0,0,0,198.32,155.17Z"/><path class="cls-8" d="M173.81,209.58h87.87l-4.16-8.08h-75a45.08,45.08,0,0,1-36.82-19.07l-45.09-63.82L87.68,121,137,190.58A45.1,45.1,0,0,0,173.81,209.58Z"/><path class="cls-9" d="M194.63,117s6.09,2.39,16.64,2.5h4.79c-6.67-12.94-20-18.61-34.33-16l-3.39.63h0l.84,1.14S184.76,113.68,194.63,117Z"/><line class="cls-10" x1="174.05" y1="105.38" x2="176.94" y2="109.42"/><path class="cls-11" d="M389.94,240.75c26.65,0,45.82-9.84,56.22-18.18l-8.77-8.63a79.7,79.7,0,0,1-47.28,15.34c-23.89,0-50.53-15.79-50.53-42.59,0-25.91,25.18-42.45,50.2-42.45,19.5,0,33.63,6.26,46.14,14.6l8-9.53c-14.13-9.67-31.35-16.83-54.59-16.83-31.68,0-65.48,21.15-65.48,54.06C323.81,221.83,360.37,240.75,389.94,240.75Z"/><path class="cls-11" d="M514.85,240.75c35.91,0,68.57-21.6,68.57-53.91,0-32-32.66-54.36-68.57-54.36-35.74,0-68.56,21.45-68.56,54.21C446.29,218.85,479.11,240.75,514.85,240.75Zm0-96.65c30.54,0,53.62,19.06,53.62,42.74,0,23.52-23.08,42.29-53.62,42.29-30.38,0-53.61-18.91-53.61-42.29C461.24,163.16,484.47,144.1,514.85,144.1Z"/><path class="cls-11" d="M607.92,239V197.11h28.6c4.39,4.32,39.65,41.84,39.65,41.84h17.06l-.66-1.49-37-39.6-1.63-1c.17-.16,1.31,0,1.47-.16,18-.74,36.23-14.44,36.23-31.11,0-19.22-20.8-31-41.1-31h-28a29.81,29.81,0,0,0-29.81,29.86l.12,74.52Zm0-76.45a16.77,16.77,0,0,1,16.77-16.77H651c13.16,0,25.84,7.75,25.84,20,0,10.87-12.68,20-25.67,20H607.92Z"/><path class="cls-11" d="M1257.74,198l-1.63-1c.17-.16,1.3,0,1.47-.16,18-.74,36.23-14.44,36.23-31.11,0-19.22-20.8-31-41.11-31h-28a29.8,29.8,0,0,0-29.81,29.86l.1,63.27h-75.12a15.65,15.65,0,0,1-15.65-15.65V192.72h65.32V181.84h-65.32V164.23a18.42,18.42,0,0,1,18.42-18.42h61.19v-11h-64.3a30.79,30.79,0,0,0-30.79,30.75l-.08,47A26.48,26.48,0,0,0,1115.16,239h95l0-41.76h28.6c4.38,4.32,39.51,41.71,39.51,41.71h17.67Zm-47.61-12.21V162.66a16.76,16.76,0,0,1,16.76-16.76h26.3c13.16,0,25.83,7.74,25.83,19.95,0,10.87-12.67,20-25.67,20Z"/><path class="cls-11" d="M954.56,139.9a10.28,10.28,0,0,0-18.26-.07l-45.65,87.54H837.27a10.44,10.44,0,0,1-10.44-10.44V134.74h-3.21v0H731.39a30.8,30.8,0,0,0-30.8,30.75l-.08,47A26.48,26.48,0,0,0,727,239h70.79V227.79H731.73a15.66,15.66,0,0,1-15.66-15.66V192.65h65.32V181.77H716.07V164.16a18.43,18.43,0,0,1,18.42-18.43h77.06v69.62A23.65,23.65,0,0,0,835.19,239h65.32v-.32L913,214.12h63.68L989.22,239h16.09Zm-35.85,63.19,26.66-51.31L971,203.09Z"/><path class="cls-11" d="M1071.54,134.73,1049.32,181a4.47,4.47,0,0,1-3.89,2.27H1019a4.49,4.49,0,0,1-3.9-2.27l-22.21-46.22H975.64l28.24,55.32a14.19,14.19,0,0,0,12.26,7h8.08V239h16v-41.9h8.09a14.17,14.17,0,0,0,12.25-7l28.25-55.32Z"/></g></svg>
+            </div>            
+        </div>
+        <div class="row">
+            <div class="col">
+                <h1>Content-Switching Flow</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h1>Raw Data</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h2>L2 - Data</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Data</th>
+                            <th scope="col">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">VLAN</th>
+                            <td>${PE_CL01_00_L2_VLAN}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Source MAC Address</th>
+                            <td>${PE_CL01_00_L2_SRCMAC}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Destination MAC Address</th>
+                            <td>${PE_CL01_00_L2_DSTMAC}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <h2>L3 - Data</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Data</th>
+                            <th scope="col">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Client IP - IPv4</th>
+                            <td>${CLIENT.IP.SRC}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Client IP - IPv6</th>
+                            <td>${CLIENT.IPV6.SRC}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Destination IP - IPv4</th>
+                            <td>${CLIENT.IP.DST}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Destination IP - IPv6</th>
+                            <td>${CLIENT.IPV6.DST}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h2>L3 - IPv4 Subnets</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Data</th>
+                            <th scope="col">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><th scope="row">Subnet /32</th><td>${PE_CL01_00_L3_IPV4_032}</td></tr>
+                        <tr><th scope="row">Subnet /31</th><td>${PE_CL01_00_L3_IPV4_031}</td></tr>
+                        <tr><th scope="row">Subnet /30</th><td>${PE_CL01_00_L3_IPV4_030}</td></tr>
+                        <tr><th scope="row">Subnet /29</th><td>${PE_CL01_00_L3_IPV4_029}</td></tr>
+                        <tr><th scope="row">Subnet /28</th><td>${PE_CL01_00_L3_IPV4_028}</td></tr>
+                        <tr><th scope="row">Subnet /27</th><td>${PE_CL01_00_L3_IPV4_027}</td></tr>
+                        <tr><th scope="row">Subnet /26</th><td>${PE_CL01_00_L3_IPV4_026}</td></tr>
+                        <tr><th scope="row">Subnet /25</th><td>${PE_CL01_00_L3_IPV4_025}</td></tr>
+                        <tr><th scope="row">Subnet /24</th><td>${PE_CL01_00_L3_IPV4_024}</td></tr>
+                        <tr><th scope="row">Subnet /23</th><td>${PE_CL01_00_L3_IPV4_023}</td></tr>
+                        <tr><th scope="row">Subnet /22</th><td>${PE_CL01_00_L3_IPV4_022}</td></tr>
+                        <tr><th scope="row">Subnet /21</th><td>${PE_CL01_00_L3_IPV4_021}</td></tr>
+                        <tr><th scope="row">Subnet /20</th><td>${PE_CL01_00_L3_IPV4_020}</td></tr>
+                        <tr><th scope="row">Subnet /19</th><td>${PE_CL01_00_L3_IPV4_019}</td></tr>
+                        <tr><th scope="row">Subnet /18</th><td>${PE_CL01_00_L3_IPV4_018}</td></tr>
+                        <tr><th scope="row">Subnet /17</th><td>${PE_CL01_00_L3_IPV4_017}</td></tr>
+                        <tr><th scope="row">Subnet /16</th><td>${PE_CL01_00_L3_IPV4_016}</td></tr>
+                        <tr><th scope="row">Subnet /15</th><td>${PE_CL01_00_L3_IPV4_015}</td></tr>
+                        <tr><th scope="row">Subnet /14</th><td>${PE_CL01_00_L3_IPV4_014}</td></tr>
+                        <tr><th scope="row">Subnet /13</th><td>${PE_CL01_00_L3_IPV4_013}</td></tr>
+                        <tr><th scope="row">Subnet /12</th><td>${PE_CL01_00_L3_IPV4_012}</td></tr>
+                        <tr><th scope="row">Subnet /11</th><td>${PE_CL01_00_L3_IPV4_011}</td></tr>
+                        <tr><th scope="row">Subnet /10</th><td>${PE_CL01_00_L3_IPV4_010}</td></tr>
+                        <tr><th scope="row">Subnet /09</th><td>${PE_CL01_00_L3_IPV4_009}</td></tr>
+                        <tr><th scope="row">Subnet /08</th><td>${PE_CL01_00_L3_IPV4_008}</td></tr>
+                        <tr><th scope="row">Subnet /07</th><td>${PE_CL01_00_L3_IPV4_007}</td></tr>
+                        <tr><th scope="row">Subnet /06</th><td>${PE_CL01_00_L3_IPV4_006}</td></tr>
+                        <tr><th scope="row">Subnet /05</th><td>${PE_CL01_00_L3_IPV4_005}</td></tr>
+                        <tr><th scope="row">Subnet /04</th><td>${PE_CL01_00_L3_IPV4_004}</td></tr>
+                        <tr><th scope="row">Subnet /03</th><td>${PE_CL01_00_L3_IPV4_003}</td></tr>
+                        <tr><th scope="row">Subnet /02</th><td>${PE_CL01_00_L3_IPV4_002}</td></tr>
+                        <tr><th scope="row">Subnet /01</th><td>${PE_CL01_00_L3_IPV4_001}</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Raw Request Data</h2>
+                ${HTTP.REQ.FULL_HEADER.HTTP_HEADER_SAFE}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -16,6 +16,9 @@
 /src/trafficmanagement/loadbalancing/virtualservers/VS_CL01_00_DEFAULT_TCP.conf
 /src/trafficmanagement/loadbalancing/virtualservers/VS_CL01_00_DEFAULT_UDP.conf
 
+# Traffic Management - Content-Swithing - HTTP
+/src/trafficmanagement/contentswitching/policylabels/CSPL_CL01_00_HTTP_REQ.conf
+
 # DEMO OBJECTS
 /src/trafficmanagement/contentswitching/virtualservers/CS_CL01_00_DEMO.conf
 

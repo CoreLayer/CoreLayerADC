@@ -1,21 +1,21 @@
 version: '3'
 services:
-  # corelayer-nginx-red:
-  #   build: nginx-red/.
-  #   image: corelayer-nginx-red
-  #   container_name: corelayer-nginx-red
-  #   networks:
-  #     - nsbackend
-  #   ports:
-  #   - "8081:80"
-  # corelayer-nginx-green:
-  #   build: nginx-green/.
-  #   image: corelayer-nginx-green
-  #   container_name: corelayer-nginx-green
-  #   networks:
-  #     - nsbackend
-  #   ports:
-  #   - "8082:80"
+  corelayer-nginx-red:
+    build: nginx-red/.
+    image: corelayer-nginx-red
+    container_name: corelayer-nginx-red
+    networks:
+      - nsbackend
+    ports:
+    - "8081:80"
+  corelayer-nginx-green:
+    build: nginx-green/.
+    image: corelayer-nginx-green
+    container_name: corelayer-nginx-green
+    networks:
+      - nsbackend
+    ports:
+    - "8082:80"
   corelayer-nginx-blue:
     build: nginx-blue/.
     image: nginx
@@ -24,54 +24,54 @@ services:
       - nsbackend
     ports:
     - "8083:80"
-  # corelayer-nginx-srcip:
-  #   build: nginx-srcip/.
-  #   image: corelayer-nginx-srcip
-  #   container_name: corelayer-nginx-srcip
-  #   networks:
-  #     - nsbackend
-  #   ports:
-  #   - "10501:80"
-  # corelayer-nginx-full:
-  #   build: nginx-full/.
-  #   image: corelayer-nginx-full
-  #   container_name: corelayer-nginx-full
-  #   networks:
-  #     - nsbackend
-  #   ports:
-  #   - "10502:80"
-  # corelayer-nginx-scnd:
-  #   build: nginx-scnd/.
-  #   image: corelayer-nginx-scnd
-  #   container_name: corelayer-nginx-scnd
-  #   networks:
-  #     - nsbackend
-  #   ports:
-  #   - "10503:80"
-  # corelayer-nginx-frst:
-  #   build: nginx-frst/.
-  #   image: corelayer-nginx-frst
-  #   container_name: corelayer-nginx-frst
-  #   networks:
-  #     - nsbackend
-  #   ports:
-  #   - "10504:80"
-  # corelayer-nginx-fqdn:
-  #   build: nginx-fqdn/.
-  #   image: corelayer-nginx-fqdn
-  #   container_name: corelayer-nginx-fqdn
-  #   networks:
-  #     - nsbackend
-  #   ports:
-  #   - "10505:80"
-  # corelayer-nginx-wild:
-  #   build: nginx-wild/.
-  #   image: corelayer-nginx-wild
-  #   container_name: corelayer-nginx-wild
-  #   networks:
-  #     - nsbackend
-  #   ports:
-  #   - "10506:80"
+  corelayer-nginx-srcip:
+    build: nginx-srcip/.
+    image: corelayer-nginx-srcip
+    container_name: corelayer-nginx-srcip
+    networks:
+      - nsbackend
+    ports:
+    - "10501:80"
+  corelayer-nginx-full:
+    build: nginx-full/.
+    image: corelayer-nginx-full
+    container_name: corelayer-nginx-full
+    networks:
+      - nsbackend
+    ports:
+    - "10502:80"
+  corelayer-nginx-scnd:
+    build: nginx-scnd/.
+    image: corelayer-nginx-scnd
+    container_name: corelayer-nginx-scnd
+    networks:
+      - nsbackend
+    ports:
+    - "10503:80"
+  corelayer-nginx-frst:
+    build: nginx-frst/.
+    image: corelayer-nginx-frst
+    container_name: corelayer-nginx-frst
+    networks:
+      - nsbackend
+    ports:
+    - "10504:80"
+  corelayer-nginx-fqdn:
+    build: nginx-fqdn/.
+    image: corelayer-nginx-fqdn
+    container_name: corelayer-nginx-fqdn
+    networks:
+      - nsbackend
+    ports:
+    - "10505:80"
+  corelayer-nginx-wild:
+    build: nginx-wild/.
+    image: corelayer-nginx-wild
+    container_name: corelayer-nginx-wild
+    networks:
+      - nsbackend
+    ports:
+    - "10506:80"
   # corelayer-logstash:
   #   build: logstash/.
   #   image: corelayer-logstash
@@ -83,33 +83,33 @@ services:
   #     - "8514:8514"
   #     - "2055:2055/udp"
   #     - "9600:9600"
-  corelayer-cpx:
-    container_name: corelayer-cpx
-    #image: store/citrix/netscalercpx:12.0-56.20
-    image: dpkumar/cpx:12.0-58.15
-    networks:
-      - nsbackend
-    ports:
-      - "8022:22"
-      - "8080:80"
-      - "8443:443"
-      - "8161:161/udp"
-      - "80:30000"
-    tty: true
-    privileged: true
-    cap_add: 
-      - NET_ADMIN
-    volumes:
-       - $PWD/cpx/cpx.conf:/etc/cpx.conf
-       - /private/var/tmp/corelayerinstaller:/var/tmp/corelayer/install:ro
-    environment: 
-      - EULA=yes
-      - CPX_CORES=1
-      - NS_HTTP_PORT=8080
-      - NS_HTTPS_PORT=8443
-      - NS_SSH_PORT=8022
-      - NS_SNMP_PORT=8161
-      - NS_ROUTABLE=FALSE
+  # corelayer-cpx:
+  #   container_name: corelayer-cpx
+  #   #image: store/citrix/netscalercpx:12.0-56.20
+  #   image: dpkumar/cpx:12.0-58.15
+  #   networks:
+  #     - nsbackend
+  #   ports:
+  #     - "8022:22"
+  #     - "8080:80"
+  #     - "8443:443"
+  #     - "8161:161/udp"
+  #     - "80:30000"
+  #   tty: true
+  #   privileged: true
+  #   cap_add: 
+  #     - NET_ADMIN
+  #   volumes:
+  #      - $PWD/cpx/cpx.conf:/etc/cpx.conf
+  #      - /private/var/tmp/corelayerinstaller:/var/tmp/corelayer/install:ro
+  #   environment: 
+  #     - EULA=yes
+  #     - CPX_CORES=1
+  #     - NS_HTTP_PORT=8080
+  #     - NS_HTTPS_PORT=8443
+  #     - NS_SSH_PORT=8022
+  #     - NS_SNMP_PORT=8161
+  #     - NS_ROUTABLE=FALSE
 
 networks:
   nsbackend:

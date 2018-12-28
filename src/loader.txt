@@ -9,7 +9,8 @@
 /src/system/auditing/syslog/SYSLOG_CL01_00.conf
 
 # AppExpert - Policy Expressions
-# /src/appexpert/policyexpressions/PE_CL01_00_HTTP_DEBUG.conf
+#/src/appexpert/policyexpressions/PE_CL01_00_HTTP_DEBUG_REGISTRATION.conf
+#/src/appexpert/policyexpressions/PE_CL01_00_HTTP_DEBUG.conf
 # /src/appexpert/policyexpressions/PE_CL01_00_HTTP_DEFAULT.conf
 # /src/appexpert/policyexpressions/PE_CL01_00_HTTP_REDIR.conf
 # /src/appexpert/policyexpressions/PE_CL01_00_L2.conf

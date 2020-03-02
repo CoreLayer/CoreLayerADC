@@ -1,0 +1,249 @@
+name: Core
+version:
+  major: 0
+  minor: 1
+dependencies:
+placeholders:
+  - name: PLH_TCP_CS_NAME
+    expression: CLIENT.TCP.CS_VSERVER.NAME
+  - name: PLH_TCP_LB_NAME
+    expression: CLIENT.TCP.LB_VSERVER.NAME
+  - name: PLH_ENDPOINT_HTTP
+    expression: ("ip=" + CLIENT.IP.DST + ";dstport=" + CLIENT.TCP.DSTPORT + ";type=HTTP")
+  - name: PLH_ENDPOINT_SSL
+    expression: ("ip=" + CLIENT.IP.DST + ";dstport=" + CLIENT.TCP.DSTPORT + ";type=SSL")
+  - name: PLH_ENDPOINT_SSLBRIDGE
+    expression: ("ip=" + CLIENT.IP.DST + ";dstport=" + CLIENT.TCP.DSTPORT + ";type=SSLBRIDGE")
+  - name: PLH_ENDPOINT_TCP
+    expression: ("ip=" + CLIENT.IP.DST + ";dstport=" + CLIENT.TCP.DSTPORT + ";type=TCP")
+  - name: PLH_ENDPOINT_SSLTCP
+    expression: ("ip=" + CLIENT.IP.DST + ";dstport=" + CLIENT.TCP.DSTPORT + ";type=SSL_TCP")
+  - name: PLH_ENDPOINT_UDP
+    expression: ("ip=" + CLIENT.IP.DST + ";dstport=" + CLIENT.UDP.DSTPORT + ";type=UDP")
+
+sections:
+  - name: AppExpert.Stringmaps
+    elements:
+      - name: SM__V__TENANT
+        expressions:
+          install: add policy stringmap SM__V__TENANT
+          uninstall: rm policy stringmap SM__V__TENANT
+      - name: SM__V__TENANT_ENDPOINTS
+        expressions:
+          install: add policy stringmap SM__V__TENANT_ENDPOINTS
+          uninstall: rm policy stringmap SM__V__TENANT_ENDPOINTS
+      - name: SM__V__TENANT_FQDN
+        expressions:
+          install: add policy stringmap SM__V__TENANT_FQDN
+          uninstall: rm policy stringmap SM__V__TENANT_FQDN
+      - name: SM__V__CS_CONFIG
+        expressions:
+          install: add policy stringmap SM__V__CS_CONFIG
+          uninstall: rm policy stringmap SM__V__CS_CONFIG
+      - name: SM__V__CSGROUP_CONFIG
+        expressions:
+          install: add policy stringmap SM__V__CSGROUP_CONFIG
+          uninstall: rm policy stringmap SM__V__CSGROUP_CONFIG
+
+
+  - name: AppExpert.AdvancedExpressions
+    elements:
+      - name: EXP__V__ENDPOINT_HTTP_IS_CONFIGURED
+        references:
+          - PLH_ENDPOINT_HTTP
+        dependencies:
+          - SM__V__TENANT_ENDPOINTS
+        expressions:
+          install: add policy expression EXP__V__TENANT_ENDPOINT_HTTP_IS_CONFIGURED q{PLH_ENDPOINT_HTTP.IS_STRINGMAP_KEY("SM__V__TENANT_ENDPOINTS")}
+          uninstall: rm policy expression EXP__V__TENANT_ENDPOINT_HTTP_IS_CONFIGURED
+      - name: EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_HTTP
+        references:
+          - PLH_ENDPOINT_HTTP
+        dependencies:
+          - SM__V__TENANT_ENDPOINTS
+          - SM__V__TENANT
+        expressions:
+          install: add policy expression EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_HTTP q{PLH_ENDPOINT_HTTP.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";").IS_STRINGMAP_KEY("SM__V__TENANT")}
+          uninstall: rm policy expression EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_HTTP
+      - name: EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_HTTP
+        references:
+          - PLH_ENDPOINT_HTTP
+        dependencies:
+          - SM__V__TENANT_ENDPOINTS
+          - SM__V__TENANT
+        expressions:
+          install: add policy expression EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_HTTP q{PLH_ENDPOINT_HTTP.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";").MAP_STRING("SM__V__TENANT").AFTER_STR("state=").BEFORE_STR(";").EQ("enabled")}
+          uninstall: rm policy expression EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_HTTP
+
+      - name: EXP__V__ENDPOINT_SSL_IS_CONFIGURED
+        references:
+          - PLH_ENDPOINT_SSL
+        dependencies:
+          - SM__V__TENANT_ENDPOINTS
+        expressions:
+          install: add policy expression EXP__V__TENANT_ENDPOINT_SSL_IS_CONFIGURED q{PLH_ENDPOINT_SSL.IS_STRINGMAP_KEY("SM__V__TENANT_ENDPOINTS")}
+          uninstall: rm policy expression EXP__V__TENANT_ENDPOINT_SSL_IS_CONFIGURED
+      - name: EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_SSL
+        references:
+          - PLH_ENDPOINT_SSL
+        dependencies:
+          - SM__V__TENANT_ENDPOINTS
+          - SM__V__TENANT
+        expressions:
+          install: add policy expression EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_SSL q{PLH_ENDPOINT_SSL.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";").IS_STRINGMAP_KEY("SM__V__TENANT")}
+          uninstall: rm policy expression EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_SSL
+      - name: EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_SSL
+        references:
+          - PLH_ENDPOINT_SSL
+        dependencies:
+          - SM__V__TENANT_ENDPOINTS
+          - SM__V__TENANT
+        expressions:
+          install: add policy expression EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_SSL q{PLH_ENDPOINT_SSL.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";").MAP_STRING("SM__V__TENANT").AFTER_STR("state=").BEFORE_STR(";").EQ("enabled")}
+          uninstall: rm policy expression EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_SSL
+
+      - name: EXP__V__ENDPOINT_SSLBRIDGE_IS_CONFIGURED
+        references:
+          - PLH_ENDPOINT_SSLBRIDGE
+        dependencies:
+          - SM__V__TENANT_ENDPOINTS
+        expressions:
+          install: add policy expression EXP__V__TENANT_ENDPOINT_SSLBRIDGE_IS_CONFIGURED q{PLH_ENDPOINT_SSLBRIDGE.IS_STRINGMAP_KEY("SM__V__TENANT_ENDPOINTS")}
+          uninstall: rm policy expression EXP__V__TENANT_ENDPOINT_SSLBRIDGE_IS_CONFIGURED
+      - name: EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_SSLBRIDGE
+        references:
+          - PLH_ENDPOINT_SSLBRIDGE
+        dependencies:
+          - SM__V__TENANT_ENDPOINTS
+          - SM__V__TENANT
+        expressions:
+          install: add policy expression EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_SSLBRIDGE q{PLH_ENDPOINT_SSLBRIDGE.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";").IS_STRINGMAP_KEY("SM__V__TENANT")}
+          uninstall: rm policy expression EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_SSLBRIDGE
+      - name: EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_SSLBRIDGE
+        references:
+          - PLH_ENDPOINT_SSLBRIDGE
+        dependencies:
+          - SM__V__TENANT_ENDPOINTS
+          - SM__V__TENANT
+        expressions:
+          install: add policy expression EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_SSLBRIDGE q{PLH_ENDPOINT_SSLBRIDGE.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";").MAP_STRING("SM__V__TENANT").AFTER_STR("state=").BEFORE_STR(";").EQ("enabled")}
+          uninstall: rm policy expression EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_SSLBRIDGE
+
+      - name: EXP__V__ENDPOINT_TCP_IS_CONFIGURED
+        references:
+          - PLH_ENDPOINT_TCP
+        dependencies:
+          - SM__V__TENANT_ENDPOINTS
+        expressions:
+          install: add policy expression EXP__V__TENANT_ENDPOINT_TCP_IS_CONFIGURED q{PLH_ENDPOINT_TCP.IS_STRINGMAP_KEY("SM__V__TENANT_ENDPOINTS")}
+          uninstall: rm policy expression EXP__V__TENANT_ENDPOINT_TCP_IS_CONFIGURED
+      - name: EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_TCP
+        references:
+          - PLH_ENDPOINT_TCP
+        dependencies:
+          - SM__V__TENANT_ENDPOINTS
+          - SM__V__TENANT
+        expressions:
+          install: add policy expression EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_TCP q{PLH_ENDPOINT_TCP.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";").IS_STRINGMAP_KEY("SM__V__TENANT")}
+          uninstall: rm policy expression EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_TCP
+      - name: EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_TCP
+        references:
+          - PLH_ENDPOINT_TCP
+        dependencies:
+          - SM__V__TENANT_ENDPOINTS
+          - SM__V__TENANT
+        expressions:
+          install: add policy expression EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_TCP q{PLH_ENDPOINT_TCP.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";").MAP_STRING("SM__V__TENANT").AFTER_STR("state=").BEFORE_STR(";").EQ("enabled")}
+          uninstall: rm policy expression EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_TCP
+
+      - name: EXP__V__ENDPOINT_SSL_TCP_IS_CONFIGURED
+        references:
+          - PLH_ENDPOINT_SSLTCP
+        dependencies:
+          - SM__V__TENANT_ENDPOINTS
+        expressions:
+          install: add policy expression EXP__V__TENANT_ENDPOINT_SSL_TCP_IS_CONFIGURED q{PLH_ENDPOINT_SSLTCP.IS_STRINGMAP_KEY("SM__V__TENANT_ENDPOINTS")}
+          uninstall: rm policy expression EXP__V__TENANT_ENDPOINT_SSL_TCP_IS_CONFIGURED
+      - name: EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_SSL_TCP
+        references:
+          - PLH_ENDPOINT_SSLTCP
+        dependencies:
+          - SM__V__TENANT_ENDPOINTS
+          - SM__V__TENANT
+        expressions:
+          install: add policy expression EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_SSL_TCP q{PLH_ENDPOINT_SSLTCP.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";").IS_STRINGMAP_KEY("SM__V__TENANT")}
+          uninstall: rm policy expression EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_SSL_TCP
+      - name: EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_SSL_TCP
+        references:
+          - PLH_ENDPOINT_SSLTCP
+        dependencies:
+          - SM__V__TENANT_ENDPOINTS
+          - SM__V__TENANT
+        expressions:
+          install: add policy expression EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_SSL_TCP q{PLH_ENDPOINT_SSLTCP.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";").MAP_STRING("SM__V__TENANT").AFTER_STR("state=").BEFORE_STR(";").EQ("enabled")}
+          uninstall: rm policy expression EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_SSL_TCP
+
+      - name: EXP__V__ENDPOINT_UDP_IS_CONFIGURED
+        references:
+          - PLH_ENDPOINT_UDP
+        dependencies:
+          - SM__V__TENANT_ENDPOINTS
+        expressions:
+          install: add policy expression EXP__V__TENANT_ENDPOINT_UDP_IS_CONFIGURED q{PLH_ENDPOINT_UDP.IS_STRINGMAP_KEY("SM__V__TENANT_ENDPOINTS")}
+          uninstall: rm policy expression EXP__V__TENANT_ENDPOINT_UDP_IS_CONFIGURED
+
+      - name: EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_UDP
+        references:
+          - PLH_ENDPOINT_UDP
+        dependencies:
+          - SM__V__TENANT_ENDPOINTS
+          - SM__V__TENANT
+        expressions:
+          install: add policy expression EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_UDP q{PLH_ENDPOINT_UDP.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";").IS_STRINGMAP_KEY("SM__V__TENANT")}
+          uninstall: rm policy expression EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_UDP
+
+      - name: EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_UDP
+        references:
+          - PLH_ENDPOINT_UDP
+        dependencies:
+          - SM__V__TENANT_ENDPOINTS
+          - SM__V__TENANT
+        expressions:
+          install: add policy expression EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_UDP q{PLH_ENDPOINT_UDP.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";").MAP_STRING("SM__V__TENANT").AFTER_STR("state=").BEFORE_STR(";").EQ("enabled")}
+          uninstall: rm policy expression EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_UDP
+
+  - name: Auditing.MessageActions
+    elements:
+      - name: LOG__V__TCP_CS_NAME
+        references:
+          - PLH_TCP_CS_NAME
+          - PLH_TCP_LB_NAME
+        expressions:
+          install: add audit messageAction LOG__V__TCP_CS_NAME INFO q{PLH_TCP_CS_NAME + " - " + PLH_TCP_LB_NAME}
+          uninstall: rm audit messageAction LOG__V__TCP_CS_NAME
+
+  - name: TrafficManagement.ContentSwitching.ContentSwitchingActions
+    elements:
+      - name: CSA__V__HTTP_ENTRY
+        references:
+        expressions:
+          install: add cs policy CSA__V__HTTP_ENTRY
+          uninstall: rm cs policy CSA__V__HTTP_ENTRY
+
+  - name: TrafficManagement.ContentSwitching.ContentSwitchingPolicies
+    elements:
+      - name: CSP__V__HTTP_ENTRY
+        references:
+        expressions:
+          install: add cs policy CSP__V__HTTP_ENTRY
+          uninstall: rm cs policy CSP__V__HTTP_ENTRY
+
+  - name: TrafficManagement.ContentSwitching.ContentSwitchingPolicyLabels
+    elements:
+      - name: CSPL__V__HTTP_ENTRY
+        references:
+        expressions:
+          install: add cs policylabel CSPL__V__HTTP_ENTRY
+          uninstall: rm cs policylabel CSPL__V__HTTP_ENTRY
+
+          

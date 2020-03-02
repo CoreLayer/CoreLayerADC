@@ -1,0 +1,50 @@
+name: DemoCS
+dependencies:
+  - Core
+sections:
+  - name: TrafficManagement.ContentSwitching.VirtualServers
+    elements:
+      - name: CS__V__DEMO_HTTP
+        references:
+          - EXP__V__ENDPOINT_HTTP_IS_CONFIGURED
+          - EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_HTTP
+          - EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_HTTP
+        expressions:
+          install: add cs vserver CS__V__DEMO_HTTP HTTP 169.254.254.254 80 -Listenpriority 50 -Listenpolicy "EXP__V__TENANT_ENDPOINT_HTTP_IS_CONFIGURED && EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_HTTP && EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_HTTP"
+          uninstall: rm cs vserver CS__V__DEMO_HTTP
+
+      - name: CS__V__DEMO_SSL
+        references:
+          - EXP__V__ENDPOINT_SSL_IS_CONFIGURED
+          - EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_SSL
+          - EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_SSL
+        expressions:
+          install: add cs vserver CS__V__DEMO_SSL SSL 169.254.254.254 443 -Listenpriority 50 -Listenpolicy "EXP__V__TENANT_ENDPOINT_SSL_IS_CONFIGURED && EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_SSL && EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_SSL"
+          uninstall: rm cs vserver CS__V__DEMO_SSL
+
+      - name: CS__V__DEMO_TCP
+        references:
+          - EXP__V__ENDPOINT_TCP_IS_CONFIGURED
+          - EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_TCP
+          - EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_TCP
+        expressions:
+          install: add cs vserver CS__V__DEMO_TCP TCP 169.254.254.254 * -Listenpriority 50 -Listenpolicy "EXP__V__TENANT_ENDPOINT_TCP_IS_CONFIGURED && EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_TCP && EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_TCP"
+          uninstall: rm cs vserver CS__V__DEMO_TCP
+
+      - name: CS__V__DEMO_SSL_TCP
+        references:
+          - EXP__V__ENDPOINT_SSL_TCP_IS_CONFIGURED
+          - EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_SSL_TCP
+          - EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_SSL_TCP
+        expressions:
+          install: add cs vserver CS__V__DEMO_SSL_TCP SSL_TCP 169.254.254.254 * -Listenpriority 100 -Listenpolicy "EXP__V__TENANT_ENDPOINT_SSL_TCP_IS_CONFIGURED && EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_SSL_TCP && EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_SSL_TCP"
+          uninstall: rm cs vserver CS__V__DEMO_SSL_TCP
+
+      - name: CS__V__DEMO_UDP
+        references:
+          - EXP__V__ENDPOINT_UDP_IS_CONFIGURED
+          - EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_UDP
+          - EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_UDP
+        expressions:
+          install: add cs vserver CS__V__DEMO_UDP UDP 169.254.254.254 * -Listenpriority 50 -Listenpolicy "EXP__V__TENANT_ENDPOINT_UDP_IS_CONFIGURED && EXP__V__TENANT_IS_CONFIGURED_FROM_ENDPOINT_UDP && EXP__V__TENANT_IS_ENABLED_FROM_ENDPOINT_UDP"
+          uninstall: rm cs vserver CS__V__DEMO_UDP

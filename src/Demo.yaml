@@ -37,6 +37,17 @@ sections:
             rm cs vserver CS__V__DEMO_SSL
             unbind policy stringmap SM__V__TENANT_ENDPOINTS "ip=169.254.254.251;dstport=443;type=SSL;"
 
+      - name: LB__V__DEMO_SSLBRIDGE
+        dependencies:
+          - EXP__V__LPE_ENDPOINT_SSLBRIDGE
+        expressions:
+          install: |
+            add lb vserver LB__V__DEMO_SSLBRIDGE SSL_BRIDGE 169.254.254.251 443 -Listenpriority 21 -Listenpolicy "EXP__V__LPE_ENDPOINT_SSLBRIDGE"
+            bind policy stringmap SM__V__TENANT_ENDPOINTS "ip=169.254.254.251;dstport=443;type=SSL_BRIDGE;" "tenant=TENANT__V__DEMO;"
+          uninstall: |
+            rm lb vserver LB__V__DEMO_SSLBRIDGE
+            unbind policy stringmap SM__V__TENANT_ENDPOINTS "ip=169.254.254.251;dstport=443;type=SSL_BRIDGE;"
+
       - name: CS__V__DEMO_TCP
         dependencies:
           - EXP__V__LPE_ENDPOINT_TCP
@@ -54,10 +65,10 @@ sections:
         expressions:
           install: |
             add cs vserver CS__V__DEMO_SSLTCP SSL_TCP 169.254.254.251 * -Listenpriority 45 -Listenpolicy "EXP__V__LPE_ENDPOINT_SSLTCP"
-            bind policy stringmap SM__V__TENANT_ENDPOINTS "ip=169.254.254.251;dstport=636;type=SSLTCP;" "tenant=TENANT__V__DEMO;"
+            bind policy stringmap SM__V__TENANT_ENDPOINTS "ip=169.254.254.251;dstport=636;type=SSL_TCP;" "tenant=TENANT__V__DEMO;"
           uninstall: |
             rm cs vserver CS__V__DEMO_SSLTCP
-            unbind policy stringmap SM__V__TENANT_ENDPOINTS "ip=169.254.254.251;dstport=636;type=SSLTCP;"
+            unbind policy stringmap SM__V__TENANT_ENDPOINTS "ip=169.254.254.251;dstport=636;type=SSL_TCP;"
 
       - name: CS__V__DEMO_UDP
         dependencies:

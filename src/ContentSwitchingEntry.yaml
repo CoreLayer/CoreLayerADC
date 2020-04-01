@@ -1,0 +1,56 @@
+name: ContentSwitchingEntry
+dependencies:
+  - Core
+placeholders:
+sections:
+  - name: TrafficManagement.ContentSwitchingPolicies
+    elements:       
+      - name: EXP__V__CSP_ENTRY_HTTP
+        references:
+          - PLH_TCP_CS_NAME
+          - PLH_TCP_CSGROUP_NAME
+          - PLH_L7_FQDN_PORT
+        dependencies:
+          - SM__V__CS
+          - SM__V__CSGROUP
+          - SM__V__TENANT_FQDN
+        expressions:
+          install: add policy expression EXP__V__CSP_ENTRY_HTTP q{PLH_TCP_CS_NAME.IS_STRINGMAP_KEY("SM__V__CS") && PLH_TCP_CSGROUP_NAME.IS_STRINGMAP_KEY("SM__V__CSGROUP") && PLH_L7_FQDN_PORT.IS_STRINGMAP_KEY("SM__V__TENANT_FQDN")}
+          uninstall: rm policy expression EXP__V__CSP_ENTRY_HTTP
+
+
+  - name: Auditing.MessageActions
+    elements:
+      - name: LOG__V__TCP_CS_NAME
+        references:
+          - PLH_TCP_CS_NAME
+          - PLH_TCP_VS_NAME
+        expressions:
+          install: add audit messageAction LOG__V__TCP_CS_NAME INFO q{PLH_TCP_CS_NAME + " - " + PLH_TCP_VS_NAME}
+          uninstall: rm audit messageAction LOG__V__TCP_CS_NAME
+
+
+  # - name: TrafficManagement.ContentSwitching.ContentSwitchingPolicies
+  #   elements:
+  #     - name: CSA__V__HTTP_ACTIVATE_CSPL
+  #       references:
+  #       expressions:
+  #         install: add cs action CSA__V__HTTP_ACTIVATE
+  #         uninstall: rm cs action CSA__V__HTTP_ACTIVATE_CSPL
+
+
+  # - name: TrafficManagement.ContentSwitching.ContentSwitchingPolicies
+  #   elements:
+  #     - name: CSP__V__HTTP_ACTIVATE_CSPL
+  #       references:
+  #       expressions:
+  #         install: add cs policy CSP__V__HTTP_ACTIVATE_CSPL
+  #         uninstall: rm cs policy CSP__V__HTTP_ACTIVATE_CSPL
+
+  # - name: TrafficManagement.ContentSwitching.ContentSwitchingPolicyLabels
+  #   elements:
+  #     - name: CSPL__V__HTTP_INITIALIZE
+  #       references:
+  #       expressions:
+  #         install: add cs policylabel CSPL__V__HTTP_INITIALIZE
+  #         uninstall: rm cs policylabel CSPL__V__HTTP_INITIALIZE

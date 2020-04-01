@@ -4,11 +4,17 @@ version:
   minor: 1
 dependencies:
 placeholders:
+  ############################################################
+  # GENERAL PLACEHOLDERS
   - name: PLH_TCP_CS_NAME
     expression: ("cs=" + CLIENT.TCP.CS_VSERVER.NAME + ";")
   - name: PLH_TCP_VS_NAME
     expression: ("vs=" + CLIENT.TCP.LB_VSERVER.NAME + ";")
-    
+  - name: PLH_UDP_CS_NAME
+    expression: ("cs=" + CLIENT.UDP.CS_VSERVER.NAME + ";")
+  - name: PLH_UDP_LB_NAME
+    expression: ("vs=" + CLIENT.UDP.LB_VSERVER.NAME + ";")
+
   - name: PLH_TCP_CS_NAME_IS_CONFIGURED
     expression: PLH_TCP_CS_NAME.IS_STRINGMAP_KEY("SM__V__CS")
   - name: PLH_TCP_CSGROUP_NAME
@@ -16,83 +22,169 @@ placeholders:
   - name: PLH_TCP_CSGROUP_NAME_IS_CONFIGURED
     expression: ("csgroup=" + PLH_TCP_CSGROUP_NAME + ";").IS_STRINGMAP_KEY("SM__V__CSGROUP")
     
-  - name: PLH_WEB_FQDN_PORT
+  - name: PLH_L7_FQDN_PORT
     expression: ("fqdn=" + HTTP.REQ.HOSTNAME + ";dstport=" + CLIENT.TCP.DSTPORT + ";")
-  - name: PLH_WEB_FQDN_PORT_IS_CONFIGURED
-    expression: PLH_WEB_FQDN_PORT.IS_STRINGMAP_KEY("SM__V__TENANT_FQDN")
+  - name: PLH_L7_FQDN_PORT_IS_CONFIGURED
+    expression: PLH_L7_FQDN_PORT.IS_STRINGMAP_KEY("SM__V__TENANT_FQDN")
   - name: PLH_WEB_TENANT_FROM_FQDN_PORT
-    expression: PLH_WEB_FQDN_PORT.MAP_STRING("SM__V__TENANT_FQDN").AFTER_STR("tenant=").BEFORE_STR(";")
-    
-  - name: PLH_ENDPOINT_HTTP
+    expression: PLH_L7_FQDN_PORT.MAP_STRING("SM__V__TENANT_FQDN").AFTER_STR("tenant=").BEFORE_STR(";")
+  
+  ############################################################
+  # ENDPOINT HTTP
+  # IPV4
+  - name: PLH_IPV4_ENDPOINT_HTTP
     expression: ("ip=" + CLIENT.IP.DST + ";dstport=" + CLIENT.TCP.DSTPORT + ";type=HTTP;")
-  - name: PLH_ENDPOINT_HTTP_IS_CONFIGURED
-    expression: PLH_ENDPOINT_HTTP.IS_STRINGMAP_KEY("SM__V__TENANT_ENDPOINTS")
-  - name: PLH_TENANT_FROM_ENDPOINT_HTTP
-    expression: PLH_ENDPOINT_HTTP.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";")
-  - name: PLH_TENANT_FROM_ENDPOINT_HTTP_IS_CONFIGURED
-    expression: ("tenant=" + PLH_TENANT_FROM_ENDPOINT_HTTP + ";").IS_STRINGMAP_KEY("SM__V__TENANT")
-  - name: PLH_TENANT_FROM_ENDPOINT_HTTP_IS_ENABLED
-    expression: ("tenant=" + PLH_TENANT_FROM_ENDPOINT_HTTP + ";").MAP_STRING("SM__V__TENANT").AFTER_STR("state=").BEFORE_STR(";").EQ("enabled")
-
-  - name: PLH_ENDPOINT_SSL
-    expression: ("ip=" + CLIENT.IP.DST + ";dstport=" + CLIENT.TCP.DSTPORT + ";type=SSL;")
-  - name: PLH_ENDPOINT_SSL_IS_CONFIGURED
-    expression: PLH_ENDPOINT_SSL.IS_STRINGMAP_KEY("SM__V__TENANT_ENDPOINTS")
-  - name: PLH_TENANT_FROM_ENDPOINT_SSL
-    expression: PLH_ENDPOINT_SSL.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";")
-  - name: PLH_TENANT_FROM_ENDPOINT_SSL_IS_CONFIGURED
-    expression: ("tenant=" + PLH_TENANT_FROM_ENDPOINT_SSL + ";").IS_STRINGMAP_KEY("SM__V__TENANT")
-  - name: PLH_TENANT_FROM_ENDPOINT_SSL_IS_ENABLED
-    expression: ("tenant=" + PLH_TENANT_FROM_ENDPOINT_SSL + ";").MAP_STRING("SM__V__TENANT").AFTER_STR("state=").BEFORE_STR(";").EQ("enabled")
-
-  - name: PLH_ENDPOINT_SSLBRIDGE
-    expression: ("ip=" + CLIENT.IP.DST + ";dstport=" + CLIENT.TCP.DSTPORT + ";type=SSLBRIDGE;")
-  - name: PLH_ENDPOINT_SSLBRIDGE_IS_CONFIGURED
-    expression: PLH_ENDPOINT_SSLBRIDGE.IS_STRINGMAP_KEY("SM__V__TENANT_ENDPOINTS")
-  - name: PLH_TENANT_FROM_ENDPOINT_SSLBRIDGE
-    expression: PLH_ENDPOINT_SSLBRIDGE.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";")
-  - name: PLH_TENANT_FROM_ENDPOINT_SSLBRIDGE_IS_CONFIGURED
-    expression: ("tenant=" + PLH_TENANT_FROM_ENDPOINT_SSLBRIDGE + ";").IS_STRINGMAP_KEY("SM__V__TENANT")
-  - name: PLH_TENANT_FROM_ENDPOINT_SSLBRIDGE_IS_ENABLED
-    expression: ("tenant=" + PLH_TENANT_FROM_ENDPOINT_SSLBRIDGE + ";").MAP_STRING("SM__V__TENANT").AFTER_STR("state=").BEFORE_STR(";").EQ("enabled")
-
-  - name: PLH_ENDPOINT_TCP
-    expression: ("ip=" + CLIENT.IP.DST + ";dstport=" + CLIENT.TCP.DSTPORT + ";type=TCP;")
-  - name: PLH_ENDPOINT_TCP_IS_CONFIGURED
-    expression: PLH_ENDPOINT_TCP.IS_STRINGMAP_KEY("SM__V__TENANT_ENDPOINTS")
-  - name: PLH_TENANT_FROM_ENDPOINT_TCP
-    expression: PLH_ENDPOINT_TCP.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";")
-  - name: PLH_TENANT_FROM_ENDPOINT_TCP_IS_CONFIGURED
-    expression: ("tenant=" + PLH_TENANT_FROM_ENDPOINT_TCP + ";").IS_STRINGMAP_KEY("SM__V__TENANT")
-  - name: PLH_TENANT_FROM_ENDPOINT_TCP_IS_ENABLED
-    expression: ("tenant=" + PLH_TENANT_FROM_ENDPOINT_TCP + ";").MAP_STRING("SM__V__TENANT").AFTER_STR("state=").BEFORE_STR(";").EQ("enabled")
-
-  - name: PLH_ENDPOINT_SSLTCP
-    expression: ("ip=" + CLIENT.IP.DST + ";dstport=" + CLIENT.TCP.DSTPORT + ";type=SSLTCP;")
-  - name: PLH_ENDPOINT_SSLTCP_IS_CONFIGURED
-    expression: PLH_ENDPOINT_SSLTCP.IS_STRINGMAP_KEY("SM__V__TENANT_ENDPOINTS")
-  - name: PLH_TENANT_FROM_ENDPOINT_SSLTCP
-    expression: PLH_ENDPOINT_SSLTCP.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";")
-  - name: PLH_TENANT_FROM_ENDPOINT_SSLTCP_IS_CONFIGURED
-    expression: ("tenant=" + PLH_TENANT_FROM_ENDPOINT_SSLTCP + ";").IS_STRINGMAP_KEY("SM__V__TENANT")
-  - name: PLH_TENANT_FROM_ENDPOINT_SSLTCP_IS_ENABLED
-    expression: ("tenant=" + PLH_TENANT_FROM_ENDPOINT_SSLTCP + ";").MAP_STRING("SM__V__TENANT").AFTER_STR("state=").BEFORE_STR(";").EQ("enabled")
-
-  - name: PLH_ENDPOINT_UDP
-    expression: ("ip=" + CLIENT.IP.DST + ";dstport=" + CLIENT.UDP.DSTPORT + ";type=UDP;")
-  - name: PLH_ENDPOINT_UDP_IS_CONFIGURED
-    expression: PLH_ENDPOINT_UDP.IS_STRINGMAP_KEY("SM__V__TENANT_ENDPOINTS")
-  - name: PLH_TENANT_FROM_ENDPOINT_UDP
-    expression: PLH_ENDPOINT_UDP.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";")
-  - name: PLH_TENANT_FROM_ENDPOINT_UDP_IS_CONFIGURED
-    expression: ("tenant=" + PLH_TENANT_FROM_ENDPOINT_UDP + ";").IS_STRINGMAP_KEY("SM__V__TENANT")
-  - name: PLH_TENANT_FROM_ENDPOINT_UDP_IS_ENABLED
-    expression: ("tenant=" + PLH_TENANT_FROM_ENDPOINT_UDP + ";").MAP_STRING("SM__V__TENANT").AFTER_STR("state=").BEFORE_STR(";").EQ("enabled")
+  - name: PLH_IPV4_ENDPOINT_HTTP_IS_CONFIGURED
+    expression: PLH_IPV4_ENDPOINT_HTTP.IS_STRINGMAP_KEY("SM__V__TENANT_ENDPOINTS")
+  - name: PLH_TENANT_FROM_IPV4_ENDPOINT_HTTP
+    expression: PLH_IPV4_ENDPOINT_HTTP.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";")
+  - name: PLH_TENANT_FROM_IPV4_ENDPOINT_HTTP_IS_CONFIGURED
+    expression: ("tenant=" + PLH_TENANT_FROM_IPV4_ENDPOINT_HTTP + ";").IS_STRINGMAP_KEY("SM__V__TENANT")
+  - name: PLH_TENANT_FROM_IPV4_ENDPOINT_HTTP_IS_ENABLED
+    expression: ("tenant=" + PLH_TENANT_FROM_IPV4_ENDPOINT_HTTP + ";").MAP_STRING("SM__V__TENANT").AFTER_STR("state=").BEFORE_STR(";").EQ("enabled")
     
-#  - name: PLH_UDP_CS_NAME
-#    expression: ("cs=" + CLIENT.UDP.CS_VSERVER.NAME + ";")
-#  - name: PLH_UDP_LB_NAME
-#    expression: ("vs=" + CLIENT.UDP.LB_VSERVER.NAME + ";")
+  # IPV6
+  - name: PLH_IPV6_ENDPOINT_HTTP
+    expression: ("ip=" + CLIENT.IPV6.DST + ";dstport=" + CLIENT.TCP.DSTPORT + ";type=HTTP;")
+  - name: PLH_IPV6_ENDPOINT_HTTP_IS_CONFIGURED
+    expression: PLH_IPV6_ENDPOINT_HTTP.IS_STRINGMAP_KEY("SM__V__TENANT_ENDPOINTS")
+  - name: PLH_TENANT_FROM_IPV6_ENDPOINT_HTTP
+    expression: PLH_IPV6_ENDPOINT_HTTP.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";")
+  - name: PLH_TENANT_FROM_IPV6_ENDPOINT_HTTP_IS_CONFIGURED
+    expression: ("tenant=" + PLH_TENANT_FROM_IPV6_ENDPOINT_HTTP + ";").IS_STRINGMAP_KEY("SM__V__TENANT")
+  - name: PLH_TENANT_FROM_IPV6_ENDPOINT_HTTP_IS_ENABLED
+    expression: ("tenant=" + PLH_TENANT_FROM_IPV6_ENDPOINT_HTTP + ";").MAP_STRING("SM__V__TENANT").AFTER_STR("state=").BEFORE_STR(";").EQ("enabled")
+
+  ############################################################
+  # ENDPOINT SSL
+  # IPV4
+  - name: PLH_IPV4_ENDPOINT_SSL
+    expression: ("ip=" + CLIENT.IP.DST + ";dstport=" + CLIENT.TCP.DSTPORT + ";type=SSL;")
+  - name: PLH_IPV4_ENDPOINT_SSL_IS_CONFIGURED
+    expression: PLH_IPV4_ENDPOINT_SSL.IS_STRINGMAP_KEY("SM__V__TENANT_ENDPOINTS")
+  - name: PLH_TENANT_FROM_IPV4_ENDPOINT_SSL
+    expression: PLH_IPV4_ENDPOINT_SSL.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";")
+  - name: PLH_TENANT_FROM_IPV4_ENDPOINT_SSL_IS_CONFIGURED
+    expression: ("tenant=" + PLH_TENANT_FROM_IPV4_ENDPOINT_SSL + ";").IS_STRINGMAP_KEY("SM__V__TENANT")
+  - name: PLH_TENANT_FROM_IPV4_ENDPOINT_SSL_IS_ENABLED
+    expression: ("tenant=" + PLH_TENANT_FROM_IPV4_ENDPOINT_SSL + ";").MAP_STRING("SM__V__TENANT").AFTER_STR("state=").BEFORE_STR(";").EQ("enabled")
+
+  # IPV6
+  - name: PLH_IPV6_ENDPOINT_SSL
+    expression: ("ip=" + CLIENT.IPV6.DST + ";dstport=" + CLIENT.TCP.DSTPORT + ";type=SSL;")
+  - name: PLH_IPV6_ENDPOINT_SSL_IS_CONFIGURED
+    expression: PLH_IPV6_ENDPOINT_SSL.IS_STRINGMAP_KEY("SM__V__TENANT_ENDPOINTS")
+  - name: PLH_TENANT_FROM_IPV6_ENDPOINT_SSL
+    expression: PLH_IPV6_ENDPOINT_SSL.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";")
+  - name: PLH_TENANT_FROM_IPV6_ENDPOINT_SSL_IS_CONFIGURED
+    expression: ("tenant=" + PLH_TENANT_FROM_IPV6_ENDPOINT_SSL + ";").IS_STRINGMAP_KEY("SM__V__TENANT")
+  - name: PLH_TENANT_FROM_IPV6_ENDPOINT_SSL_IS_ENABLED
+    expression: ("tenant=" + PLH_TENANT_FROM_IPV6_ENDPOINT_SSL + ";").MAP_STRING("SM__V__TENANT").AFTER_STR("state=").BEFORE_STR(";").EQ("enabled")
+
+  ############################################################
+  # ENDPOINT SSLBRIDGE
+  # IPV4
+  - name: PLH_IPV4_ENDPOINT_SSLBRIDGE
+    expression: ("ip=" + CLIENT.IP.DST + ";dstport=" + CLIENT.TCP.DSTPORT + ";type=SSL_BRIDGE;")
+  - name: PLH_IPV4_ENDPOINT_SSLBRIDGE_IS_CONFIGURED
+    expression: PLH_IPV4_ENDPOINT_SSLBRIDGE.IS_STRINGMAP_KEY("SM__V__TENANT_ENDPOINTS")
+  - name: PLH_TENANT_FROM_IPV4_ENDPOINT_SSLBRIDGE
+    expression: PLH_IPV4_ENDPOINT_SSLBRIDGE.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";")
+  - name: PLH_TENANT_FROM_IPV4_ENDPOINT_SSLBRIDGE_IS_CONFIGURED
+    expression: ("tenant=" + PLH_TENANT_FROM_IPV4_ENDPOINT_SSLBRIDGE + ";").IS_STRINGMAP_KEY("SM__V__TENANT")
+  - name: PLH_TENANT_FROM_IPV4_ENDPOINT_SSLBRIDGE_IS_ENABLED
+    expression: ("tenant=" + PLH_TENANT_FROM_IPV4_ENDPOINT_SSLBRIDGE + ";").MAP_STRING("SM__V__TENANT").AFTER_STR("state=").BEFORE_STR(";").EQ("enabled")
+
+  # IPV6
+  - name: PLH_IPV6_ENDPOINT_SSLBRIDGE
+    expression: ("ip=" + CLIENT.IPV6.DST + ";dstport=" + CLIENT.TCP.DSTPORT + ";type=SSLBRIDGE;")
+  - name: PLH_IPV6_ENDPOINT_SSLBRIDGE_IS_CONFIGURED
+    expression: PLH_IPV6_ENDPOINT_SSLBRIDGE.IS_STRINGMAP_KEY("SM__V__TENANT_ENDPOINTS")
+  - name: PLH_TENANT_FROM_IPV6_ENDPOINT_SSLBRIDGE
+    expression: PLH_IPV6_ENDPOINT_SSLBRIDGE.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";")
+  - name: PLH_TENANT_FROM_IPV6_ENDPOINT_SSLBRIDGE_IS_CONFIGURED
+    expression: ("tenant=" + PLH_TENANT_FROM_IPV6_ENDPOINT_SSLBRIDGE + ";").IS_STRINGMAP_KEY("SM__V__TENANT")
+  - name: PLH_TENANT_FROM_IPV6_ENDPOINT_SSLBRIDGE_IS_ENABLED
+    expression: ("tenant=" + PLH_TENANT_FROM_IPV6_ENDPOINT_SSLBRIDGE + ";").MAP_STRING("SM__V__TENANT").AFTER_STR("state=").BEFORE_STR(";").EQ("enabled")
+
+  ############################################################
+  # ENDPOINT TCP
+  # IPV4
+  - name: PLH_IPV4_ENDPOINT_TCP
+    expression: ("ip=" + CLIENT.IP.DST + ";dstport=" + CLIENT.TCP.DSTPORT + ";type=TCP;")
+  - name: PLH_IPV4_ENDPOINT_TCP_IS_CONFIGURED
+    expression: PLH_IPV4_ENDPOINT_TCP.IS_STRINGMAP_KEY("SM__V__TENANT_ENDPOINTS")
+  - name: PLH_TENANT_FROM_IPV4_ENDPOINT_TCP
+    expression: PLH_IPV4_ENDPOINT_TCP.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";")
+  - name: PLH_TENANT_FROM_IPV4_ENDPOINT_TCP_IS_CONFIGURED
+    expression: ("tenant=" + PLH_TENANT_FROM_IPV4_ENDPOINT_TCP + ";").IS_STRINGMAP_KEY("SM__V__TENANT")
+  - name: PLH_TENANT_FROM_IPV4_ENDPOINT_TCP_IS_ENABLED
+    expression: ("tenant=" + PLH_TENANT_FROM_IPV4_ENDPOINT_TCP + ";").MAP_STRING("SM__V__TENANT").AFTER_STR("state=").BEFORE_STR(";").EQ("enabled")
+
+  # IPV6
+  - name: PLH_IPV6_ENDPOINT_TCP
+    expression: ("ip=" + CLIENT.IPV6.DST + ";dstport=" + CLIENT.TCP.DSTPORT + ";type=TCP;")
+  - name: PLH_IPV6_ENDPOINT_TCP_IS_CONFIGURED
+    expression: PLH_IPV6_ENDPOINT_TCP.IS_STRINGMAP_KEY("SM__V__TENANT_ENDPOINTS")
+  - name: PLH_TENANT_FROM_IPV6_ENDPOINT_TCP
+    expression: PLH_IPV6_ENDPOINT_TCP.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";")
+  - name: PLH_TENANT_FROM_IPV6_ENDPOINT_TCP_IS_CONFIGURED
+    expression: ("tenant=" + PLH_TENANT_FROM_IPV6_ENDPOINT_TCP + ";").IS_STRINGMAP_KEY("SM__V__TENANT")
+  - name: PLH_TENANT_FROM_IPV6_ENDPOINT_TCP_IS_ENABLED
+    expression: ("tenant=" + PLH_TENANT_FROM_IPV6_ENDPOINT_TCP + ";").MAP_STRING("SM__V__TENANT").AFTER_STR("state=").BEFORE_STR(";").EQ("enabled")
+
+  ############################################################
+  # ENDPOINT SSL_TCP
+  # IPV4
+  - name: PLH_IPV4_ENDPOINT_SSLTCP
+    expression: ("ip=" + CLIENT.IP.DST + ";dstport=" + CLIENT.TCP.DSTPORT + ";type=SSL_TCP;")
+  - name: PLH_IPV4_ENDPOINT_SSLTCP_IS_CONFIGURED
+    expression: PLH_IPV4_ENDPOINT_SSLTCP.IS_STRINGMAP_KEY("SM__V__TENANT_ENDPOINTS")
+  - name: PLH_TENANT_FROM_IPV4_ENDPOINT_SSLTCP
+    expression: PLH_IPV4_ENDPOINT_SSLTCP.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";")
+  - name: PLH_TENANT_FROM_IPV4_ENDPOINT_SSLTCP_IS_CONFIGURED
+    expression: ("tenant=" + PLH_TENANT_FROM_IPV4_ENDPOINT_SSLTCP + ";").IS_STRINGMAP_KEY("SM__V__TENANT")
+  - name: PLH_TENANT_FROM_IPV4_ENDPOINT_SSLTCP_IS_ENABLED
+    expression: ("tenant=" + PLH_TENANT_FROM_IPV4_ENDPOINT_SSLTCP + ";").MAP_STRING("SM__V__TENANT").AFTER_STR("state=").BEFORE_STR(";").EQ("enabled")
+
+  # IPV6
+  - name: PLH_IPV6_ENDPOINT_SSLTCP
+    expression: ("ip=" + CLIENT.IPV6.DST + ";dstport=" + CLIENT.TCP.DSTPORT + ";type=SSLTCP;")
+  - name: PLH_IPV6_ENDPOINT_SSLTCP_IS_CONFIGURED
+    expression: PLH_IPV6_ENDPOINT_SSLTCP.IS_STRINGMAP_KEY("SM__V__TENANT_ENDPOINTS")
+  - name: PLH_TENANT_FROM_IPV6_ENDPOINT_SSLTCP
+    expression: PLH_IPV6_ENDPOINT_SSLTCP.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";")
+  - name: PLH_TENANT_FROM_IPV6_ENDPOINT_SSLTCP_IS_CONFIGURED
+    expression: ("tenant=" + PLH_TENANT_FROM_IPV6_ENDPOINT_SSLTCP + ";").IS_STRINGMAP_KEY("SM__V__TENANT")
+  - name: PLH_TENANT_FROM_IPV6_ENDPOINT_SSLTCP_IS_ENABLED
+    expression: ("tenant=" + PLH_TENANT_FROM_IPV6_ENDPOINT_SSLTCP + ";").MAP_STRING("SM__V__TENANT").AFTER_STR("state=").BEFORE_STR(";").EQ("enabled")
+
+  ############################################################
+  # ENDPOINT UDP
+  # IPV4
+  - name: PLH_IPV4_ENDPOINT_UDP
+    expression: ("ip=" + CLIENT.IP.DST + ";dstport=" + CLIENT.UDP.DSTPORT + ";type=UDP;")
+  - name: PLH_IPV4_ENDPOINT_UDP_IS_CONFIGURED
+    expression: PLH_IPV4_ENDPOINT_UDP.IS_STRINGMAP_KEY("SM__V__TENANT_ENDPOINTS")
+  - name: PLH_TENANT_FROM_IPV4_ENDPOINT_UDP
+    expression: PLH_IPV4_ENDPOINT_UDP.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";")
+  - name: PLH_TENANT_FROM_IPV4_ENDPOINT_UDP_IS_CONFIGURED
+    expression: ("tenant=" + PLH_TENANT_FROM_IPV4_ENDPOINT_UDP + ";").IS_STRINGMAP_KEY("SM__V__TENANT")
+  - name: PLH_TENANT_FROM_IPV4_ENDPOINT_UDP_IS_ENABLED
+    expression: ("tenant=" + PLH_TENANT_FROM_IPV4_ENDPOINT_UDP + ";").MAP_STRING("SM__V__TENANT").AFTER_STR("state=").BEFORE_STR(";").EQ("enabled")
+
+  # IPV6
+  - name: PLH_IPV6_ENDPOINT_UDP
+    expression: ("ip=" + CLIENT.IPV6.DST + ";dstport=" + CLIENT.UDP.DSTPORT + ";type=UDP;")
+  - name: PLH_IPV6_ENDPOINT_UDP_IS_CONFIGURED
+    expression: PLH_IPV6_ENDPOINT_UDP.IS_STRINGMAP_KEY("SM__V__TENANT_ENDPOINTS")
+  - name: PLH_TENANT_FROM_IPV6_ENDPOINT_UDP
+    expression: PLH_IPV6_ENDPOINT_UDP.MAP_STRING("SM__V__TENANT_ENDPOINTS").AFTER_STR("tenant=").BEFORE_STR(";")
+  - name: PLH_TENANT_FROM_IPV6_ENDPOINT_UDP_IS_CONFIGURED
+    expression: ("tenant=" + PLH_TENANT_FROM_IPV6_ENDPOINT_UDP + ";").IS_STRINGMAP_KEY("SM__V__TENANT")
+  - name: PLH_TENANT_FROM_IPV6_ENDPOINT_UDP_IS_ENABLED
+    expression: ("tenant=" + PLH_TENANT_FROM_IPV6_ENDPOINT_UDP + ";").MAP_STRING("SM__V__TENANT").AFTER_STR("state=").BEFORE_STR(";").EQ("enabled")
+  
 
 sections:
   - name: AppExpert.Stringmaps
@@ -139,30 +231,30 @@ sections:
           uninstall: rm policy expression EXP__V__TCP_CSGROUP_IS_CONFIGURED
       - name: EXP__V__HTTP_FQDN_PORT_IS_CONFIGURED
         references:
-          - PLH_WEB_FQDN_PORT_IS_CONFIGURED
+          - PLH_L7_FQDN_PORT_IS_CONFIGURED
         dependencies:
           - SM__V__TENANT_FQDN
         expressions:
-          install: add policy expression EXP__V__HTTP_FQDN_PORT_IS_CONFIGURED q{PLH_WEB_FQDN_PORT_IS_CONFIGURED}
+          install: add policy expression EXP__V__HTTP_FQDN_PORT_IS_CONFIGURED q{PLH_L7_FQDN_PORT_IS_CONFIGURED}
           uninstall: rm policy expression EXP__V__HTTP_FQDN_PORT_IS_CONFIGURED
       - name: EXP__V__HTTP_TENANT_MATCH_ON_FQDN_AND_ENDPOINT
         references:
-          - PLH_TENANT_FROM_ENDPOINT_HTTP
+          - PLH_TENANT_FROM_IPV4_ENDPOINT_HTTP
           - PLH_WEB_TENANT_FROM_FQDN_PORT
         dependencies:
           - SM__V__TENANT_ENDPOINTS
           - SM__V__TENANT_FQDN
         expressions:
-          install: add policy expression EXP__V__HTTP_TENANT_MATCH_ON_FQDN_AND_ENDPOINT q{PLH_TENANT_FROM_ENDPOINT_HTTP == PLH_WEB_TENANT_FROM_FQDN_PORT}
+          install: add policy expression EXP__V__HTTP_TENANT_MATCH_ON_FQDN_AND_ENDPOINT q{PLH_TENANT_FROM_IPV4_ENDPOINT_HTTP == PLH_WEB_TENANT_FROM_FQDN_PORT}
           uninstall: rm policy expression EXP__V__HTTP_TENANT_MATCH_ON_FQDN_AND_ENDPOINT
       - name: EXP__V__SSL_TENANT_MATCH_ON_FQDN_AND_ENDPOINT
         references:
-          - PLH_TENANT_FROM_ENDPOINT_SSL
+          - PLH_TENANT_FROM_IPV4_ENDPOINT_SSL
           - PLH_WEB_TENANT_FROM_FQDN_PORT
         dependencies:
           - SM__V__TENANT_ENDPOINTS
           - SM__V__TENANT_FQDN
         expressions:
-          install: add policy expression EXP__V__SSL_TENANT_MATCH_ON_FQDN_AND_ENDPOINT q{PLH_TENANT_FROM_ENDPOINT_SSL == PLH_WEB_TENANT_FROM_FQDN_PORT}
+          install: add policy expression EXP__V__SSL_TENANT_MATCH_ON_FQDN_AND_ENDPOINT q{PLH_TENANT_FROM_IPV4_ENDPOINT_SSL == PLH_WEB_TENANT_FROM_FQDN_PORT}
           uninstall: rm policy expression EXP__V__SSL_TENANT_MATCH_ON_FQDN_AND_ENDPOINT
           

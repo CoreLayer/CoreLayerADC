@@ -2,81 +2,182 @@ name: Demo
 dependencies:
   - Core
   - ListenPolicies
+  - ContentSwitchingEntry
 placeholders:
+  - name: PLH_DEMO_TENANT
+    expression: DemoTenant
+  - name: PLH_DEMO_CSV
+    expression: CSV__V__DEMO
+  - name: PLH_DEMO_LBV
+    expression: LBV__V__DEMO
+  - name: PLH_CSP_DEMO_CSV_HTTP
+    expression: CSP__V__DEMO_HTTP
+  - name: PLH_CSP_DEMO_CSV_SSL
+    expression: CSP__V__DEMO_SSL
+  - name: PLH_CSP_DEMO_CSV_TCP
+    expression: CSP__V__DEMO_TCP
+  - name: PLH_CSP_DEMO_CSV_SSLTCP
+    expression: CSP__V__DEMO_SSLTCP
+  - name: PLH_CSP_DEMO_CSV_UDP
+    expression: CSP__V__DEMO_UDP
+  
 sections:
   - name: AppExpert.Stringmap.Bindings
     elements:
-      - name: TENANT__V__DEMO
+      - name: TENANT_DEMO
+        references:
+          - PLH_PSM_TENANT
+          - PLH_PSM_ENDPOINT
         dependencies:
-          - SM__V__TENANT
+          - PSM_TENANT
         expressions:
-          install: bind policy stringmap SM__V__TENANT "tenant=TENANT__V__DEMO;" "state=ENABLED;"
-          uninstall: unbind policy stringmap SM__V__TENANT "tenant=TENANT__V__DEMO;"
+          install: bind policy stringmap PLH_PSM_TENANT "tenant=PLH_DEMO_TENANT;" "name=DemoTenantName;state=enabled;"
+          uninstall: unbind policy stringmap PLH_PSM_TENANT "tenant=PLH_DEMO_TENANT;"
 
   - name: TrafficManagement.ContentSwitching.VirtualServers
     elements:
-      - name: CS__V__DEMO_HTTP
+      - name: CSV_DEMO_HTTP
+        references:
+          - PLH_DEMO_TENANT
+          - PLH_DEMO_CSV_HTTP
+          - PLH_EXP_CSP_ENTRY_HTTP
+          - PLH_CSP_DEMO_CSV_HTTP
+          - PLH_LOG_CSP_ENTRY_HTTP
+          - PLH_CSL_ENTRY_HTTP
+          - PLH_PSM_ENDPOINT
+          - PLH_EXP_LPE_IPV4_HTTP
+          - PLH_EXP_LPE_IPV6_HTTP
         dependencies:
-          - EXP__V__LPE_ENDPOINT_HTTP
+          - EXP_LPE_HTTP
+          - PSM_ENDPOINT
+          - EXP_CSP_ENTRY_HTTP
+          - LOG_CSP_ENTRY_HTTP
+          - CSL_ENTRY_HTTP
         expressions:
           install: |
-            add cs vserver CS__V__DEMO_HTTP HTTP 169.254.254.251 * -Listenpriority 15 -Listenpolicy "EXP__V__LPE_ENDPOINT_HTTP"
-            bind policy stringmap SM__V__TENANT_ENDPOINTS "ip=169.254.254.251;dstport=80;type=HTTP;" "tenant=TENANT__V__DEMO;"
+            add cs policy PLH_CSP_DEMO_CSV_HTTP -rule q{PLH_EXP_CSP_ENTRY_HTTP} -logAction PLH_LOG_CSP_ENTRY_HTTP
+            add cs vserver PLH_DEMO_CSV_HTTP HTTP 169.254.254.251 * -Listenpriority 15 -Listenpolicy "PLH_EXP_LPE_IPV4_HTTP || PLH_EXP_LPE_IPV6_HTTP"
+            bind cs vserver PLH_DEMO_CSV_HTTP -policyName PLH_CSP_DEMO_CSV_HTTP -priority 10601 -priority 10601 -gotoPriorityExpression NEXT -invoke policylabel PLH_CSL_ENTRY_HTTP
+            bind policy stringmap PLH_PSM_ENDPOINT "vip=169.254.254.251;port=80;protocol=http;" "tenant=PLH_DEMO_TENANT;vs=PLH_DEMO_CSV_HTTP;state=enabled;"
           uninstall: |
-            rm cs vserver CS__V__DEMO_HTTP
-            unbind policy stringmap SM__V__TENANT_ENDPOINTS "ip=169.254.254.251;dstport=80;type=HTTP;"
+            rm cs vserver PLH_DEMO_CSV_HTTP
+            rm cs policy PLH_CSP_DEMO_CSV_HTTP
+            unbind policy stringmap PLH_PSM_ENDPOINT "vip=169.254.254.251;port=80;protocol=http;"
 
-      - name: CS__V__DEMO_SSL
+      - name: CSV_DEMO_SSL
+        references:
+          - PLH_DEMO_TENANT
+          - PLH_DEMO_CSV_SSL
+          - PLH_EXP_CSP_ENTRY_SSL
+          - PLH_CSP_DEMO_CSV_SSL
+          - PLH_LOG_CSP_ENTRY_HTTP
+          - PLH_CSL_ENTRY_HTTP
+          - PLH_PSM_ENDPOINT
+          - PLH_EXP_LPE_IPV4_SSL
+          - PLH_EXP_LPE_IPV6_SSL
         dependencies:
-          - EXP__V__LPE_ENDPOINT_SSL
+          - EXP_LPE_SSL
+          - PSM_ENDPOINT   
         expressions:
           install: |
-            add cs vserver CS__V__DEMO_SSL SSL 169.254.254.251 * -Listenpriority 25 -Listenpolicy "EXP__V__LPE_ENDPOINT_SSL"
-            bind policy stringmap SM__V__TENANT_ENDPOINTS "ip=169.254.254.251;dstport=443;type=SSL;" "tenant=TENANT__V__DEMO;"
+            add cs policy PLH_CSP_DEMO_CSV_SSL -rule q{PLH_EXP_CSP_ENTRY_SSL} -logAction PLH_LOG_CSP_ENTRY_SSL
+            add cs vserver PLH_DEMO_CSV_SSL SSL 169.254.254.251 * -Listenpriority 25 -Listenpolicy "PLH_EXP_LPE_IPV4_SSL || PLH_EXP_LPE_IPV6_SSL"
+            bind cs vserver PLH_DEMO_CSV_SSL -policyName PLH_CSP_DEMO_CSV_SSL -priority 10601 -priority 10601 -gotoPriorityExpression NEXT -invoke policylabel PLH_CSL_ENTRY_HTTP
+            bind policy stringmap PLH_PSM_ENDPOINT "vip=169.254.254.251;port=443;protocol=ssl;" "tenant=PLH_DEMO_TENANT;vs=PLH_DEMO_CSV_SSL;state=enabled;"
           uninstall: |
-            rm cs vserver CS__V__DEMO_SSL
-            unbind policy stringmap SM__V__TENANT_ENDPOINTS "ip=169.254.254.251;dstport=443;type=SSL;"
+            rm cs vserver PLH_DEMO_CSV_SSL
+            rm cs policy PLH_CSP_DEMO_CSV_SSL
+            unbind policy stringmap PLH_PSM_ENDPOINT "vip=169.254.254.251;port=443;protocol=ssl;"
 
-      - name: LB__V__DEMO_SSLBRIDGE
+      - name: LBV_DEMO_SSLBRIDGE
+        references:
+          - PLH_DEMO_TENANT
+          - PLH_DEMO_LBV_SSLBRIDGE
+          - PLH_PSM_ENDPOINT
+          - PLH_EXP_LPE_IPV4_SSLBRIDGE
+          - PLH_EXP_LPE_IPV6_SSLBRIDGE
         dependencies:
-          - EXP__V__LPE_ENDPOINT_SSLBRIDGE
+          - EXP_LPE_SSLBRIDGE
+          - PSM_ENDPOINT
         expressions:
           install: |
-            add lb vserver LB__V__DEMO_SSLBRIDGE SSL_BRIDGE 169.254.254.251 443 -Listenpriority 21 -Listenpolicy "EXP__V__LPE_ENDPOINT_SSLBRIDGE"
-            bind policy stringmap SM__V__TENANT_ENDPOINTS "ip=169.254.254.251;dstport=443;type=SSL_BRIDGE;" "tenant=TENANT__V__DEMO;"
+            add lb vserver PLH_DEMO_LBV_SSLBRIDGE SSL_BRIDGE 169.254.254.251 443 -Listenpriority 21 -Listenpolicy "PLH_EXP_LPE_IPV4_SSLBRIDGE || PLH_EXP_LPE_IPV6_SSLBRIDGE"
+            bind policy stringmap PLH_PSM_ENDPOINT "vip=169.254.254.251;port=443;protocol=ssl_bridge;" "tenant=PLH_DEMO_TENANT;vs=PLH_DEMO_LBV_SSLBRIDGE;state=enabled;"
           uninstall: |
-            rm lb vserver LB__V__DEMO_SSLBRIDGE
-            unbind policy stringmap SM__V__TENANT_ENDPOINTS "ip=169.254.254.251;dstport=443;type=SSL_BRIDGE;"
+            rm lb vserver PLH_DEMO_LBV_SSLBRIDGE
+            unbind policy stringmap PLH_PSM_ENDPOINT "vip=169.254.254.251;port=443;protocol=ssl_bridge;"
 
-      - name: CS__V__DEMO_TCP
+      - name: CSV_DEMO_TCP
+        references:
+          - PLH_DEMO_TENANT
+          - PLH_DEMO_CSV_TCP
+          - PLH_EXP_CSP_ENTRY_TCP
+          - PLH_CSP_DEMO_CSV_TCP
+          - PLH_LOG_CSP_ENTRY_TCP
+          - PLH_CSL_ENTRY_TCP
+          - PLH_PSM_ENDPOINT
+          - PLH_EXP_LPE_IPV4_TCP
+          - PLH_EXP_LPE_IPV6_TCP
         dependencies:
-          - EXP__V__LPE_ENDPOINT_TCP
+          - EXP_LPE_TCP
+          - PSM_ENDPOINT
         expressions:
           install: |
-            add cs vserver CS__V__DEMO_TCP TCP 169.254.254.251 * -Listenpriority 35 -Listenpolicy "EXP__V__LPE_ENDPOINT_TCP"
-            bind policy stringmap SM__V__TENANT_ENDPOINTS "ip=169.254.254.251;dstport=389;type=TCP;" "tenant=TENANT__V__DEMO;"
+            add cs policy PLH_CSP_DEMO_CSV_TCP -rule q{PLH_EXP_CSP_ENTRY_TCP} -logAction PLH_LOG_CSP_ENTRY_TCP
+            add cs vserver PLH_DEMO_CSV_TCP TCP 169.254.254.251 * -Listenpriority 35 -Listenpolicy "PLH_EXP_LPE_IPV4_TCP || PLH_EXP_LPE_IPV6_TCP"
+            bind cs vserver PLH_DEMO_CSV_TCP -policyName PLH_CSP_DEMO_CSV_TCP -priority 10601 -priority 10601 -gotoPriorityExpression NEXT -invoke policylabel PLH_CSL_ENTRY_TCP
+            bind policy stringmap PLH_PSM_ENDPOINT "vip=169.254.254.251;port=389;protocol=tcp;" "tenant=PLH_DEMO_TENANT;vs=PLH_DEMO_CSV_TCP;state=enabled;"
           uninstall: |
-            rm cs vserver CS__V__DEMO_TCP
-            unbind policy stringmap SM__V__TENANT_ENDPOINTS "ip=169.254.254.251;dstport=389;type=TCP;"
+            rm cs vserver PLH_DEMO_CSV_TCP
+            rm cs policy PLH_CSP_DEMO_CSV_TCP
+            unbind policy stringmap PLH_PSM_ENDPOINT "vip=169.254.254.251;port=389;protocol=tcp;"
 
-      - name: CS__V__DEMO_SSLTCP
+      - name: CSV_DEMO_SSLTCP
+        references:
+          - PLH_DEMO_TENANT
+          - PLH_DEMO_CSV_SSLTCP
+          - PLH_EXP_CSP_ENTRY_SSLTCP
+          - PLH_CSP_DEMO_CSV_SSLTCP
+          - PLH_LOG_CSP_ENTRY_SSLTCP
+          - PLH_CSL_ENTRY_TCP
+          - PLH_PSM_ENDPOINT
+          - PLH_EXP_LPE_IPV4_SSLTCP
+          - PLH_EXP_LPE_IPV6_SSLTCP
         dependencies:
-          - EXP__V__LPE_ENDPOINT_SSLTCP
+          - EXP_LPE_SSLTCP
+          - PSM_ENDPOINT
         expressions:
           install: |
-            add cs vserver CS__V__DEMO_SSLTCP SSL_TCP 169.254.254.251 * -Listenpriority 45 -Listenpolicy "EXP__V__LPE_ENDPOINT_SSLTCP"
-            bind policy stringmap SM__V__TENANT_ENDPOINTS "ip=169.254.254.251;dstport=636;type=SSL_TCP;" "tenant=TENANT__V__DEMO;"
+            add cs policy PLH_CSP_DEMO_CSV_SSLTCP -rule q{PLH_EXP_CSP_ENTRY_SSLTCP} -logAction PLH_LOG_CSP_ENTRY_SSLTCP
+            add cs vserver PLH_DEMO_CSV_SSLTCP SSL_TCP 169.254.254.251 * -Listenpriority 45 -Listenpolicy "PLH_EXP_LPE_IPV4_SSLTCP || PLH_EXP_LPE_IPV6_SSLTCP"
+            bind cs vserver PLH_DEMO_CSV_SSLTCP -policyName PLH_CSP_DEMO_CSV_SSLTCP -priority 10601 -priority 10601 -gotoPriorityExpression NEXT -invoke policylabel PLH_CSL_ENTRY_TCP
+            bind policy stringmap PLH_PSM_ENDPOINT "vip=169.254.254.251;port=636;protocol=ssl_tcp;" "tenant=PLH_DEMO_TENANT;vs=PLH_DEMO_CSV_SSLTCP;state=enabled;"
           uninstall: |
-            rm cs vserver CS__V__DEMO_SSLTCP
-            unbind policy stringmap SM__V__TENANT_ENDPOINTS "ip=169.254.254.251;dstport=636;type=SSL_TCP;"
+            rm cs vserver PLH_DEMO_CSV_SSLTCP
+            rm cs policy PLH_CSP_DEMO_CSV_SSLTCP
+            unbind policy stringmap PLH_PSM_ENDPOINT "vip=169.254.254.251;port=636;protocol=ssl_tcp;"
 
-      - name: CS__V__DEMO_UDP
+      - name: CSV_DEMO_UDP
+        references:
+          - PLH_DEMO_TENANT
+          - PLH_DEMO_CSV_UDP
+          - PLH_EXP_CSP_ENTRY_UDP
+          - PLH_CSP_DEMO_CSV_UDP
+          - PLH_LOG_CSP_ENTRY_UDP
+          - PLH_CSL_ENTRY_UDP
+          - PLH_PSM_ENDPOINT
+          - PLH_EXP_LPE_IPV4_UDP
+          - PLH_EXP_LPE_IPV6_UDP
         dependencies:
-          - EXP__V__LPE_ENDPOINT_UDP
+          - EXP_LPE_UDP
+          - PSM_ENDPOINT
         expressions:
           install: |
-            add cs vserver CS__V__DEMO_UDP UDP 169.254.254.251 * -Listenpriority 55 -Listenpolicy "EXP__V__LPE_ENDPOINT_UDP"
-            bind policy stringmap SM__V__TENANT_ENDPOINTS "ip=169.254.254.251;dstport=514;type=UDP;" "tenant=TENANT__V__DEMO;"
+            add cs policy PLH_CSP_DEMO_CSV_UDP -rule q{PLH_EXP_CSP_ENTRY_UDP} -logAction PLH_LOG_CSP_ENTRY_UDP
+            add cs vserver PLH_DEMO_CSV_UDP UDP 169.254.254.251 * -Listenpriority 55 -Listenpolicy "PLH_EXP_LPE_IPV4_UDP || PLH_EXP_LPE_IPV6_UDP"
+            bind cs vserver PLH_DEMO_CSV_UDP -policyName PLH_CSP_DEMO_CSV_UDP -priority 10601 -priority 10601 -gotoPriorityExpression NEXT -invoke policylabel PLH_CSL_ENTRY_UDP
+            bind policy stringmap PLH_PSM_ENDPOINT "vip=169.254.254.251;port=514;protocol=udp;" "tenant=PLH_DEMO_TENANT;vs=PLH_DEMO_CSV_UDP;state=enabled;"
           uninstall: |
-            rm cs vserver CS__V__DEMO_UDP
-            unbind policy stringmap SM__V__TENANT_ENDPOINTS "ip=169.254.254.251;dstport=514;type=UDP;"
+            rm cs vserver PLH_DEMO_CSV_UDP
+            rm cs policy PLH_CSP_DEMO_CSV_UDP
+            unbind policy stringmap PLH_PSM_ENDPOINT "vip=169.254.254.251;port=514;protocol=udp;"

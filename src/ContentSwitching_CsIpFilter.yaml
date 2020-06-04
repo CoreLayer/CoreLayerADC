@@ -159,6 +159,7 @@ sections:
             add cs policylabel PLH_CSL_CSIPFILTER_HTTP HTTP
             bind cs policylabel PLH_CSL_ENTRY_HTTP PLH_CSP_CSIPFILTER_HTTP 2011 -invoke policylabel PLH_CSL_CSIPFILTER_HTTP
           uninstall: |
+            unbind cs policylabel PLH_CSL_ENTRY_HTTP PLH_CSP_CSIPFILTER_HTTP
             rm cs policylabel PLH_CSL_CSIPFILTER_HTTP
 
       - name: CSL_CSIPFILTER_TCP
@@ -253,4 +254,4 @@ sections:
           - LOG_CSP_CSIPFILTER_HTTP
         expressions:
           install: add cs policy PLH_CSP_CSIPFILTER_HTTP -rule q{true} -logAction PLH_LOG_CSP_CSIPFILTER_HTTP
-          uninstall: rm cs policylabel PLH_CSP_CSIPFILTER_HTTP
+          uninstall: rm cs policy PLH_CSP_CSIPFILTER_HTTP

@@ -35,29 +35,49 @@ placeholders:
   - name: PLH_CSL_CSIPFILTER_IPV6_UDP
     expression: CSL__V__CSIPFILTER_IPV6_UDP
 
+
+
+  - name: PLH_CSP_CSIPFILTER_IPV4_032_HTTP
+    expression: CSP__V__CSIPFILTER_IPV4_032_HTTP
+  - name: PLH_LOG_CSP_CSIPFILTER_IPV4_032_HTTP
+    expression: LOG__V__CSP_CSIPFILTER_IPV4_032_HTTP
+
+
 sections:
   - name: Auditing.MessageActions
     elements:
       - name: LOG_CSP_CSIPFILTER_IPV4_HTTP
         references:
           - PLH_LOG_CSP_CSIPFILTER_IPV4_HTTP
+          - PLH_CSP_CSIPFILTER_IPV4_HTTP
         expressions:
-          install: add audit messageAction PLH_LOG_CSP_CSIPFILTER_IPV4_HTTP INFO q{PLH_PSM_CS_TCP_KEY + "policy=PLH_LOG_CSP_CSIPFILTER_IPV4_HTTP"}
+          install: add audit messageAction PLH_LOG_CSP_CSIPFILTER_IPV4_HTTP INFO q{PLH_PSM_CS_TCP_KEY + "policy=PLH_CSP_CSIPFILTER_IPV4_HTTP"}
           uninstall: rm audit messageAction PLH_LOG_CSP_CSIPFILTER_IPV4_HTTP
 
       - name: LOG_CSP_CSIPFILTER_IPV4_TCP
         references:
           - PLH_LOG_CSP_CSIPFILTER_IPV4_TCP
+          - PLH_CSP_CSIPFILTER_IPV4_TCP
         expressions:
-          install: add audit messageAction PLH_LOG_CSP_CSIPFILTER_IPV4_TCP INFO q{PLH_PSM_CS_TCP_KEY + "policy=PLH_LOG_CSP_CSIPFILTER_IPV4_TCP"}
+          install: add audit messageAction PLH_LOG_CSP_CSIPFILTER_IPV4_TCP INFO q{PLH_PSM_CS_TCP_KEY + "policy=PLH_CSP_CSIPFILTER_IPV4_TCP"}
           uninstall: rm audit messageAction PLH_LOG_CSP_CSIPFILTER_IPV4_TCP
 
       - name: LOG_CSP_CSIPFILTER_IPV4_UDP
         references:
           - PLH_LOG_CSP_CSIPFILTER_IPV4_UDP
+          - PLH_CSP_CSIPFILTER_IPV4_UDP
         expressions:
-          install: add audit messageAction PLH_LOG_CSP_CSIPFILTER_IPV4_UDP INFO q{PLH_PSM_CS_UDP_KEY + "policy=PLH_LOG_CSP_CSIPFILTER_IPV4_UDP"}
+          install: add audit messageAction PLH_LOG_CSP_CSIPFILTER_IPV4_UDP INFO q{PLH_PSM_CS_UDP_KEY + "policy=PLH_CSP_CSIPFILTER_IPV4_UDP"}
           uninstall: rm audit messageAction PLH_LOG_CSP_CSIPFILTER_IPV4_UDP
+
+
+      - name: LOG_CSP_CSIPFILTER_IPV4_032_HTTP
+        references:
+          - PLH_CSP_CSIPFILTER_IPV4_032_HTTP
+          - PLH_LOG_CSP_CSIPFILTER_IPV4_032_HTTP
+        expressions:
+          install: add audit messageAction PLH_LOG_CSP_CSIPFILTER_IPV4_032_HTTP INFO q{PLH_PSM_CS_TCP_KEY + "policy=PLH_CSP_CSIPFILTER_IPV4_032_HTTP"}
+          uninstall: rm audit messageAction PLH_LOG_CSP_CSIPFILTER_IPV4_032_HTTP
 
 
 
@@ -92,17 +112,17 @@ sections:
 
 
 
-  # - name: TrafficManagement.ContentSwitching.ContentSwitchingPolicies
-  #   elements:
-  #     - name: CSP_CSIPFILTER_HTTP
-  #       references:
-  #         - PLH_CSP_CSIPFILTER_HTTP
-  #         - PLH_LOG_CSP_CSIPFILTER_HTTP
-  #       dependencies:
-  #         - LOG_CSP_CSIPFILTER_HTTP
-  #       expressions:
-  #         install: add cs policy PLH_CSP_CSIPFILTER_HTTP -rule q{true} -logAction PLH_LOG_CSP_CSIPFILTER_HTTP
-  #         uninstall: rm cs policy PLH_CSP_CSIPFILTER_HTTP
+  - name: TrafficManagement.ContentSwitching.ContentSwitchingPolicies
+    elements:
+      - name: CSP_CSIPFILTER_IPV4_032_HTTP
+        references:
+          - PLH_CSP_CSIPFILTER_IPV4_032_HTTP
+          - PLH_LOG_CSP_CSIPFILTER_IPV4_032_HTTP
+        dependencies:
+          - LOG_CSP_CSIPFILTER_IPV4_032_HTTP
+        expressions:
+          install: add cs policy PLH_CSP_CSIPFILTER_IPV4_032_HTTP -rule q{true} -logAction PLH_LOG_CSP_CSIPFILTER_IPV4_032_HTTP
+          uninstall: rm cs policy PLH_CSP_CSIPFILTER_IPV4_032_HTTP
 
   #     - name: CSP_CSIPFILTER_TCP
   #       references:

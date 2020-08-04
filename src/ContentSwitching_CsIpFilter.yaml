@@ -110,7 +110,7 @@ sections:
         dependencies:
           - LOG_CSP_CSIPFILTER_HTTP
         expressions:
-          install: add cs policy PLH_CSP_CSIPFILTER_HTTP -rule q{true} -logAction PLH_LOG_CSP_CSIPFILTER_HTTP
+          install: add cs policy PLH_CSP_CSIPFILTER_HTTP -rule q{PLH_PSM_CS_TCP_VALUE_IPFILTER_ISENABLED || PLH_PSM_CSGROUP_TCP_VALUE_IPFILTER_ISENABLED} -logAction PLH_LOG_CSP_CSIPFILTER_HTTP
           uninstall: rm cs policy PLH_CSP_CSIPFILTER_HTTP
 
       - name: CSP_CSIPFILTER_TCP
@@ -120,7 +120,7 @@ sections:
         dependencies:
           - LOG_CSP_CSIPFILTER_TCP
         expressions:
-          install: add cs policy PLH_CSP_CSIPFILTER_TCP -rule q{true} -logAction PLH_LOG_CSP_CSIPFILTER_TCP
+          install: add cs policy PLH_CSP_CSIPFILTER_TCP -rule q{PLH_PSM_CS_TCP_VALUE_IPFILTER_ISENABLED || PLH_PSM_CSGROUP_TCP_VALUE_IPFILTER_ISENABLED} -logAction PLH_LOG_CSP_CSIPFILTER_TCP
           uninstall: rm cs policy PLH_CSP_CSIPFILTER_TCP
 
       - name: CSP_CSIPFILTER_UDP
@@ -130,5 +130,5 @@ sections:
         dependencies:
           - LOG_CSP_CSIPFILTER_UDP
         expressions:
-          install: add cs policy PLH_CSP_CSIPFILTER_UDP -rule q{true} -logAction PLH_LOG_CSP_CSIPFILTER_UDP
+          install: add cs policy PLH_CSP_CSIPFILTER_UDP -rule q{PLH_PSM_CS_UDP_VALUE_IPFILTER_ISENABLED || PLH_PSM_CSGROUP_UDP_VALUE_IPFILTER_ISENABLED} -logAction PLH_LOG_CSP_CSIPFILTER_UDP
           uninstall: rm cs policy PLH_CSP_CSIPFILTER_UDP

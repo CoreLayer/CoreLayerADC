@@ -502,6 +502,12 @@ placeholders:
     expression: PLH_PSM_CS_TCP_VALUE_STATE.EQ("disabled")
   - name: PLH_PSM_CS_TCP_VALUE_STATE_ISMAINTENANCE
     expression: PLH_PSM_CS_TCP_VALUE_STATE.EQ("maintenance")
+  - name: PLH_PSM_CS_TCP_VALUE_IPFILTER
+    expression: PLH_PSM_CS_TCP_VALUE.VALUE("ipfilter")
+  - name: PLH_PSM_CS_TCP_VALUE_IPFILTER_ISENABLED
+    expression: PLH_PSM_CS_TCP_VALUE_IPFILTER.EQ("enabled")
+  - name: PLH_PSM_CS_TCP_VALUE_IPFILTER_ISDISABLED
+    expression: PLH_PSM_CS_TCP_VALUE_IPFILTER.EQ("disabled")
 
   - name: PLH_PSM_CS_UDP_KEY
     expression: ("cs=" + CLIENT.UDP.CS_VSERVER.NAME + ";").TO_LOWER
@@ -519,6 +525,12 @@ placeholders:
     expression: PLH_PSM_CS_UDP_VALUE_STATE.EQ("disabled")
   - name: PLH_PSM_CS_UDP_VALUE_STATE_ISMAINTENANCE
     expression: PLH_PSM_CS_UDP_VALUE_STATE.EQ("maintenance")
+  - name: PLH_PSM_CS_UDP_VALUE_IPFILTER
+    expression: PLH_PSM_CS_UDP_VALUE.VALUE("ipfilter")
+  - name: PLH_PSM_CS_UDP_VALUE_IPFILTER_ISENABLED
+    expression: PLH_PSM_CS_UDP_VALUE_IPFILTER.EQ("enabled")
+  - name: PLH_PSM_CS_UDP_VALUE_IPFILTER_ISDISABLED
+    expression: PLH_PSM_CS_UDP_VALUE_IPFILTER.EQ("disabled")
 
 
   # PSM_CSGROUP
@@ -536,6 +548,12 @@ placeholders:
     expression: PLH_PSM_CSGROUP_TCP_VALUE_STATE.EQ("disabled")
   - name: PLH_PSM_CSGROUP_TCP_VALUE_STATE_ISMAINTENANCE
     expression: PLH_PSM_CSGROUP_TCP_VALUE_STATE.EQ("maintenance")
+  - name: PLH_PSM_CSGROUP_TCP_VALUE_IPFILTER
+    expression: PLH_PSM_CSGROUP_TCP_VALUE.VALUE("ipfilter")
+  - name: PLH_PSM_CSGROUP_TCP_VALUE_IPFILTER_ISENABLED
+    expression: PLH_PSM_CSGROUP_TCP_VALUE_IPFILTER.EQ("enabled")
+  - name: PLH_PSM_CSGROUP_TCP_VALUE_IPFILTER_ISDISABLED
+    expression: PLH_PSM_CSGROUP_TCP_VALUE_IPFILTER.EQ("disabled")
 
   - name: PLH_PSM_CSGROUP_UDP_KEY
     expression: ("csgroup=" + PLH_PSM_CS_UDP_VALUE_CSGROUP + ";")
@@ -551,6 +569,12 @@ placeholders:
     expression: PLH_PSM_CSGROUP_UDP_VALUE_STATE.EQ("disabled")
   - name: PLH_PSM_CSGROUP_UDP_VALUE_STATE_ISMAINTENANCE
     expression: PLH_PSM_CSGROUP_UDP_VALUE_STATE.EQ("maintenance")
+  - name: PLH_PSM_CSGROUP_UDP_VALUE_IPFILTER
+    expression: PLH_PSM_CSGROUP_UDP_VALUE.VALUE("ipfilter")
+  - name: PLH_PSM_CSGROUP_UDP_VALUE_IPFILTER_ISENABLED
+    expression: PLH_PSM_CSGROUP_UDP_VALUE_IPFILTER.EQ("enabled")
+  - name: PLH_PSM_CSGROUP_UDP_VALUE_IPFILTER_ISDISABLED
+    expression: PLH_PSM_CSGROUP_UDP_VALUE_IPFILTER.EQ("disabled")
 
 sections:
   - name: AppExpert.Stringmaps

@@ -57,7 +57,7 @@ sections:
           install: |
             add cs policy PLH_CSP_DEMO_CSV_HTTP -rule q{PLH_EXP_CSP_ENTRY_HTTP} -logAction PLH_LOG_CSP_ENTRY_HTTP
             add cs vserver PLH_DEMO_CSV_HTTP HTTP 169.254.254.251 * -Listenpriority 15 -Listenpolicy "PLH_EXP_LPE_IPV4_HTTP || PLH_EXP_LPE_IPV6_HTTP"
-            bind cs vserver PLH_DEMO_CSV_HTTP -policyName PLH_CSP_DEMO_CSV_HTTP -priority 10601 -priority 10601 -gotoPriorityExpression NEXT -invoke policylabel PLH_CSL_ENTRY_HTTP
+            bind cs vserver PLH_DEMO_CSV_HTTP -policyName PLH_CSP_DEMO_CSV_HTTP -priority 101 -gotoPriorityExpression NEXT -invoke policylabel PLH_CSL_ENTRY_HTTP
             bind policy stringmap PLH_PSM_ENDPOINT "vip=169.254.254.251;port=80;protocol=http;" "tenant=PLH_DEMO_TENANT;vs=PLH_DEMO_CSV_HTTP;state=enabled;"
           uninstall: |
             rm cs vserver PLH_DEMO_CSV_HTTP
@@ -82,7 +82,7 @@ sections:
           install: |
             add cs policy PLH_CSP_DEMO_CSV_SSL -rule q{PLH_EXP_CSP_ENTRY_SSL} -logAction PLH_LOG_CSP_ENTRY_SSL
             add cs vserver PLH_DEMO_CSV_SSL SSL 169.254.254.251 * -Listenpriority 25 -Listenpolicy "PLH_EXP_LPE_IPV4_SSL || PLH_EXP_LPE_IPV6_SSL"
-            bind cs vserver PLH_DEMO_CSV_SSL -policyName PLH_CSP_DEMO_CSV_SSL -priority 10601 -priority 10601 -gotoPriorityExpression NEXT -invoke policylabel PLH_CSL_ENTRY_HTTP
+            bind cs vserver PLH_DEMO_CSV_SSL -policyName PLH_CSP_DEMO_CSV_SSL -priority 101 -gotoPriorityExpression NEXT -invoke policylabel PLH_CSL_ENTRY_HTTP
             bind policy stringmap PLH_PSM_ENDPOINT "vip=169.254.254.251;port=443;protocol=ssl;" "tenant=PLH_DEMO_TENANT;vs=PLH_DEMO_CSV_SSL;state=enabled;"
           uninstall: |
             rm cs vserver PLH_DEMO_CSV_SSL
@@ -125,7 +125,7 @@ sections:
           install: |
             add cs policy PLH_CSP_DEMO_CSV_TCP -rule q{PLH_EXP_CSP_ENTRY_TCP} -logAction PLH_LOG_CSP_ENTRY_TCP
             add cs vserver PLH_DEMO_CSV_TCP TCP 169.254.254.251 * -Listenpriority 35 -Listenpolicy "PLH_EXP_LPE_IPV4_TCP || PLH_EXP_LPE_IPV6_TCP"
-            bind cs vserver PLH_DEMO_CSV_TCP -policyName PLH_CSP_DEMO_CSV_TCP -priority 10601 -priority 10601 -gotoPriorityExpression NEXT -invoke policylabel PLH_CSL_ENTRY_TCP
+            bind cs vserver PLH_DEMO_CSV_TCP -policyName PLH_CSP_DEMO_CSV_TCP -priority 101 -gotoPriorityExpression NEXT -invoke policylabel PLH_CSL_ENTRY_TCP
             bind policy stringmap PLH_PSM_ENDPOINT "vip=169.254.254.251;port=389;protocol=tcp;" "tenant=PLH_DEMO_TENANT;vs=PLH_DEMO_CSV_TCP;state=enabled;"
           uninstall: |
             rm cs vserver PLH_DEMO_CSV_TCP
@@ -150,7 +150,7 @@ sections:
           install: |
             add cs policy PLH_CSP_DEMO_CSV_SSLTCP -rule q{PLH_EXP_CSP_ENTRY_SSLTCP} -logAction PLH_LOG_CSP_ENTRY_SSLTCP
             add cs vserver PLH_DEMO_CSV_SSLTCP SSL_TCP 169.254.254.251 * -Listenpriority 45 -Listenpolicy "PLH_EXP_LPE_IPV4_SSLTCP || PLH_EXP_LPE_IPV6_SSLTCP"
-            bind cs vserver PLH_DEMO_CSV_SSLTCP -policyName PLH_CSP_DEMO_CSV_SSLTCP -priority 10601 -priority 10601 -gotoPriorityExpression NEXT -invoke policylabel PLH_CSL_ENTRY_TCP
+            bind cs vserver PLH_DEMO_CSV_SSLTCP -policyName PLH_CSP_DEMO_CSV_SSLTCP -priority 101 -gotoPriorityExpression NEXT -invoke policylabel PLH_CSL_ENTRY_TCP
             bind policy stringmap PLH_PSM_ENDPOINT "vip=169.254.254.251;port=636;protocol=ssl_tcp;" "tenant=PLH_DEMO_TENANT;vs=PLH_DEMO_CSV_SSLTCP;state=enabled;"
           uninstall: |
             rm cs vserver PLH_DEMO_CSV_SSLTCP
@@ -175,7 +175,7 @@ sections:
           install: |
             add cs policy PLH_CSP_DEMO_CSV_UDP -rule q{PLH_EXP_CSP_ENTRY_UDP} -logAction PLH_LOG_CSP_ENTRY_UDP
             add cs vserver PLH_DEMO_CSV_UDP UDP 169.254.254.251 * -Listenpriority 55 -Listenpolicy "PLH_EXP_LPE_IPV4_UDP || PLH_EXP_LPE_IPV6_UDP"
-            bind cs vserver PLH_DEMO_CSV_UDP -policyName PLH_CSP_DEMO_CSV_UDP -priority 10601 -priority 10601 -gotoPriorityExpression NEXT -invoke policylabel PLH_CSL_ENTRY_UDP
+            bind cs vserver PLH_DEMO_CSV_UDP -policyName PLH_CSP_DEMO_CSV_UDP -priority 101 -gotoPriorityExpression NEXT -invoke policylabel PLH_CSL_ENTRY_UDP
             bind policy stringmap PLH_PSM_ENDPOINT "vip=169.254.254.251;port=514;protocol=udp;" "tenant=PLH_DEMO_TENANT;vs=PLH_DEMO_CSV_UDP;state=enabled;"
           uninstall: |
             rm cs vserver PLH_DEMO_CSV_UDP

@@ -1,0 +1,79 @@
+name: ContentSwitching_IpFilter_Cs_IPv6
+dependencies:
+  - Core
+  - ContentSwitching_IpFilter_Cs
+placeholders:
+  - name: PLH_CSP_IPFILTER_CS_IPV6
+    expression: CSP__V__IPFILTER_CS_IPV6
+
+  # IPV6 - HTTP
+  - name: PLH_CSP_IPFILTER_CS_IPV6_128_HTTP
+    expression: CSP__V__IPFILTER_CS_IPV6_128_HTTP
+  - name: PLH_LOG_CSP_IPFILTER_CS_IPV6_128_HTTP
+    expression: LOG__V__CSP_IPFILTER_CS_IPV6_128_HTTP
+  - name: PLH_RSP_IPFILTER_CS_IPV6_128_HTTP
+    expression: RSP_IPFILTER_CS_IPV6_128_HTTP
+  - name: PLH_LOG_RSP_IPFILTER_CS_IPV6_128_HTTP
+    expression: LOG_RSP_IPFILTER_CS_IPV6_128_HTTP
+
+
+sections:
+  - name: Auditing.MessageActions
+    elements:
+      - name: LOG_CSP_IPFILTER_CS_IPV6_128_HTTP
+        references:
+          - PLH_CSP_IPFILTER_CS_IPV6_128_HTTP
+          - PLH_LOG_CSP_IPFILTER_CS_IPV6_128_HTTP
+        expressions:
+          install: add audit messageAction PLH_LOG_CSP_IPFILTER_CS_IPV6_128_HTTP INFO q{PLH_PSM_CS_TCP_KEY + "policy=PLH_CSP_IPFILTER_CS_IPV6_128_HTTP"}
+          uninstall: rm audit messageAction PLH_LOG_CSP_IPFILTER_CS_IPV6_128_HTTP
+      - name: LOG_RSP_IPFILTER_CS_IPV6_128_HTTP
+        references:
+          - PLH_RSP_IPFILTER_CS_IPV6_128_HTTP
+          - PLH_LOG_RSP_IPFILTER_CS_IPV6_128_HTTP
+        expressions:
+          install: add audit messageAction PLH_LOG_RSP_IPFILTER_CS_IPV6_128_HTTP INFO q{PLH_PSM_CS_TCP_KEY + "policy=PLH_RSP_IPFILTER_CS_IPV6_128_HTTP"}
+          uninstall: rm audit messageAction PLH_LOG_RSP_IPFILTER_CS_IPV6_128_HTTP
+
+  - name: AppExpert.Variables
+    elements:
+      - name: VAR_IPFILTER_CACHE_ASSIGN_IPV6
+        references:
+          - PLH_VAR_IPFILTER_CACHE
+        dependencies:
+          - VAR_IPFILTER_CACHE
+        expressions:
+          install: add ns assignment PLH_VAR_IPFILTER_CACHE_ASSIGN_IPV6 -variable q{$PLH_VAR_IPFILTER_CACHE[PLH_PSM_CS_TCP_KEY + ";ipfilter=" + PLH_PSM_CS_TCP_VALUE_IPFILTER + ";ip=" + PLH_IPV6_SRC_128]} -set q{PLH_IPV6_SRC_128}
+          uninstall: rm ns assignment PLH_VAR_IPFILTER_CACHE_ASSIGN_IPV6
+
+  - name: TrafficManagement.ContentSwitching.ContentSwitchingPolicies
+    elements:
+      - name: CSP_IPFILTER_CS_IPV6
+        references:
+          - PLH_CSP_IPFILTER_CS_IPV6
+        expressions:
+          install: |
+            add cs policy PLH_CSP_IPFILTER_CS_IPV6 -rule q{!CLIENT.IPV6.SRC.IS_IPV4}
+            bind cs policylabel PLH_CSL_IPFILTER_CS_HTTP PLH_CSP_IPFILTER_CS_IPV6 2012 -gotoPriorityExpression 2201
+          uninstall: |
+            unbind cs policylabel PLH_CSL_IPFILTER_CS_HTTP PLH_CSP_IPFILTER_CS_IPV6
+            rm cs policy PLH_CSP_IPFILTER_CS_IPV6
+
+      - name: CSP_IPFILTER_CS_IPV6_128_HTTP
+        references:
+          - PLH_CSP_IPFILTER_CS_IPV6_128_HTTP
+          - PLH_PSM_IPFILTER_CS_IPV6_128_TCP_KEY_EXISTS
+          - PLH_CSA_IPFILTER_CS_HTTP
+          - PLH_LOG_CSP_IPFILTER_CS_IPV6_128_HTTP
+          - PLH_CSL_IPFILTER_CS_HTTP
+        dependencies:
+          - LOG_CSP_IPFILTER_CS_IPV6_128_HTTP
+          - CSL_IPFILTER_CS_HTTP
+          - CSA_IPFILTER_CS_HTTP
+        expressions:
+          install: |
+            add cs policy PLH_CSP_IPFILTER_CS_IPV6_128_HTTP -rule q{PLH_PSM_IPFILTER_CS_IPV6_128_TCP_KEY_EXISTS} -action PLH_CSA_IPFILTER_CS_HTTP -logAction PLH_LOG_CSP_IPFILTER_CS_IPV6_128_HTTP
+            bind cs policylabel PLH_CSL_IPFILTER_CS_HTTP PLH_CSP_IPFILTER_CS_IPV6_128_HTTP 2201
+          uninstall: |
+            unbind cs policylabel PLH_CSL_IPFILTER_CS_HTTP PLH_CSP_IPFILTER_CS_IPV6_128_HTTP
+            rm cs policy PLH_CSP_IPFILTER_CS_IPV6_128_HTTP

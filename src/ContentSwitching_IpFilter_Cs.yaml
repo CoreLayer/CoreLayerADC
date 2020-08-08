@@ -30,6 +30,9 @@ placeholders:
   - name: PLH_CSA_IPFILTER_CS_HTTP
     expression: CSA__V__IPFILTER_CS_HTTP
 
+  - name: PLH_VAR_IPFILTER_CACHE
+    expression: VAR__V__IPFILTER_CACHE
+
 sections:
   - name: Auditing.MessageActions
     elements:
@@ -54,6 +57,14 @@ sections:
           install: add audit messageAction PLH_LOG_CSP_GOTO_CSL_IPFILTER_CS_UDP INFO q{PLH_PSM_CS_UDP_KEY + "policy=PLH_CSP_GOTO_CSL_IPFILTER_CS_UDP"}
           uninstall: rm audit messageAction PLH_LOG_CSP_GOTO_CSL_IPFILTER_CS_UDP
 
+  - name: AppExpert.Variables
+    elements:
+      - name: VAR_IPFILTER_CACHE
+        references:
+          - PLH_VAR_IPFILTER_CACHE
+        expressions:
+          install: add ns variable PLH_VAR_IPFILTER_CACHE -type q{map(text(100),text(100),1000)} -ifNoValue undef -expires 20
+          uninstall: rm ns variable PLH_VAR_IPFILTER_CACHE
 
 
   - name: TrafficManagement.ContentSwitching.ContentSwitchingPolicyLabels
@@ -68,7 +79,7 @@ sections:
         expressions:
           install: |
             add cs policylabel PLH_CSL_IPFILTER_CS_HTTP HTTP
-            bind cs policylabel PLH_CSL_ENTRY_HTTP PLH_CSP_GOTO_CSL_IPFILTER_CS_HTTP 10001 -invoke policylabel PLH_CSL_IPFILTER_CS_HTTP
+            bind cs policylabel PLH_CSL_ENTRY_HTTP PLH_CSP_GOTO_CSL_IPFILTER_CS_HTTP 101 -invoke policylabel PLH_CSL_IPFILTER_CS_HTTP
           uninstall: |
             unbind cs policylabel PLH_CSL_ENTRY_HTTP PLH_CSP_GOTO_CSL_IPFILTER_CS_HTTP
             rm cs policylabel PLH_CSL_IPFILTER_CS_HTTP
@@ -83,7 +94,7 @@ sections:
         expressions:
           install: |
             add cs policylabel PLH_CSL_IPFILTER_CS_TCP TCP
-            bind cs policylabel PLH_CSL_ENTRY_TCP PLH_CSP_GOTO_CSL_IPFILTER_CS_TCP 10001 -invoke policylabel PLH_CSL_IPFILTER_CS_TCP
+            bind cs policylabel PLH_CSL_ENTRY_TCP PLH_CSP_GOTO_CSL_IPFILTER_CS_TCP 101 -invoke policylabel PLH_CSL_IPFILTER_CS_TCP
           uninstall: |
             unbind cs policylabel PLH_CSL_ENTRY_TCP PLH_CSP_GOTO_CSL_IPFILTER_CS_TCP
             rm cs policylabel PLH_CSL_IPFILTER_CS_TCP
@@ -98,7 +109,7 @@ sections:
         expressions:
           install: |
             add cs policylabel PLH_CSL_IPFILTER_CS_UDP UDP
-            bind cs policylabel PLH_CSL_ENTRY_UDP PLH_CSP_GOTO_CSL_IPFILTER_CS_UDP 10001 -invoke policylabel PLH_CSL_IPFILTER_CS_UDP
+            bind cs policylabel PLH_CSL_ENTRY_UDP PLH_CSP_GOTO_CSL_IPFILTER_CS_UDP 101 -invoke policylabel PLH_CSL_IPFILTER_CS_UDP
           uninstall: |
             unbind cs policylabel PLH_CSL_ENTRY_UDP PLH_CSP_GOTO_CSL_IPFILTER_CS_UDP
             rm cs policylabel PLH_CSL_IPFILTER_CS_UDP

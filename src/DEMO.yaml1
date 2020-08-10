@@ -1,25 +1,25 @@
-name: Demo
+name: DEMO
 dependencies:
-  - Core
-  - ListenPolicies
-  - ContentSwitchingEntry
+  - CORE
+  - LISTENPOLICIES
+  - CONTENTSWITCHING_ENTRY
 placeholders:
   - name: PLH_DEMO_TENANT
     expression: DemoTenant
   - name: PLH_DEMO_CSV
-    expression: CSV__V__DEMO
+    expression: _V__CSV_DEMO
   - name: PLH_DEMO_LBV
-    expression: LBV__V__DEMO
+    expression: _V__LBV_DEMO
   - name: PLH_CSP_DEMO_CSV_HTTP
-    expression: CSP__V__DEMO_HTTP
+    expression: _V__CSP_DEMO_HTTP
   - name: PLH_CSP_DEMO_CSV_SSL
-    expression: CSP__V__DEMO_SSL
+    expression: _V__CSP_DEMO_SSL
   - name: PLH_CSP_DEMO_CSV_TCP
-    expression: CSP__V__DEMO_TCP
+    expression: _V__CSP_DEMO_TCP
   - name: PLH_CSP_DEMO_CSV_SSLTCP
-    expression: CSP__V__DEMO_SSLTCP
+    expression: _V__CSP_DEMO_SSLTCP
   - name: PLH_CSP_DEMO_CSV_UDP
-    expression: CSP__V__DEMO_UDP
+    expression: _V__CSP_DEMO_UDP
   
 sections:
   - name: AppExpert.Stringmap.Bindings

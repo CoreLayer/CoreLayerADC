@@ -1,20 +1,20 @@
-name: ContentSwitching_IpFilter_Cs_IPv6
+name: CONTENTSWITCHING_IPFILTER_CS_IPV6
 dependencies:
-  - Core
-  - ContentSwitching_IpFilter_Cs
+  - CORE
+  - CONTENTSWITCHING_IPFILTER_CS
 placeholders:
   - name: PLH_CSP_IPFILTER_CS_IPV6
-    expression: CSP__V__IPFILTER_CS_IPV6
+    expression: _V__CSP_IPFILTER_CS_IPV6
 
   # IPV6 - HTTP
   - name: PLH_CSP_IPFILTER_CS_IPV6_128_HTTP
-    expression: CSP__V__IPFILTER_CS_IPV6_128_HTTP
+    expression: _V__CSP_IPFILTER_CS_IPV6_128_HTTP
   - name: PLH_LOG_CSP_IPFILTER_CS_IPV6_128_HTTP
-    expression: LOG__V__CSP_IPFILTER_CS_IPV6_128_HTTP
+    expression: _V__LOG_CSP_IPFILTER_CS_IPV6_128_HTTP
   - name: PLH_RSP_IPFILTER_CS_IPV6_128_HTTP
-    expression: RSP_IPFILTER_CS_IPV6_128_HTTP
+    expression: _V__RSP_IPFILTER_CS_IPV6_128_HTTP
   - name: PLH_LOG_RSP_IPFILTER_CS_IPV6_128_HTTP
-    expression: LOG_RSP_IPFILTER_CS_IPV6_128_HTTP
+    expression: _V__LOG_RSP_IPFILTER_CS_IPV6_128_HTTP
 
 
 sections:
@@ -48,16 +48,7 @@ sections:
 
   - name: TrafficManagement.ContentSwitching.ContentSwitchingPolicies
     elements:
-      - name: CSP_IPFILTER_CS_IPV6
-        references:
-          - PLH_CSP_IPFILTER_CS_IPV6
-        expressions:
-          install: |
-            add cs policy PLH_CSP_IPFILTER_CS_IPV6 -rule q{!CLIENT.IPV6.SRC.IS_IPV4}
-            bind cs policylabel PLH_CSL_IPFILTER_CS_HTTP PLH_CSP_IPFILTER_CS_IPV6 2012 -gotoPriorityExpression 2201
-          uninstall: |
-            unbind cs policylabel PLH_CSL_IPFILTER_CS_HTTP PLH_CSP_IPFILTER_CS_IPV6
-            rm cs policy PLH_CSP_IPFILTER_CS_IPV6
+      
 
       - name: CSP_IPFILTER_CS_IPV6_128_HTTP
         references:

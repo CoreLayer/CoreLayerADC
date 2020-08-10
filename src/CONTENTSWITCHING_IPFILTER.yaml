@@ -1,0 +1,17 @@
+name: CONTENTSWITCHING_IPFILTER
+dependencies:
+  - CORE
+  - CONTENTSWITCHING_ENTRY
+placeholders:
+  - name: PLH_VAR_IPFILTER_CACHE
+    expression: _V__VAR_IPFILTER_CACHE
+
+sections:
+  - name: AppExpert.Variables
+    elements:
+      - name: VAR_IPFILTER_CACHE
+        references:
+          - PLH_VAR_IPFILTER_CACHE
+        expressions:
+          install: add ns variable PLH_VAR_IPFILTER_CACHE -type q{map(text(100),text(100),1000)} -ifNoValue undef -expires 20
+          uninstall: rm ns variable PLH_VAR_IPFILTER_CACHE

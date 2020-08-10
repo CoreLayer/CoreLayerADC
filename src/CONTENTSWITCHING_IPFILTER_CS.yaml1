@@ -1,37 +1,35 @@
-name: ContentSwitching_IpFilter_Cs
+name: CONTENTSWITCHING_IPFILTER_CS
 dependencies:
-  - Core
-  - ContentSwitchingEntry
+  - CORE
+  - CONTENTSWITCHING_ENTRY
+  - CONTENTSWITCHING_IPFILTER
 placeholders:
   - name: PLH_LBV_IPFILTER_CS_HTTP
-    expression: LBV__V__IPFILTER_CS_HTTP
+    expression: _V__LBV_IPFILTER_CS_HTTP
 
   - name: PLH_CSL_IPFILTER_CS_HTTP
-    expression: CSL__V__IPFILTER_CS_HTTP
+    expression: _V__CSL_IPFILTER_CS_HTTP
   - name: PLH_CSL_IPFILTER_CS_TCP
-    expression: CSL__V__IPFILTER_CS_TCP
+    expression: _V__CSL_IPFILTER_CS_TCP
   - name: PLH_CSL_IPFILTER_CS_UDP
-    expression: CSL__V__IPFILTER_CS_UDP
+    expression: _V__CSL_IPFILTER_CS_UDP
 
   - name: PLH_LOG_CSP_GOTO_CSL_IPFILTER_CS_HTTP
-    expression: LOG__V__CSP_GOTO_CSL_IPFILTER_CS_HTTP
+    expression: _V__LOG_CSP_GOTO_CSL_IPFILTER_CS_HTTP
   - name: PLH_LOG_CSP_GOTO_CSL_IPFILTER_CS_TCP
-    expression: LOG__V__CSP_GOTO_CSL_IPFILTER_CS_TCP
+    expression: _V__LOG_CSP_GOTO_CSL_IPFILTER_CS_TCP
   - name: PLH_LOG_CSP_GOTO_CSL_IPFILTER_CS_UDP
-    expression: LOG__V__CSP_GOTO_CSL_IPFILTER_CS_UDP
+    expression: _V__LOG_CSP_GOTO_CSL_IPFILTER_CS_UDP
 
   - name: PLH_CSP_GOTO_CSL_IPFILTER_CS_HTTP
-    expression: CSP__V__GOTO_CSL_IPFILTER_CS_HTTP
+    expression: _V__CSP_GOTO_CSL_IPFILTER_CS_HTTP
   - name: PLH_CSP_GOTO_CSL_IPFILTER_CS_TCP
-    expression: CSP__V__GOTO_CSL_IPFILTER_CS_TCP
+    expression: _V__CSP_GOTO_CSL_IPFILTER_CS_TCP
   - name: PLH_CSP_GOTO_CSL_IPFILTER_CS_UDP
-    expression: CSP__V__GOTO_CSL_IPFILTER_CS_UDP
+    expression: _V__CSP_GOTO_CSL_IPFILTER_CS_UDP
 
   - name: PLH_CSA_IPFILTER_CS_HTTP
-    expression: CSA__V__IPFILTER_CS_HTTP
-
-  - name: PLH_VAR_IPFILTER_CACHE
-    expression: VAR__V__IPFILTER_CACHE
+    expression: _V__CSA_IPFILTER_CS_HTTP
 
 sections:
   - name: Auditing.MessageActions
@@ -57,14 +55,79 @@ sections:
           install: add audit messageAction PLH_LOG_CSP_GOTO_CSL_IPFILTER_CS_UDP INFO q{PLH_PSM_CS_UDP_KEY + "policy=PLH_CSP_GOTO_CSL_IPFILTER_CS_UDP"}
           uninstall: rm audit messageAction PLH_LOG_CSP_GOTO_CSL_IPFILTER_CS_UDP
 
-  - name: AppExpert.Variables
+
+
+  - name: TrafficManagement.ContentSwitching.ContentSwitchingActions
     elements:
-      - name: VAR_IPFILTER_CACHE
+      - name: CSA_IPFILTER_CS_HTTP
         references:
-          - PLH_VAR_IPFILTER_CACHE
+          - PLH_CSA_IPFILTER_CS_HTTP
+          - PLH_LBV_IPFILTER_CS_HTTP
+        dependencies:
+          - LBV_IPFILTER_CS_HTTP
         expressions:
-          install: add ns variable PLH_VAR_IPFILTER_CACHE -type q{map(text(100),text(100),1000)} -ifNoValue undef -expires 20
-          uninstall: rm ns variable PLH_VAR_IPFILTER_CACHE
+          install: add cs action PLH_CSA_IPFILTER_CS_HTTP -targetVserverExpr q{"PLH_LBV_IPFILTER_CS_HTTP"}
+          uninstall: rm cs action PLH_CSA_IPFILTER_CS_HTTP
+
+
+  - name: TrafficManagement.ContentSwitching.ContentSwitchingPolicies
+    elements:
+      - name: CSP_GOTO_CSL_IPFILTER_CS_HTTP
+        references:
+          - PLH_CSP_GOTO_CSL_IPFILTER_CS_HTTP
+          - PLH_LOG_CSP_GOTO_CSL_IPFILTER_CS_HTTP
+        dependencies:
+          - LOG_CSP_GOTO_CSL_IPFILTER_CS_HTTP
+        expressions:
+          install: add cs policy PLH_CSP_GOTO_CSL_IPFILTER_CS_HTTP -rule q{true} -logAction PLH_LOG_CSP_GOTO_CSL_IPFILTER_CS_HTTP
+          uninstall: rm cs policy PLH_CSP_GOTO_CSL_IPFILTER_CS_HTTP
+
+      - name: CSP_GOTO_CSL_IPFILTER_CS_TCP
+        references:
+          - PLH_CSP_GOTO_CSL_IPFILTER_CS_TCP
+          - PLH_LOG_CSP_GOTO_CSL_IPFILTER_CS_TCP
+        dependencies:
+          - LOG_CSP_GOTO_CSL_IPFILTER_CS_TCP
+        expressions:
+          install: add cs policy PLH_CSP_GOTO_CSL_IPFILTER_CS_TCP -rule q{true} -logAction PLH_LOG_CSP_GOTO_CSL_IPFILTER_CS_TCP
+          uninstall: rm cs policy PLH_CSP_GOTO_CSL_IPFILTER_CS_TCP
+
+      - name: CSP_GOTO_CSL_IPFILTER_CS_UDP
+        references:
+          - PLH_CSP_GOTO_CSL_IPFILTER_CS_UDP
+          - PLH_LOG_CSP_GOTO_CSL_IPFILTER_CS_UDP
+        dependencies:
+          - LOG_CSP_GOTO_CSL_IPFILTER_CS_UDP
+        expressions:
+          install: add cs policy PLH_CSP_GOTO_CSL_IPFILTER_CS_UDP -rule q{true} -logAction PLH_LOG_CSP_GOTO_CSL_IPFILTER_CS_UDP
+          uninstall: rm cs policy PLH_CSP_GOTO_CSL_IPFILTER_CS_UDP
+
+
+      - name: CSP_IPFILTER_CS_IPV4_HTTP
+        references:
+          - PLH_CSP_IPFILTER_CS_IPV4_HTTP
+          - PLH_CSL_IPFILTER_CS_HTTP
+        dependencies:
+          - CSL_IPFILTER_CS_HTTP
+        expressions:
+          install: |
+            add cs policy PLH_CSP_IPFILTER_CS_IPV4_HTTP -rule q{!CLIENT.IP.SRC.IS_IPV6}
+            bind cs policylabel PLH_CSL_IPFILTER_CS_HTTP PLH_CSP_IPFILTER_CS_IPV4_HTTP 10101 -gotoPriorityExpression 10201
+          uninstall: |
+            unbind cs policylabel PLH_CSL_IPFILTER_CS_HTTP PLH_CSP_IPFILTER_CS_IPV4_HTTP
+            rm cs policy PLH_CSP_IPFILTER_CS_IPV4_HTTP
+
+      - name: CSP_IPFILTER_CS_IPV6
+        references:
+          - PLH_CSP_IPFILTER_CS_IPV6
+        expressions:
+          install: |
+            add cs policy PLH_CSP_IPFILTER_CS_IPV6 -rule q{!CLIENT.IPV6.SRC.IS_IPV4}
+            bind cs policylabel PLH_CSL_IPFILTER_CS_HTTP PLH_CSP_IPFILTER_CS_IPV6 10102 -gotoPriorityExpression 10211
+          uninstall: |
+            unbind cs policylabel PLH_CSL_IPFILTER_CS_HTTP PLH_CSP_IPFILTER_CS_IPV6
+            rm cs policy PLH_CSP_IPFILTER_CS_IPV6
+
 
 
   - name: TrafficManagement.ContentSwitching.ContentSwitchingPolicyLabels
@@ -115,55 +178,6 @@ sections:
             rm cs policylabel PLH_CSL_IPFILTER_CS_UDP
 
 
-
-  - name: TrafficManagement.ContentSwitching.ContentSwitchingActions
-    elements:
-      - name: CSA_IPFILTER_CS_HTTP
-        references:
-          - PLH_CSA_IPFILTER_CS_HTTP
-          - PLH_LBV_IPFILTER_CS_HTTP
-        dependencies:
-          - LBV_IPFILTER_CS_HTTP
-        expressions:
-          install: add cs action PLH_CSA_IPFILTER_CS_HTTP -targetVserverExpr q{"PLH_LBV_IPFILTER_CS_HTTP"}
-          uninstall: rm cs action PLH_CSA_IPFILTER_CS_HTTP
-
-
-  - name: TrafficManagement.ContentSwitching.ContentSwitchingPolicies
-    elements:
-      - name: CSP_GOTO_CSL_IPFILTER_CS_HTTP
-        references:
-          - PLH_CSP_GOTO_CSL_IPFILTER_CS_HTTP
-          - PLH_LOG_CSP_GOTO_CSL_IPFILTER_CS_HTTP
-        dependencies:
-          - LOG_CSP_GOTO_CSL_IPFILTER_CS_HTTP
-        expressions:
-          install: add cs policy PLH_CSP_GOTO_CSL_IPFILTER_CS_HTTP -rule q{true} -logAction PLH_LOG_CSP_GOTO_CSL_IPFILTER_CS_HTTP
-          uninstall: rm cs policy PLH_CSP_GOTO_CSL_IPFILTER_CS_HTTP
-
-      - name: CSP_GOTO_CSL_IPFILTER_CS_TCP
-        references:
-          - PLH_CSP_GOTO_CSL_IPFILTER_CS_TCP
-          - PLH_LOG_CSP_GOTO_CSL_IPFILTER_CS_TCP
-        dependencies:
-          - LOG_CSP_GOTO_CSL_IPFILTER_CS_TCP
-        expressions:
-          install: add cs policy PLH_CSP_GOTO_CSL_IPFILTER_CS_TCP -rule q{true} -logAction PLH_LOG_CSP_GOTO_CSL_IPFILTER_CS_TCP
-          uninstall: rm cs policy PLH_CSP_GOTO_CSL_IPFILTER_CS_TCP
-
-      - name: CSP_GOTO_CSL_IPFILTER_CS_UDP
-        references:
-          - PLH_CSP_GOTO_CSL_IPFILTER_CS_UDP
-          - PLH_LOG_CSP_GOTO_CSL_IPFILTER_CS_UDP
-        dependencies:
-          - LOG_CSP_GOTO_CSL_IPFILTER_CS_UDP
-        expressions:
-          install: add cs policy PLH_CSP_GOTO_CSL_IPFILTER_CS_UDP -rule q{true} -logAction PLH_LOG_CSP_GOTO_CSL_IPFILTER_CS_UDP
-          uninstall: rm cs policy PLH_CSP_GOTO_CSL_IPFILTER_CS_UDP
-
-      # - name: CSP_GOTO_CSL_MAINTENANCE_CS_HTTP
-      # - name: CSP_GOTO_CSL_MAINTENANCE_CS_TCP
-      # - name: CSP_GOTO_CSL_MAINTENANCE_CS_UDP
 
   - name: TrafficManagement.LoadBalancing.VirtualServers
     elements:

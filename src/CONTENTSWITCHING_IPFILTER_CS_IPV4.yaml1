@@ -1,0 +1,151 @@
+name: CONTENTSWITCHING_IPFILTER_CS_IPV4
+dependencies:
+  - CORE
+  - CONTENTSWITCHING_IPFILTER_CS
+placeholders:
+  - name: PLH_CSP_IPFILTER_CS_ACTIVE
+    expression: _V__CSP_IPFILTER_CS_ACTIVE
+  - name: PLH_CSP_IPFILTER_CS_IPV4
+    expression: _V__CSP_IPFILTER_CS_IPV4
+
+  # IPV4 - CACHE
+  - name: PLH_VAR_IPFILTER_CS_IPV4_CACHE_KEY
+    expression: PLH_PSM_CS_TCP_KEY + "ipfilter=" + PLH_PSM_CS_TCP_VALUE_IPFILTER + ";ip=" + PLH_IPV4_SRC_032
+  - name: PLH_CSP_IPFILTER_CS_IPV4_CACHED_HTTP
+    expression: _V__CSP_IPTFILTER_CS_IPV4_CACHED_HTTP
+  - name: PLH_LOG_CSP_IPFILTER_CS_IPV4_CACHED_HTTP
+    expression: _V__LOG_CSP_IPFILTER_CS_IPV4_CACHED_HTTP
+  - name: PLH_RSP_VAR_IPFILTER_CS_IPV4_ASSIGN
+    expression: _V__RSP_VAR_IPFILTER_CS_IPV4_ASSIGN
+
+  # IPV4 - HTTP
+  - name: PLH_CSP_IPFILTER_CS_IPV4_032_HTTP
+    expression: _V__CSP_IPFILTER_CS_IPV4_032_HTTP
+  - name: PLH_LOG_CSP_IPFILTER_CS_IPV4_032_HTTP
+    expression: _V__LOG_CSP_IPFILTER_CS_IPV4_032_HTTP
+  - name: PLH_RSP_IPFILTER_CS_IPV4_032_HTTP
+    expression: _V__RSP_IPFILTER_CS_IPV4_032_HTTP
+  - name: PLH_LOG_RSP_IPFILTER_CS_IPV4_032_HTTP
+    expression: _V__LOG_RSP_IPFILTER_CS_IPV4_032_HTTP
+
+#LBV_IPFILTER_CS_HTTP
+
+sections:
+  - name: Auditing.MessageActions
+    elements:
+      - name: LOG_CSP_IPFILTER_CS_IPV4_CACHED_HTTP
+        references:
+          - PLH_LOG_CSP_IPFILTER_CS_IPV4_CACHED_HTTP
+        expressions:
+          install: add audit messageAction PLH_LOG_CSP_IPFILTER_CS_IPV4_CACHED_HTTP INFO q{PLH_PSM_CS_TCP_KEY + "policy=PLH_LOG_CSP_IPFILTER_CS_IPV4_CACHED_HTTP"}
+          uninstall: rm audit messageAction PLH_LOG_CSP_IPFILTER_CS_IPV4_CACHED_HTTP
+
+      - name: LOG_CSP_IPFILTER_CS_IPV4_032_HTTP
+        references:
+          - PLH_CSP_IPFILTER_CS_IPV4_032_HTTP
+          - PLH_LOG_CSP_IPFILTER_CS_IPV4_032_HTTP
+        expressions:
+          install: add audit messageAction PLH_LOG_CSP_IPFILTER_CS_IPV4_032_HTTP INFO q{PLH_PSM_CS_TCP_KEY + "policy=PLH_CSP_IPFILTER_CS_IPV4_032_HTTP"}
+          uninstall: rm audit messageAction PLH_LOG_CSP_IPFILTER_CS_IPV4_032_HTTP
+      - name: LOG_RSP_IPFILTER_CS_IPV4_032_HTTP
+        references:
+          - PLH_RSP_IPFILTER_CS_IPV4_032_HTTP
+          - PLH_LOG_RSP_IPFILTER_CS_IPV4_032_HTTP
+        expressions:
+          install: add audit messageAction PLH_LOG_RSP_IPFILTER_CS_IPV4_032_HTTP INFO q{PLH_PSM_CS_TCP_KEY + "policy=PLH_RSP_IPFILTER_CS_IPV4_032_HTTP"}
+          uninstall: rm audit messageAction PLH_LOG_RSP_IPFILTER_CS_IPV4_032_HTTP
+
+  - name: AppExpert.Variables
+    elements:
+      - name: VAR_IPFILTER_CACHE_ASSIGN_IPV4
+        references:
+          - PLH_VAR_IPFILTER_CACHE
+          - PLH_VAR_IPFILTER_CACHE_KEY
+        dependencies:
+          - VAR_IPFILTER_CACHE
+        expressions:
+          install: add ns assignment PLH_VAR_IPFILTER_CACHE_ASSIGN_IPV4 -variable q{$PLH_VAR_IPFILTER_CACHE[PLH_VAR_IPFILTER_CS_IPV4_CACHE_KEY]} -set q{PLH_IPV4_SRC_032}
+          uninstall: rm ns assignment PLH_VAR_IPFILTER_CACHE_ASSIGN_IPV4
+
+
+
+  - name: TrafficManagement.ContentSwitching.ContentSwitchingPolicies
+    elements:            
+      - name: CSP_IPFILTER_CS_IPV4_CACHED_HTTP
+        references:
+          - PLH_CSP_IPFILTER_CS_IPV4_CACHED_HTTP
+          - PLH_VAR_IPFILTER_CACHE
+          - PLH_VAR_IPFILTER_CS_IPV4_CACHE_KEY
+          - PLH_CSA_IPFILTER_CS_HTTP
+          - PLH_LOG_CSP_IPFILTER_CS_IPV4_CACHED_HTTP
+          - PLH_CSL_IPFILTER_CS_HTTP
+        dependencies:
+          - VAR_IPFILTER_CACHE
+          - LOG_CSP_IPFILTER_CS_IPV4_CACHED_HTTP
+          - CSL_IPFILTER_CS_HTTP
+          - CSA_IPFILTER_CS_HTTP
+        expressions:
+          install: |
+            add cs policy PLH_CSP_IPFILTER_CS_IPV4_CACHED_HTTP -rule q{PLH_PSM_CS_TCP_VALUE_IPFILTER_ISENABLED && $PLH_VAR_IPFILTER_CACHE.valueExists(PLH_VAR_IPFILTER_CS_IPV4_CACHE_KEY)} -action PLH_CSA_IPFILTER_CS_HTTP -logAction PLH_LOG_CSP_IPFILTER_CS_IPV4_CACHED_HTTP
+            bind cs policylabel PLH_CSL_IPFILTER_CS_HTTP PLH_CSP_IPFILTER_CS_IPV4_CACHED_HTTP 10205
+          uninstall: |
+            unbind cs policylabel PLH_CSL_IPFILTER_CS_HTTP PLH_CSP_IPFILTER_CS_IPV4_CACHED_HTTP
+            rm cs policy PLH_CSP_IPFILTER_CS_IPV4_CACHED_HTTP
+            
+      - name: CSP_IPFILTER_CS_ACTIVE
+        references:
+          - PLH_CSP_IPFILTER_CS_ACTIVE
+          - PLH_PSM_CS_TCP_VALUE_IPFILTER_ISENABLED
+          - PLH_CSL_IPFILTER_CS_HTTP
+        dependencies:
+          - PSM_CS
+          - CSL_IPFILTER_CS_HTTP
+        expressions:
+          install: |
+            add cs policy PLH_CSP_IPFILTER_CS_ACTIVE -rule q{PLH_PSM_CS_TCP_VALUE_IPFILTER_ISENABLED}
+            bind cs policylabel PLH_CSL_IPFILTER_CS_HTTP PLH_CSP_IPFILTER_CS_ACTIVE 10206 -gotoPriorityExpression 10111
+          uninstall: |
+            unbind cs policylabel PLH_CSL_IPFILTER_CS_HTTP PLH_CSP_IPFILTER_CS_ACTIVE
+            rm cs policy PLH_CSP_IPFILTER_CS_ACTIVE            
+
+
+
+
+      - name: CSP_IPFILTER_CS_IPV4_032_HTTP
+        references:
+          - PLH_CSP_IPFILTER_CS_IPV4_032_HTTP
+          - PLH_PSM_IPFILTER_CS_IPV4_032_TCP_KEY_EXISTS
+          - PLH_CSA_IPFILTER_CS_HTTP
+          - PLH_LOG_CSP_IPFILTER_CS_IPV4_032_HTTP
+          - PLH_CSL_IPFILTER_CS_HTTP
+        dependencies:
+          - LOG_CSP_IPFILTER_CS_IPV4_032_HTTP
+          - CSL_IPFILTER_CS_HTTP
+          - CSA_IPFILTER_CS_HTTP
+        expressions:
+          install: |
+            add cs policy PLH_CSP_IPFILTER_CS_IPV4_032_HTTP -rule q{PLH_PSM_IPFILTER_CS_IPV4_032_TCP_KEY_EXISTS} -action PLH_CSA_IPFILTER_CS_HTTP -logAction PLH_LOG_CSP_IPFILTER_CS_IPV4_032_HTTP
+            bind cs policylabel PLH_CSL_IPFILTER_CS_HTTP PLH_CSP_IPFILTER_CS_IPV4_032_HTTP 11101
+          uninstall: |
+            unbind cs policylabel PLH_CSL_IPFILTER_CS_HTTP PLH_CSP_IPFILTER_CS_IPV4_032_HTTP
+            rm cs policy PLH_CSP_IPFILTER_CS_IPV4_032_HTTP
+
+
+
+  - name: AppExpert.ResponderPolicies
+    elements:
+      - name: RSP_VAR_IPFILTER_CS_IPV4_ASSIGN
+        references:
+          - PLH_RSP_VAR_IPFILTER_CS_IPV4_ASSIGN
+          - PLH_LBV_IPFILTER_CS_HTTP
+        dependencies:
+          - VAR_IPFILTER_CACHE
+          - VAR_IPFILTER_CACHE_ASSIGN_IPV4
+          - LBV_IPFILTER_CS_HTTP
+        expressions:
+          install: |
+            add responder policy PLH_RSP_VAR_IPFILTER_CS_IPV4_ASSIGN  q{!CLIENT.IP.SRC.IS_IPV6} PLH_VAR_IPFILTER_CACHE_ASSIGN_IPV4
+            bind lb vserver PLH_LBV_IPFILTER_CS_HTTP -policyName PLH_RSP_VAR_IPFILTER_CS_IPV4_ASSIGN -priority 101 -gotoPriorityExpression NEXT
+          uninstall: |
+            unbind lb vserver PLH_LBV_IPFILTER_CS_HTTP -policyName PLH_RSP_VAR_IPFILTER_CS_IPV4_ASSIGN
+            rm responder policy PLH_RSP_VAR_IPFILTER_CS_IPV4_ASSIGN

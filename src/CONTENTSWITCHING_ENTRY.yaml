@@ -1,0 +1,89 @@
+name: CONTENTSWITCHING_ENTRY
+dependencies:
+  - CORE
+placeholders:
+  - name: PLH_EXP_CSP_ENTRY_HTTP
+    expression: _V__EXP_CSP_ENTRY_HTTP 
+  - name: PLH_EXP_CSP_ENTRY_SSL
+    expression: _V__EXP_CS_ENTRY_SSL
+  - name: PLH_EXP_CSP_ENTRY_TCP
+    expression: _V__EXP_CSP_ENTRY_TCP
+  - name: PLH_EXP_CSP_ENTRY_SSLTCP
+    expression: _V__EXP_CSP_ENTRY_SSLTCP
+  - name: PLH_EXP_CSP_ENTRY_UDP
+    expression: _V__EXP_CSP_ENTRY_UDP
+
+  - name: PLH_CSL_ENTRY_HTTP
+    expression: _V__CSL_ENTRY_HTTP
+  - name: PLH_CSL_ENTRY_TCP
+    expression: _V__CSL_ENTRY_TCP
+  - name: PLH_CSL_ENTRY_UDP
+    expression: _V__CSL_ENTRY_UDP
+
+  - name: PLH_LOG_CSP_ENTRY_HTTP
+    expression: _V__LOG_CSP_ENTRY_HTTP
+  - name: PLH_LOG_CSP_ENTRY_SSL
+    expression: _V__LOG_CSP_ENTRY_SSL
+  - name: PLH_LOG_CSP_ENTRY_TCP
+    expression: _V__LOG_CSP_ENTRY_TCP
+  - name: PLH_LOG_CSP_ENTRY_SSLTCP
+    expression: _V__LOG_CSP_ENTRY_SSLTCP
+  - name: PLH_LOG_CSP_ENTRY_UDP
+    expression: _V__LOG_CSP_ENTRY_UDP
+
+sections:
+  - name: AppExpert.AdvancedExpressions
+    elements:       
+      - name: EXP_CSP_ENTRY_HTTP
+        references:
+          - PLH_EXP_CSP_ENTRY_HTTP
+        expressions:
+          install: add policy expression PLH_EXP_CSP_ENTRY_HTTP q{true}
+          uninstall: rm policy expression PLH_EXP_CSP_ENTRY_HTTP
+      - name: EXP_CSP_ENTRY_SSL
+        references:
+          - PLH_EXP_CSP_ENTRY_SSL
+        expressions:
+          install: add policy expression PLH_EXP_CSP_ENTRY_SSL q{true}
+          uninstall: rm policy expression PLH_EXP_CSP_ENTRY_SSL
+      - name: EXP_CSP_ENTRY_TCP
+        references:
+          - PLH_EXP_CSP_ENTRY_TCP
+        expressions:
+          install: add policy expression PLH_EXP_CSP_ENTRY_TCP q{true}
+          uninstall: rm policy expression PLH_EXP_CSP_ENTRY_TCP
+      - name: EXP_CSP_ENTRY_SSLTCP
+        references:
+          - PLH_EXP_CSP_ENTRY_SSLTCP
+        expressions:
+          install: add policy expression PLH_EXP_CSP_ENTRY_SSLTCP q{true}
+          uninstall: rm policy expression PLH_EXP_CSP_ENTRY_SSLTCP
+      - name: EXP_CSP_ENTRY_UDP
+        references:
+          - PLH_EXP_CSP_ENTRY_UDP
+        expressions:
+          install: add policy expression PLH_EXP_CSP_ENTRY_UDP q{true}
+          uninstall: rm policy expression PLH_EXP_CSP_ENTRY_UDP
+
+  - name: TrafficManagement.ContentSwitching.ContentSwitchingPolicyLabels
+    elements:
+      - name: CSL_ENTRY_HTTP
+        references:
+          - PLH_CSL_ENTRY_HTTP
+        expressions:
+          install: add cs policylabel PLH_CSL_ENTRY_HTTP HTTP
+          uninstall: rm cs policylabel PLH_CSL_ENTRY_HTTP
+
+      - name: CSL_ENTRY_TCP
+        references:
+          - PLH_CSL_ENTRY_TCP
+        expressions:
+          install: add cs policylabel PLH_CSL_ENTRY_TCP TCP
+          uninstall: rm cs policylabel PLH_CSL_ENTRY_TCP
+
+      - name: CSL_ENTRY_UDP
+        references:
+          - PLH_CSL_ENTRY_UDP
+        expressions:
+          install: add cs policylabel PLH_CSL_ENTRY_UDP UDP
+          uninstall: rm cs policylabel PLH_CSL_ENTRY_UDP

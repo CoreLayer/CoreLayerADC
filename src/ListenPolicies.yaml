@@ -1,36 +1,36 @@
-name: ListenPolicies
+name: LISTENPOLICIES
 dependencies:
-  - Core
+  - CORE
 placeholders:
   ############################################################
   # EXPRESSION PLACEHOLDERS
   # IPV4
   - name: PLH_EXP_LPE_IPV4_HTTP
-    expression: EXP__V__LPE_IPV4_HTTP
+    expression: _V__EXP_LPE_IPV4_HTTP
   - name: PLH_EXP_LPE_IPV4_SSL
-    expression: EXP__V__LPE_IPV4_SSL
+    expression: _V__EXP_LPE_IPV4_SSL
   - name: PLH_EXP_LPE_IPV4_SSLBRIDGE
-    expression: EXP__V__LPE_IPV4_SSLBRIDGE
+    expression: _V__EXP_LPE_IPV4_SSLBRIDGE
   - name: PLH_EXP_LPE_IPV4_TCP
-    expression: EXP__V__LPE_IPV4_TCP
+    expression: _V__EXP_LPE_IPV4_TCP
   - name: PLH_EXP_LPE_IPV4_SSLTCP
-    expression: EXP__V__LPE_IPV4_SSLTCP
+    expression: _V__EXP_LPE_IPV4_SSLTCP
   - name: PLH_EXP_LPE_IPV4_UDP
-    expression: EXP__V__LPE_IPV4_UDP
+    expression: _V__EXP_LPE_IPV4_UDP
 
   # IPV6
   - name: PLH_EXP_LPE_IPV6_HTTP
-    expression: EXP__V__LPE_IPV6_HTTP
+    expression: _V__EXP_LPE_IPV6_HTTP
   - name: PLH_EXP_LPE_IPV6_SSL
-    expression: EXP__V__LPE_IPV6_SSL
+    expression: _V__EXP_LPE_IPV6_SSL
   - name: PLH_EXP_LPE_IPV6_SSLBRIDGE
-    expression: EXP__V__LPE_IPV6_SSLBRIDGE
+    expression: _V__EXP_LPE_IPV6_SSLBRIDGE
   - name: PLH_EXP_LPE_IPV6_TCP
-    expression: EXP__V__LPE_IPV6_TCP
+    expression: _V__EXP_LPE_IPV6_TCP
   - name: PLH_EXP_LPE_IPV6_SSLTCP
-    expression: EXP__V__LPE_IPV6_SSLTCP
+    expression: _V__EXP_LPE_IPV6_SSLTCP
   - name: PLH_EXP_LPE_IPV6_UDP
-    expression: EXP__V__LPE_IPV6_UDP
+    expression: _V__EXP_LPE_IPV6_UDP
 
 sections:
   - name: AppExpert.AdvancedExpressions

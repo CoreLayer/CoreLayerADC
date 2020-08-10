@@ -1,4 +1,4 @@
-name: Core
+name: CORE
 version:
   major: 0
   minor: 1
@@ -7,30 +7,32 @@ placeholders:
   ############################################################
   # DUMMY PLACEHOLDERS
   - name: PLH_SRV_DUMMY
-    expression: SRV__V__DUMMY
+    expression: _V__SRV_DUMMY
   - name: PLH_SVG_DUMMY_HTTP
-    expression: SVG__V__DUMMY_HTTP
+    expression: _V__SVG_DUMMY_HTTP
   - name: PLH_SVG_DUMMY_TCP
-    expression: SVG__V__DUMMY_TCP
+    expression: _V__SVG_DUMMY_TCP
   - name: PLH_SVG_DUMMY_UDP
-    expression: SVG__V__DUMMY_UDP
+    expression: _V__SVG_DUMMY_UDP
 
   ############################################################
   # STRINGMAP PLACEHOLDERS
   - name: PLH_PSM_ENDPOINT
-    expression: PSM__V__ENDPOINT
+    expression: _V__PSM_ENDPOINT
   - name: PLH_PSM_TENANT
-    expression: PSM__V__TENANT
+    expression: _V__PSM_TENANT
   - name: PLH_PSM_FQDN
-    expression: PSM__V__FQDN
+    expression: _V__PSM_FQDN
   - name: PLH_PSM_CS
-    expression: PSM__V__CS
+    expression: _V__PSM_CS
   - name: PLH_PSM_CSGROUP
-    expression: PSM__V__CSGROUP
+    expression: _V__PSM_CSGROUP
   - name: PLH_PSM_IPFILTER_CS
-    expression: PSM__V__IPFILTER_CS
+    expression: _V__PSM_IPFILTER_CS
   - name: PLH_PSM_IPFILTER_CSGROUP
-    expression: PSM__V__IPFILTER_CSGROUP
+    expression: _V__PSM_IPFILTER_CSGROUP
+  - name: PLH_PSM_IPFILTER_TENANT
+    expression: _V__PSM_IPFILTER_TENANT
 
   ############################################################
   # STRINGMAP DATA PLACEHOLDERS
@@ -42,7 +44,7 @@ placeholders:
   - name: PLH_PSM_ENDPOINT_IPV4_HTTP_VALUE
     expression: PLH_PSM_ENDPOINT_IPV4_HTTP_KEY.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=')
   - name: PLH_PSM_ENDPOINT_IPV4_HTTP_VALUE_TENANTID
-    expression: PLH_PSM_ENDPOINT_IPV4_HTTP_VALUE.VALUE("tenantid")
+    expression: PLH_PSM_ENDPOINT_IPV4_HTTP_VALUE.VALUE("tenant")
   - name: PLH_PSM_ENDPOINT_IPV4_HTTP_VALUE_VSNAME
     expression: PLH_PSM_ENDPOINT_IPV4_HTTP_VALUE.VALUE("vsname")
   - name: PLH_PSM_ENDPOINT_IPV4_HTTP_VALUE_STATE
@@ -61,7 +63,7 @@ placeholders:
   - name: PLH_PSM_ENDPOINT_IPV4_SSL_VALUE
     expression: PLH_PSM_ENDPOINT_IPV4_SSL_KEY.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=')
   - name: PLH_PSM_ENDPOINT_IPV4_SSL_VALUE_TENANTID
-    expression: PLH_PSM_ENDPOINT_IPV4_SSL_VALUE.VALUE("tenantid")
+    expression: PLH_PSM_ENDPOINT_IPV4_SSL_VALUE.VALUE("tenant")
   - name: PLH_PSM_ENDPOINT_IPV4_SSL_VALUE_VSNAME
     expression: PLH_PSM_ENDPOINT_IPV4_SSL_VALUE.VALUE("vsname")
   - name: PLH_PSM_ENDPOINT_IPV4_SSL_VALUE_STATE
@@ -80,7 +82,7 @@ placeholders:
   - name: PLH_PSM_ENDPOINT_IPV4_SSLBRIDGE_VALUE
     expression: PLH_PSM_ENDPOINT_IPV4_SSLBRIDGE_KEY.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=')
   - name: PLH_PSM_ENDPOINT_IPV4_SSLBRIDGE_VALUE_TENANTID
-    expression: PLH_PSM_ENDPOINT_IPV4_SSLBRIDGE_VALUE.VALUE("tenantid")
+    expression: PLH_PSM_ENDPOINT_IPV4_SSLBRIDGE_VALUE.VALUE("tenant")
   - name: PLH_PSM_ENDPOINT_IPV4_SSLBRIDGE_VALUE_VSNAME
     expression: PLH_PSM_ENDPOINT_IPV4_SSLBRIDGE_VALUE.VALUE("vsname")
   - name: PLH_PSM_ENDPOINT_IPV4_SSLBRIDGE_VALUE_STATE
@@ -99,7 +101,7 @@ placeholders:
   - name: PLH_PSM_ENDPOINT_IPV4_TCP_VALUE
     expression: PLH_PSM_ENDPOINT_IPV4_TCP_KEY.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=')
   - name: PLH_PSM_ENDPOINT_IPV4_TCP_VALUE_TENANTID
-    expression: PLH_PSM_ENDPOINT_IPV4_TCP_VALUE.VALUE("tenantid")
+    expression: PLH_PSM_ENDPOINT_IPV4_TCP_VALUE.VALUE("tenant")
   - name: PLH_PSM_ENDPOINT_IPV4_TCP_VALUE_VSNAME
     expression: PLH_PSM_ENDPOINT_IPV4_TCP_VALUE.VALUE("vsname")
   - name: PLH_PSM_ENDPOINT_IPV4_TCP_VALUE_STATE
@@ -118,7 +120,7 @@ placeholders:
   - name: PLH_PSM_ENDPOINT_IPV4_SSLTCP_VALUE
     expression: PLH_PSM_ENDPOINT_IPV4_SSLTCP_KEY.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=')
   - name: PLH_PSM_ENDPOINT_IPV4_SSLTCP_VALUE_TENANTID
-    expression: PLH_PSM_ENDPOINT_IPV4_SSLTCP_VALUE.VALUE("tenantid")
+    expression: PLH_PSM_ENDPOINT_IPV4_SSLTCP_VALUE.VALUE("tenant")
   - name: PLH_PSM_ENDPOINT_IPV4_SSLTCP_VALUE_VSNAME
     expression: PLH_PSM_ENDPOINT_IPV4_SSLTCP_VALUE.VALUE("vsname")
   - name: PLH_PSM_ENDPOINT_IPV4_SSLTCP_VALUE_STATE
@@ -137,7 +139,7 @@ placeholders:
   - name: PLH_PSM_ENDPOINT_IPV4_UDP_VALUE
     expression: PLH_PSM_ENDPOINT_IPV4_UDP_KEY.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=')
   - name: PLH_PSM_ENDPOINT_IPV4_UDP_VALUE_TENANTID
-    expression: PLH_PSM_ENDPOINT_IPV4_UDP_VALUE.VALUE("tenantid")
+    expression: PLH_PSM_ENDPOINT_IPV4_UDP_VALUE.VALUE("tenant")
   - name: PLH_PSM_ENDPOINT_IPV4_UDP_VALUE_VSNAME
     expression: PLH_PSM_ENDPOINT_IPV4_UDP_VALUE.VALUE("vsname")
   - name: PLH_PSM_ENDPOINT_IPV4_UDP_VALUE_STATE
@@ -151,7 +153,7 @@ placeholders:
 
   # PSM_TENANT_IPV4
   - name: PLH_PSM_TENANT_IPV4_HTTP_KEY
-    expression: ("vip=" + CLIENT.IP.DST + ";port=" + CLIENT.TCP.DSTPORT + ";protocol=http;").TO_LOWER.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=').VALUE("tenantid").TO_LOWER
+    expression: ("vip=" + CLIENT.IP.DST + ";port=" + CLIENT.TCP.DSTPORT + ";protocol=http;").TO_LOWER.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=').VALUE("tenant").TO_LOWER
   - name: PLH_PSM_TENANT_IPV4_HTTP_KEY_EXISTS
     expression: PLH_PSM_TENANT_IPV4_HTTP_KEY.IS_STRINGMAP_KEY("PLH_PSM_TENANT")
   - name: PLH_PSM_TENANT_IPV4_HTTP_VALUE
@@ -168,7 +170,7 @@ placeholders:
     expression: PLH_PSM_TENANT_IPV4_HTTP_VALUE_STATE.EQ("maintenance")
 
   - name: PLH_PSM_TENANT_IPV4_SSL_KEY
-    expression: ("vip=" + CLIENT.IP.DST + ";port=" + CLIENT.TCP.DSTPORT + ";protocol=ssl;").TO_LOWER.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=').VALUE("tenantid").TO_LOWER
+    expression: ("vip=" + CLIENT.IP.DST + ";port=" + CLIENT.TCP.DSTPORT + ";protocol=ssl;").TO_LOWER.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=').VALUE("tenant").TO_LOWER
   - name: PLH_PSM_TENANT_IPV4_SSL_KEY_EXISTS
     expression: PLH_PSM_TENANT_IPV4_SSL_KEY.IS_STRINGMAP_KEY("PLH_PSM_TENANT")
   - name: PLH_PSM_TENANT_IPV4_SSL_VALUE
@@ -185,7 +187,7 @@ placeholders:
     expression: PLH_PSM_TENANT_IPV4_SSL_VALUE_STATE.EQ("maintenance")
 
   - name: PLH_PSM_TENANT_IPV4_SSLBRIDGE_KEY
-    expression: ("vip=" + CLIENT.IP.DST + ";port=" + CLIENT.TCP.DSTPORT + ";protocol=ssl_bridge;").TO_LOWER.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=').VALUE("tenantid").TO_LOWER
+    expression: ("vip=" + CLIENT.IP.DST + ";port=" + CLIENT.TCP.DSTPORT + ";protocol=ssl_bridge;").TO_LOWER.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=').VALUE("tenant").TO_LOWER
   - name: PLH_PSM_TENANT_IPV4_SSLBRIDGE_KEY_EXISTS
     expression: PLH_PSM_TENANT_IPV4_SSLBRIDGE_KEY.IS_STRINGMAP_KEY("PLH_PSM_TENANT")
   - name: PLH_PSM_TENANT_IPV4_SSLBRIDGE_VALUE
@@ -202,7 +204,7 @@ placeholders:
     expression: PLH_PSM_TENANT_IPV4_SSLBRIDGE_VALUE_STATE.EQ("maintenance")
 
   - name: PLH_PSM_TENANT_IPV4_TCP_KEY
-    expression: ("vip=" + CLIENT.IP.DST + ";port=" + CLIENT.TCP.DSTPORT + ";protocol=tcp;").TO_LOWER.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=').VALUE("tenantid").TO_LOWER
+    expression: ("vip=" + CLIENT.IP.DST + ";port=" + CLIENT.TCP.DSTPORT + ";protocol=tcp;").TO_LOWER.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=').VALUE("tenant").TO_LOWER
   - name: PLH_PSM_TENANT_IPV4_TCP_KEY_EXISTS
     expression: PLH_PSM_TENANT_IPV4_TCP_KEY.IS_STRINGMAP_KEY("PLH_PSM_TENANT")
   - name: PLH_PSM_TENANT_IPV4_TCP_VALUE
@@ -219,7 +221,7 @@ placeholders:
     expression: PLH_PSM_TENANT_IPV4_TCP_VALUE_STATE.EQ("maintenance")
 
   - name: PLH_PSM_TENANT_IPV4_SSLTCP_KEY
-    expression: ("vip=" + CLIENT.IP.DST + ";port=" + CLIENT.TCP.DSTPORT + ";protocol=ssl_tcp;").TO_LOWER.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=').VALUE("tenantid").TO_LOWER
+    expression: ("vip=" + CLIENT.IP.DST + ";port=" + CLIENT.TCP.DSTPORT + ";protocol=ssl_tcp;").TO_LOWER.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=').VALUE("tenant").TO_LOWER
   - name: PLH_PSM_TENANT_IPV4_SSLTCP_KEY_EXISTS
     expression: PLH_PSM_TENANT_IPV4_SSLTCP_KEY.IS_STRINGMAP_KEY("PLH_PSM_TENANT")
   - name: PLH_PSM_TENANT_IPV4_SSLTCP_VALUE
@@ -236,7 +238,7 @@ placeholders:
     expression: PLH_PSM_TENANT_IPV4_SSLTCP_VALUE_STATE.EQ("maintenance")
 
   - name: PLH_PSM_TENANT_IPV4_UDP_KEY
-    expression: ("vip=" + CLIENT.IP.DST + ";port=" + CLIENT.UDP.DSTPORT + ";protocol=udp;").TO_LOWER.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=').VALUE("tenantid").TO_LOWER
+    expression: ("vip=" + CLIENT.IP.DST + ";port=" + CLIENT.UDP.DSTPORT + ";protocol=udp;").TO_LOWER.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=').VALUE("tenant").TO_LOWER
   - name: PLH_PSM_TENANT_IPV4_UDP_KEY_EXISTS
     expression: PLH_PSM_TENANT_IPV4_UDP_KEY.IS_STRINGMAP_KEY("PLH_PSM_TENANT")
   - name: PLH_PSM_TENANT_IPV4_UDP_VALUE
@@ -252,6 +254,8 @@ placeholders:
   - name: PLH_PSM_TENANT_IPV4_UDP_VALUE_STATE_ISMAINTENANCE
     expression: PLH_PSM_TENANT_IPV4_UDP_VALUE_STATE.EQ("maintenance")
 
+
+
 # PSM_ENDPOINT_IPV6
   - name: PLH_PSM_ENDPOINT_IPV6_HTTP_KEY
     expression: ("vip=" + CLIENT.IPV6.DST + ";port=" + CLIENT.TCP.DSTPORT + ";protocol=http;").TO_LOWER
@@ -260,7 +264,7 @@ placeholders:
   - name: PLH_PSM_ENDPOINT_IPV6_HTTP_VALUE
     expression: PLH_PSM_ENDPOINT_IPV6_HTTP_KEY.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=')
   - name: PLH_PSM_ENDPOINT_IPV6_HTTP_VALUE_TENANTID
-    expression: PLH_PSM_ENDPOINT_IPV6_HTTP_VALUE.VALUE("tenantid")
+    expression: PLH_PSM_ENDPOINT_IPV6_HTTP_VALUE.VALUE("tenant")
   - name: PLH_PSM_ENDPOINT_IPV6_HTTP_VALUE_VSNAME
     expression: PLH_PSM_ENDPOINT_IPV6_HTTP_VALUE.VALUE("vsname")
   - name: PLH_PSM_ENDPOINT_IPV6_HTTP_VALUE_STATE
@@ -279,7 +283,7 @@ placeholders:
   - name: PLH_PSM_ENDPOINT_IPV6_SSL_VALUE
     expression: PLH_PSM_ENDPOINT_IPV6_SSL_KEY.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=')
   - name: PLH_PSM_ENDPOINT_IPV6_SSL_VALUE_TENANTID
-    expression: PLH_PSM_ENDPOINT_IPV6_SSL_VALUE.VALUE("tenantid")
+    expression: PLH_PSM_ENDPOINT_IPV6_SSL_VALUE.VALUE("tenant")
   - name: PLH_PSM_ENDPOINT_IPV6_SSL_VALUE_VSNAME
     expression: PLH_PSM_ENDPOINT_IPV6_SSL_VALUE.VALUE("vsname")
   - name: PLH_PSM_ENDPOINT_IPV6_SSL_VALUE_STATE
@@ -298,7 +302,7 @@ placeholders:
   - name: PLH_PSM_ENDPOINT_IPV6_SSLBRIDGE_VALUE
     expression: PLH_PSM_ENDPOINT_IPV6_SSLBRIDGE_KEY.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=')
   - name: PLH_PSM_ENDPOINT_IPV6_SSLBRIDGE_VALUE_TENANTID
-    expression: PLH_PSM_ENDPOINT_IPV6_SSLBRIDGE_VALUE.VALUE("tenantid")
+    expression: PLH_PSM_ENDPOINT_IPV6_SSLBRIDGE_VALUE.VALUE("tenant")
   - name: PLH_PSM_ENDPOINT_IPV6_SSLBRIDGE_VALUE_VSNAME
     expression: PLH_PSM_ENDPOINT_IPV6_SSLBRIDGE_VALUE.VALUE("vsname")
   - name: PLH_PSM_ENDPOINT_IPV6_SSLBRIDGE_VALUE_STATE
@@ -317,7 +321,7 @@ placeholders:
   - name: PLH_PSM_ENDPOINT_IPV6_TCP_VALUE
     expression: PLH_PSM_ENDPOINT_IPV6_TCP_KEY.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=')
   - name: PLH_PSM_ENDPOINT_IPV6_TCP_VALUE_TENANTID
-    expression: PLH_PSM_ENDPOINT_IPV6_TCP_VALUE.VALUE("tenantid")
+    expression: PLH_PSM_ENDPOINT_IPV6_TCP_VALUE.VALUE("tenant")
   - name: PLH_PSM_ENDPOINT_IPV6_TCP_VALUE_VSNAME
     expression: PLH_PSM_ENDPOINT_IPV6_TCP_VALUE.VALUE("vsname")
   - name: PLH_PSM_ENDPOINT_IPV6_TCP_VALUE_STATE
@@ -336,7 +340,7 @@ placeholders:
   - name: PLH_PSM_ENDPOINT_IPV6_SSLTCP_VALUE
     expression: PLH_PSM_ENDPOINT_IPV6_SSLTCP_KEY.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=')
   - name: PLH_PSM_ENDPOINT_IPV6_SSLTCP_VALUE_TENANTID
-    expression: PLH_PSM_ENDPOINT_IPV6_SSLTCP_VALUE.VALUE("tenantid")
+    expression: PLH_PSM_ENDPOINT_IPV6_SSLTCP_VALUE.VALUE("tenant")
   - name: PLH_PSM_ENDPOINT_IPV6_SSLTCP_VALUE_VSNAME
     expression: PLH_PSM_ENDPOINT_IPV6_SSLTCP_VALUE.VALUE("vsname")
   - name: PLH_PSM_ENDPOINT_IPV6_SSLTCP_VALUE_STATE
@@ -355,7 +359,7 @@ placeholders:
   - name: PLH_PSM_ENDPOINT_IPV6_UDP_VALUE
     expression: PLH_PSM_ENDPOINT_IPV6_UDP_KEY.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=')
   - name: PLH_PSM_ENDPOINT_IPV6_UDP_VALUE_TENANTID
-    expression: PLH_PSM_ENDPOINT_IPV6_UDP_VALUE.VALUE("tenantid")
+    expression: PLH_PSM_ENDPOINT_IPV6_UDP_VALUE.VALUE("tenant")
   - name: PLH_PSM_ENDPOINT_IPV6_UDP_VALUE_VSNAME
     expression: PLH_PSM_ENDPOINT_IPV6_UDP_VALUE.VALUE("vsname")
   - name: PLH_PSM_ENDPOINT_IPV6_UDP_VALUE_STATE
@@ -369,7 +373,7 @@ placeholders:
 
   # PSM_TENANT_IPV6
   - name: PLH_PSM_TENANT_IPV6_HTTP_KEY
-    expression: ("vip=" + CLIENT.IPV6.DST + ";port=" + CLIENT.TCP.DSTPORT + ";protocol=http;").TO_LOWER.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=').VALUE("tenantid").TO_LOWER
+    expression: ("vip=" + CLIENT.IPV6.DST + ";port=" + CLIENT.TCP.DSTPORT + ";protocol=http;").TO_LOWER.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=').VALUE("tenant").TO_LOWER
   - name: PLH_PSM_TENANT_IPV6_HTTP_KEY_EXISTS
     expression: PLH_PSM_TENANT_IPV6_HTTP_KEY.IS_STRINGMAP_KEY("PLH_PSM_TENANT")
   - name: PLH_PSM_TENANT_IPV6_HTTP_VALUE
@@ -386,7 +390,7 @@ placeholders:
     expression: PLH_PSM_TENANT_IPV6_HTTP_VALUE_STATE.EQ("maintenance")
 
   - name: PLH_PSM_TENANT_IPV6_SSL_KEY
-    expression: ("vip=" + CLIENT.IPV6.DST + ";port=" + CLIENT.TCP.DSTPORT + ";protocol=ssl;").TO_LOWER.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=').VALUE("tenantid").TO_LOWER
+    expression: ("vip=" + CLIENT.IPV6.DST + ";port=" + CLIENT.TCP.DSTPORT + ";protocol=ssl;").TO_LOWER.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=').VALUE("tenant").TO_LOWER
   - name: PLH_PSM_TENANT_IPV6_SSL_KEY_EXISTS
     expression: PLH_PSM_TENANT_IPV6_SSL_KEY.IS_STRINGMAP_KEY("PLH_PSM_TENANT")
   - name: PLH_PSM_TENANT_IPV6_SSL_VALUE
@@ -403,7 +407,7 @@ placeholders:
     expression: PLH_PSM_TENANT_IPV6_SSL_VALUE_STATE.EQ("maintenance")
 
   - name: PLH_PSM_TENANT_IPV6_SSLBRIDGE_KEY
-    expression: ("vip=" + CLIENT.IPV6.DST + ";port=" + CLIENT.TCP.DSTPORT + ";protocol=ssl_bridge;").TO_LOWER.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=').VALUE("tenantid").TO_LOWER
+    expression: ("vip=" + CLIENT.IPV6.DST + ";port=" + CLIENT.TCP.DSTPORT + ";protocol=ssl_bridge;").TO_LOWER.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=').VALUE("tenant").TO_LOWER
   - name: PLH_PSM_TENANT_IPV6_SSLBRIDGE_KEY_EXISTS
     expression: PLH_PSM_TENANT_IPV6_SSLBRIDGE_KEY.IS_STRINGMAP_KEY("PLH_PSM_TENANT")
   - name: PLH_PSM_TENANT_IPV6_SSLBRIDGE_VALUE
@@ -420,7 +424,7 @@ placeholders:
     expression: PLH_PSM_TENANT_IPV6_SSLBRIDGE_VALUE_STATE.EQ("maintenance")
 
   - name: PLH_PSM_TENANT_IPV6_TCP_KEY
-    expression: ("vip=" + CLIENT.IPV6.DST + ";port=" + CLIENT.TCP.DSTPORT + ";protocol=tcp;").TO_LOWER.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=').VALUE("tenantid").TO_LOWER
+    expression: ("vip=" + CLIENT.IPV6.DST + ";port=" + CLIENT.TCP.DSTPORT + ";protocol=tcp;").TO_LOWER.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=').VALUE("tenant").TO_LOWER
   - name: PLH_PSM_TENANT_IPV6_TCP_KEY_EXISTS
     expression: PLH_PSM_TENANT_IPV6_TCP_KEY.IS_STRINGMAP_KEY("PLH_PSM_TENANT")
   - name: PLH_PSM_TENANT_IPV6_TCP_VALUE
@@ -437,7 +441,7 @@ placeholders:
     expression: PLH_PSM_TENANT_IPV6_TCP_VALUE_STATE.EQ("maintenance")
 
   - name: PLH_PSM_TENANT_IPV6_SSLTCP_KEY
-    expression: ("vip=" + CLIENT.IPV6.DST + ";port=" + CLIENT.TCP.DSTPORT + ";protocol=ssl_tcp;").TO_LOWER.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=').VALUE("tenantid").TO_LOWER
+    expression: ("vip=" + CLIENT.IPV6.DST + ";port=" + CLIENT.TCP.DSTPORT + ";protocol=ssl_tcp;").TO_LOWER.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=').VALUE("tenant").TO_LOWER
   - name: PLH_PSM_TENANT_IPV6_SSLTCP_KEY_EXISTS
     expression: PLH_PSM_TENANT_IPV6_SSLTCP_KEY.IS_STRINGMAP_KEY("PLH_PSM_TENANT")
   - name: PLH_PSM_TENANT_IPV6_SSLTCP_VALUE
@@ -454,7 +458,7 @@ placeholders:
     expression: PLH_PSM_TENANT_IPV6_SSLTCP_VALUE_STATE.EQ("maintenance")
 
   - name: PLH_PSM_TENANT_IPV6_UDP_KEY
-    expression: ("vip=" + CLIENT.IPV6.DST + ";port=" + CLIENT.UDP.DSTPORT + ";protocol=udp;").TO_LOWER.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=').VALUE("tenantid").TO_LOWER
+    expression: ("vip=" + CLIENT.IPV6.DST + ";port=" + CLIENT.UDP.DSTPORT + ";protocol=udp;").TO_LOWER.MAP_STRING("PLH_PSM_ENDPOINT").TYPECAST_NVLIST_T(';','=').VALUE("tenant").TO_LOWER
   - name: PLH_PSM_TENANT_IPV6_UDP_KEY_EXISTS
     expression: PLH_PSM_TENANT_IPV6_UDP_KEY.IS_STRINGMAP_KEY("PLH_PSM_TENANT")
   - name: PLH_PSM_TENANT_IPV6_UDP_VALUE
@@ -470,6 +474,10 @@ placeholders:
   - name: PLH_PSM_TENANT_IPV6_UDP_VALUE_STATE_ISMAINTENANCE
     expression: PLH_PSM_TENANT_IPV6_UDP_VALUE_STATE.EQ("maintenance")
 
+
+
+  
+
   # PSM_FQDN
   - name: PLH_PSM_FQDN_KEY
     expression: ("fqdn=" + HTTP.REQ.HOSTNAME +";").TO_LOWER
@@ -478,7 +486,7 @@ placeholders:
   - name: PLH_PSM_FQDN_VALUE
     expression: PLH_PSM_FQDN_KEY.MAP_STRING("PLH_PSM_FQDN").TYPECAST_NVLIST_T(';','=')
   - name: PLH_PSM_FQDN_VALUE_TENANTID
-    expression: PLH_PSM_FQDN_VALUE.VALUE("tenantid")
+    expression: PLH_PSM_FQDN_VALUE.VALUE("tenant")
   - name: PLH_PSM_FQDN_VALUE_STATE
     expression: PLH_PSM_FQDN_VALUE.VALUE("state")
   - name: PLH_PSM_FQDN_VALUE_STATE_ISENABLED
@@ -507,6 +515,8 @@ placeholders:
     expression: PLH_PSM_CS_TCP_KEY.IS_STRINGMAP_KEY("PLH_PSM_CS")
   - name: PLH_PSM_CS_TCP_VALUE
     expression: PLH_PSM_CS_TCP_KEY.MAP_STRING("PLH_PSM_CS").TYPECAST_NVLIST_T(';','=')
+  - name: PLH_PSM_CS_TCP_VALUE_TENANT
+    expression: PLH_PSM_CS_TCP_VALUE.VALUE("tenant")
   - name: PLH_PSM_CS_TCP_VALUE_CSGROUP
     expression: PLH_PSM_CS_TCP_VALUE.VALUE("csgroup")
   - name: PLH_PSM_CS_TCP_VALUE_STATE
@@ -530,6 +540,8 @@ placeholders:
     expression: PLH_PSM_CS_UDP_KEY.IS_STRINGMAP_KEY("PLH_PSM_CS")
   - name: PLH_PSM_CS_UDP_VALUE
     expression: PLH_PSM_CS_UDP_KEY.MAP_STRING("PLH_PSM_CS").TYPECAST_NVLIST_T(';','=')
+  - name: PLH_PSM_CS_UDP_VALUE_TENANT
+    expression: PLH_PSM_CS_UDP_VALUE.VALUE("tenant")
   - name: PLH_PSM_CS_UDP_VALUE_CSGROUP
     expression: PLH_PSM_CS_UDP_VALUE.VALUE("csgroup")
   - name: PLH_PSM_CS_UDP_VALUE_STATE
@@ -590,6 +602,38 @@ placeholders:
     expression: PLH_PSM_CSGROUP_UDP_VALUE_IPFILTER.EQ("enabled")
   - name: PLH_PSM_CSGROUP_UDP_VALUE_IPFILTER_ISDISABLED
     expression: PLH_PSM_CSGROUP_UDP_VALUE_IPFILTER.EQ("disabled")
+
+
+  # PSM_TENANT
+  - name: PLH_PSM_TENANT_TCP_KEY
+    expression: ("tenant=" + PLH_PSM_CS_TCP_VALUE_TENANT + ";").TO_LOWER
+  - name: PLH_PSM_TENANT_TCP_KEY_EXISTS
+    expression: PLH_PSM_TENANT_TCP_KEY.IS_STRINGMAP_KEY("PLH_PSM_TENANT")
+  - name: PLH_PSM_TENANT_TCP_VALUE
+    expression: PLH_PSM_TENANT_TCP_KEY.MAP_STRING("PLH_PSM_TENANT").TYPECAST_NVLIST_T(';','=')
+  - name: PLH_PSM_TENANT_TCP_VALUE_STATE
+    expression: PLH_PSM_TENANT_TCP_VALUE.VALUE("state")
+  - name: PLH_PSM_TENANT_TCP_VALUE_STATE_ISENABLED
+    expression: PLH_PSM_TENANT_TCP_VALUE_STATE.EQ("enabled")
+  - name: PLH_PSM_TENANT_TCP_VALUE_STATE_ISDISABLED
+    expression: PLH_PSM_TENANT_TCP_VALUE_STATE.EQ("disabled")
+  - name: PLH_PSM_TENANT_TCP_VALUE_STATE_ISMAINTENANCE
+    expression: PLH_PSM_TENANT_TCP_VALUE_STATE.EQ("maintenance")
+
+  - name: PLH_PSM_TENANT_UDP_KEY
+    expression: ("tenant=" + PLH_PSM_CS_UDP_VALUE_TENANT + ";").TO_LOWER
+  - name: PLH_PSM_TENANT_UDP_KEY_EXISTS
+    expression: PLH_PSM_TENANT_UDP_KEY.IS_STRINGMAP_KEY("PLH_PSM_TENANT")
+  - name: PLH_PSM_TENANT_UDP_VALUE
+    expression: PLH_PSM_TENANT_UDP_KEY.MAP_STRING("PLH_PSM_TENANT").TYPECAST_NVLIST_T(';','=')
+  - name: PLH_PSM_TENANT_UDP_VALUE_STATE
+    expression: PLH_PSM_TENANT_UDP_VALUE.VALUE("state")
+  - name: PLH_PSM_TENANT_UDP_VALUE_STATE_ISENABLED
+    expression: PLH_PSM_TENANT_UDP_VALUE_STATE.EQ("enabled")
+  - name: PLH_PSM_TENANT_UDP_VALUE_STATE_ISDISABLED
+    expression: PLH_PSM_TENANT_UDP_VALUE_STATE.EQ("disabled")
+  - name: PLH_PSM_TENANT_UDP_VALUE_STATE_ISMAINTENANCE
+    expression: PLH_PSM_TENANT_UDP_VALUE_STATE.EQ("maintenance")
 
 
   # PSM_IPFILTER_CS_IPV4_TCP
@@ -984,6 +1028,13 @@ sections:
         expressions:
           install: add policy stringmap PLH_PSM_IPFILTER_CSGROUP
           uninstall: rm policy stringmap PLH_PSM_IPFILTER_CSGROUP
+      - name: PSM_IPFILTER_TENANT
+        references:
+          - PLH_PSM_IPFILTER_TENANT
+        expressions:
+          install: add policy stringmap PLH_PSM_IPFILTER_TENANT
+          uninstall: rm policy stringmap PLH_PSM_IPFILTER_TENANT
+        
 
   - name: TrafficManagement.LoadBalancing.ServiceGroups
     elements:
@@ -1034,8 +1085,8 @@ sections:
           - PLH_SRV_DUMMY
         expressions:
           install: |
-            add dns addRec dummy-_V_ 169.254.0.1 -TTL 300
-            add server PLH_SRV_DUMMY dummy-_V_
+            add dns addRec _V_-dummy 169.254.0.1 -TTL 300
+            add server PLH_SRV_DUMMY _V_-dummy
           uninstall: |
             rm server PLH_SRV_DUMMY
-            rm dns addRec dummy-_V_
+            rm dns addRec _V_-dummy

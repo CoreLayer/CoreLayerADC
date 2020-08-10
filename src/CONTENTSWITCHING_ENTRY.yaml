@@ -20,19 +20,8 @@ placeholders:
   - name: PLH_CSL_ENTRY_UDP
     expression: _V__CSL_ENTRY_UDP
 
-  - name: PLH_LOG_CSP_ENTRY_HTTP
-    expression: _V__LOG_CSP_ENTRY_HTTP
-  - name: PLH_LOG_CSP_ENTRY_SSL
-    expression: _V__LOG_CSP_ENTRY_SSL
-  - name: PLH_LOG_CSP_ENTRY_TCP
-    expression: _V__LOG_CSP_ENTRY_TCP
-  - name: PLH_LOG_CSP_ENTRY_SSLTCP
-    expression: _V__LOG_CSP_ENTRY_SSLTCP
-  - name: PLH_LOG_CSP_ENTRY_UDP
-    expression: _V__LOG_CSP_ENTRY_UDP
-
 sections:
-  - name: AppExpert.AdvancedExpressions
+  - name: ADVANCED POLICY EXPRESSIONS - ENTRY
     elements:       
       - name: EXP_CSP_ENTRY_HTTP
         references:
@@ -65,7 +54,7 @@ sections:
           install: add policy expression PLH_EXP_CSP_ENTRY_UDP q{true}
           uninstall: rm policy expression PLH_EXP_CSP_ENTRY_UDP
 
-  - name: TrafficManagement.ContentSwitching.ContentSwitchingPolicyLabels
+  - name: CONTENT SWITCHING POLICY LABELS - ENTRY
     elements:
       - name: CSL_ENTRY_HTTP
         references:

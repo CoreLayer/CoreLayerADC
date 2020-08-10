@@ -38,6 +38,12 @@ placeholders:
     expression: _V__CSP_GOTO_CSL_IPFILTER_TENANT_TCP
   - name: PLH_CSP_IPFILTER_TENANT_NOT_CONFIGURED_TCP
     expression: _V__CSP_IPFILTER_TENANT_NOT_CONFIGURED_TCP
+  - name: PLH_CSP_IPFILTER_TENANT_NOT_ENABLED_TCP
+    expression: _V__CSP_IPFILTER_TENANT_NOT_ENABLED_TCP
+  - name: PLH_CSP_IPFILTER_TENANT_IPV4_TCP
+    expression: _V__CSP_IPFILTER_TENANT_IPV4_TCP
+  - name: PLH_CSP_IPFILTER_TENANT_IPV6_TCP
+    expression: _V__CSP_IPFILTER_TENANT_IPV6_TCP
   - name: PLH_CSL_IPFILTER_TENANT_TCP
     expression: _V__CSL_IPFILTER_TENANT_TCP
 
@@ -45,11 +51,22 @@ placeholders:
     expression: _V__CSP_GOTO_CSL_IPFILTER_TENANT_UDP
   - name: PLH_CSP_IPFILTER_TENANT_NOT_CONFIGURED_UDP
     expression: _V__CSP_IPFILTER_TENANT_NOT_CONFIGURED_UDP
+  - name: PLH_CSP_IPFILTER_TENANT_NOT_ENABLED_UDP
+    expression: _V__CSP_IPFILTER_TENANT_NOT_ENABLED_UDP
+  - name: PLH_CSP_IPFILTER_TENANT_IPV4_UDP
+    expression: _V__CSP_IPFILTER_TENANT_IPV4_UDP
+  - name: PLH_CSP_IPFILTER_TENANT_IPV6_UDP
+    expression: _V__CSP_IPFILTER_TENANT_IPV6_UDP
   - name: PLH_CSL_IPFILTER_TENANT_UDP
     expression: _V__CSL_IPFILTER_TENANT_UDP
 
 
-
+  - name: PLH_CSL_IPFILTER_CSGROUP_HTTP
+    expression: _V__CSL_IPFILTER_CSGROUP_HTTP
+  - name: PLH_CSL_IPFILTER_CSGROUP_TCP
+    expression: _V__CSL_IPFILTER_CSGROUP_TCP
+  - name: PLH_CSL_IPFILTER_CSGROUP_UDP
+    expression: _V__CSL_IPFILTER_CSGROUP_UDP
 
 sections:
   - name: IPFILTER_TENANT - LBV
@@ -76,7 +93,7 @@ sections:
           - SVG_DUMMY_TCP
         expressions:
           install: |
-            add lb vserver PLH_LBV_IPFILTER_TENANT_TCP HTTP 0.0.0.0 0
+            add lb vserver PLH_LBV_IPFILTER_TENANT_TCP TCP 0.0.0.0 0
             bind lb vserver PLH_LBV_IPFILTER_TENANT_TCP PLH_SVG_DUMMY_TCP
           uninstall: |
             unbind lb vserver PLH_LBV_IPFILTER_TENANT_TCP PLH_SVG_DUMMY_TCP
@@ -90,7 +107,7 @@ sections:
           - SVG_DUMMY_UDP
         expressions:
           install: |
-            add lb vserver PLH_LBV_IPFILTER_TENANT_UDP HTTP 0.0.0.0 0
+            add lb vserver PLH_LBV_IPFILTER_TENANT_UDP UDP 0.0.0.0 0
             bind lb vserver PLH_LBV_IPFILTER_TENANT_UDP PLH_SVG_DUMMY_UDP
           uninstall: |
             unbind lb vserver PLH_LBV_IPFILTER_TENANT_UDP PLH_SVG_DUMMY_UDP
@@ -149,14 +166,15 @@ sections:
           install: |
             add cs policy PLH_CSP_GOTO_CSL_IPFILTER_TENANT_HTTP -rule q{true}
             add cs policy PLH_CSP_IPFILTER_TENANT_NOT_CONFIGURED_HTTP -rule q{!PLH_PSM_TENANT_IPV4_HTTP_KEY_EXISTS} -action PLH_CSA_IPFILTER_TENANT_HTTP
-            add cs policy PLH_CSP_IPFILTER_TENANT_NOT_ENABLED_HTTP -rule q{}
+            add cs policy PLH_CSP_IPFILTER_TENANT_NOT_ENABLED_HTTP -rule q{PLH_PSM_TENANT_TCP_VALUE_IPFILTER_ISDISABLED}
             add cs policy PLH_CSP_IPFILTER_TENANT_IPV4_HTTP -rule q{!CLIENT.IP.SRC.IS_IPV6}
-            add cs policy PLH_CSP_IPFILTER_TENANT_IPV6_HTTP -rule q{!CLIENT.IP.SRC.IS_IPV6}
+            add cs policy PLH_CSP_IPFILTER_TENANT_IPV6_HTTP -rule q{!CLIENT.IPV6.SRC.IS_IPV4}
 
             add cs policylabel PLH_CSL_IPFILTER_TENANT_HTTP HTTP
             bind cs policylabel PLH_CSL_IPFILTER_TENANT_HTTP PLH_CSP_IPFILTER_TENANT_NOT_CONFIGURED_HTTP 10001
-            bind cs policylabel PLH_CSL_IPFILTER_TENANT_HTTP PLH_CSP_IPFILTER_TENANT_IPV4_HTTP 10003
-            bind cs policylabel PLH_CSL_IPFILTER_TENANT_HTTP PLH_CSP_IPFILTER_TENANT_IPV6_HTTP 10004
+            # TODO (move to IPFILTER_CSGROUP) bind cs policylabel PLH_CSL_IPFILTER_TENANT_HTTP PLH_CSP_IPFILTER_TENANT_NOT_ENABLED_HTTP 10002 -invoke policylabel PLH_CSL_IPFILTER_CSGROUP_HTTP
+            bind cs policylabel PLH_CSL_IPFILTER_TENANT_HTTP PLH_CSP_IPFILTER_TENANT_IPV4_HTTP 10003 -gotoPriorityExpression 10100
+            bind cs policylabel PLH_CSL_IPFILTER_TENANT_HTTP PLH_CSP_IPFILTER_TENANT_IPV6_HTTP 10004 -gotoPriorityExpression 10200
 
             bind cs policylabel PLH_CSL_ENTRY_HTTP PLH_CSP_GOTO_CSL_IPFILTER_TENANT_HTTP 101 -invoke policylabel PLH_CSL_IPFILTER_TENANT_HTTP
           uninstall: |
@@ -164,11 +182,16 @@ sections:
 
             unbind cs policylabel PLH_CSL_IPFILTER_TENANT_HTTP PLH_CSP_IPFILTER_TENANT_IPV6_HTTP
             unbind cs policylabel PLH_CSL_IPFILTER_TENANT_HTTP PLH_CSP_IPFILTER_TENANT_IPV4_HTTP
+            # TODO (move to IPFILTER_CSGROUP) unbind cs policylabel PLH_CSL_IPFILTER_TENANT_HTTP PLH_CSP_IPFILTER_TENANT_NOT_ENABLED_HTTP
             unbind cs policylabel PLH_CSL_IPFILTER_TENANT_HTTP PLH_CSP_IPFILTER_TENANT_NOT_CONFIGURED_HTTP
             rm cs policylabel PLH_CSL_IPFILTER_TENANT_HTTP
 
+            rm cs policy PLH_CSP_IPFILTER_TENANT_IPV6_HTTP
+            rm cs policy PLH_CSP_IPFILTER_TENANT_IPV4_HTTP
+            rm cs policy PLH_CSP_IPFILTER_TENANT_NOT_ENABLED_HTTP
             rm cs policy PLH_CSP_IPFILTER_TENANT_NOT_CONFIGURED_HTTP
             rm cs policy PLH_CSP_GOTO_CSL_IPFILTER_TENANT_HTTP
+
 
       - name: CSL_IPFILTER_TENANT_TCP
         references:
@@ -176,6 +199,8 @@ sections:
           - PLH_CSP_IPFILTER_TENANT_NOT_CONFIGURED_TCP
           - PLH_PSM_TENANT_IPV4_TCP_KEY_EXISTS
           - PLH_CSA_IPFILTER_TENANT_TCP
+          - PLH_CSP_IPFILTER_TENANT_IPV4_TCP
+          - PLH_CSP_IPFILTER_TENANT_IPV6_TCP
           - PLH_CSL_IPFILTER_TENANT_TCP
           - PLH_CSL_ENTRY_TCP
         dependencies:
@@ -185,19 +210,32 @@ sections:
           install: |
             add cs policy PLH_CSP_GOTO_CSL_IPFILTER_TENANT_TCP -rule q{true}
             add cs policy PLH_CSP_IPFILTER_TENANT_NOT_CONFIGURED_TCP -rule q{!PLH_PSM_TENANT_IPV4_TCP_KEY_EXISTS} -action PLH_CSA_IPFILTER_TENANT_TCP
+            add cs policy PLH_CSP_IPFILTER_TENANT_NOT_ENABLED_TCP -rule q{PLH_PSM_TENANT_TCP_VALUE_IPFILTER_ISDISABLED}
+            add cs policy PLH_CSP_IPFILTER_TENANT_IPV4_TCP -rule q{!CLIENT.IP.SRC.IS_IPV6}
+            add cs policy PLH_CSP_IPFILTER_TENANT_IPV6_TCP -rule q{!CLIENT.IPV6.SRC.IS_IPV4}
 
             add cs policylabel PLH_CSL_IPFILTER_TENANT_TCP TCP
             bind cs policylabel PLH_CSL_IPFILTER_TENANT_TCP PLH_CSP_IPFILTER_TENANT_NOT_CONFIGURED_TCP 10001
+            # TODO (move to IPFILTER_CSGROUP) bind cs policylabel PLH_CSL_IPFILTER_TENANT_TCP PLH_CSP_IPFILTER_TENANT_NOT_ENABLED_TCP 10002 -invoke policylabel PLH_CSL_IPFILTER_CSGROUP_TCP
+            bind cs policylabel PLH_CSL_IPFILTER_TENANT_TCP PLH_CSP_IPFILTER_TENANT_IPV4_TCP 10003 -gotoPriorityExpression 10100
+            bind cs policylabel PLH_CSL_IPFILTER_TENANT_TCP PLH_CSP_IPFILTER_TENANT_IPV6_TCP 10004 -gotoPriorityExpression 10200
 
             bind cs policylabel PLH_CSL_ENTRY_TCP PLH_CSP_GOTO_CSL_IPFILTER_TENANT_TCP 101 -invoke policylabel PLH_CSL_IPFILTER_TENANT_TCP
           uninstall: |
             unbind cs policylabel PLH_CSL_ENTRY_TCP PLH_CSP_GOTO_CSL_IPFILTER_TENANT_TCP
 
-            unbind cs policylabel PLH_CSL_IPFILTER_TENANT_TCP
-            rm cs policylabel PLH_CSL_IPFILTER_TENANT_TCP PLH_CSP_IPFILTER_TENANT_NOT_CONFIGURED_TCP
+            unbind cs policylabel PLH_CSL_IPFILTER_TENANT_TCP PLH_CSP_IPFILTER_TENANT_IPV6_TCP
+            unbind cs policylabel PLH_CSL_IPFILTER_TENANT_TCP PLH_CSP_IPFILTER_TENANT_IPV4_TCP
+            # TODO (move to IPFILTER_CSGROUP) unbind cs policylabel PLH_CSL_IPFILTER_TENANT_TCP PLH_CSP_IPFILTER_TENANT_NOT_ENABLED_TCP
+            unbind cs policylabel PLH_CSL_IPFILTER_TENANT_TCP PLH_CSP_IPFILTER_TENANT_NOT_CONFIGURED_TCP
+            rm cs policylabel PLH_CSL_IPFILTER_TENANT_TCP
 
+            rm cs policy PLH_CSP_IPFILTER_TENANT_IPV6_TCP
+            rm cs policy PLH_CSP_IPFILTER_TENANT_IPV4_TCP
+            rm cs policy PLH_CSP_IPFILTER_TENANT_NOT_ENABLED_TCP
             rm cs policy PLH_CSP_IPFILTER_TENANT_NOT_CONFIGURED_TCP
             rm cs policy PLH_CSP_GOTO_CSL_IPFILTER_TENANT_TCP
+
 
       - name: CSL_IPFILTER_TENANT_UDP
         references:
@@ -205,6 +243,8 @@ sections:
           - PLH_CSP_IPFILTER_TENANT_NOT_CONFIGURED_UDP
           - PLH_PSM_TENANT_IPV4_UDP_KEY_EXISTS
           - PLH_CSA_IPFILTER_TENANT_UDP
+          - PLH_CSP_IPFILTER_TENANT_IPV4_UDP
+          - PLH_CSP_IPFILTER_TENANT_IPV6_UDP
           - PLH_CSL_IPFILTER_TENANT_UDP
           - PLH_CSL_ENTRY_UDP
         dependencies:
@@ -214,45 +254,28 @@ sections:
           install: |
             add cs policy PLH_CSP_GOTO_CSL_IPFILTER_TENANT_UDP -rule q{true}
             add cs policy PLH_CSP_IPFILTER_TENANT_NOT_CONFIGURED_UDP -rule q{!PLH_PSM_TENANT_IPV4_UDP_KEY_EXISTS} -action PLH_CSA_IPFILTER_TENANT_UDP
+            add cs policy PLH_CSP_IPFILTER_TENANT_NOT_ENABLED_UDP -rule q{PLH_PSM_TENANT_TCP_VALUE_IPFILTER_ISDISABLED}
+            add cs policy PLH_CSP_IPFILTER_TENANT_IPV4_UDP -rule q{!CLIENT.IP.SRC.IS_IPV6}
+            add cs policy PLH_CSP_IPFILTER_TENANT_IPV6_UDP -rule q{!CLIENT.IPV6.SRC.IS_IPV4}
 
             add cs policylabel PLH_CSL_IPFILTER_TENANT_UDP UDP
             bind cs policylabel PLH_CSL_IPFILTER_TENANT_UDP PLH_CSP_IPFILTER_TENANT_NOT_CONFIGURED_UDP 10001
+            # TODO (move to IPFILTER_CSGROUP) bind cs policylabel PLH_CSL_IPFILTER_TENANT_UDP PLH_CSP_IPFILTER_TENANT_NOT_ENABLED_UDP 10002 -invoke policylabel PLH_CSL_IPFILTER_CSGROUP_UDP
+            bind cs policylabel PLH_CSL_IPFILTER_TENANT_UDP PLH_CSP_IPFILTER_TENANT_IPV4_UDP 10003 -gotoPriorityExpression 10100
+            bind cs policylabel PLH_CSL_IPFILTER_TENANT_UDP PLH_CSP_IPFILTER_TENANT_IPV6_UDP 10004 -gotoPriorityExpression 10200
 
             bind cs policylabel PLH_CSL_ENTRY_UDP PLH_CSP_GOTO_CSL_IPFILTER_TENANT_UDP 101 -invoke policylabel PLH_CSL_IPFILTER_TENANT_UDP
           uninstall: |
             unbind cs policylabel PLH_CSL_ENTRY_UDP PLH_CSP_GOTO_CSL_IPFILTER_TENANT_UDP
 
-            unbind cs policylabel PLH_CSL_IPFILTER_TENANT_UDP
-            rm cs policylabel PLH_CSL_IPFILTER_TENANT_UDP PLH_CSP_IPFILTER_TENANT_NOT_CONFIGURED_UDP
+            unbind cs policylabel PLH_CSL_IPFILTER_TENANT_UDP PLH_CSP_IPFILTER_TENANT_IPV6_UDP
+            unbind cs policylabel PLH_CSL_IPFILTER_TENANT_UDP PLH_CSP_IPFILTER_TENANT_IPV4_UDP
+            # TODO (move to IPFILTER_CSGROUP) unbind cs policylabel PLH_CSL_IPFILTER_TENANT_UDP PLH_CSP_IPFILTER_TENANT_NOT_ENABLED_UDP
+            unbind cs policylabel PLH_CSL_IPFILTER_TENANT_UDP PLH_CSP_IPFILTER_TENANT_NOT_CONFIGURED_UDP
+            rm cs policylabel PLH_CSL_IPFILTER_TENANT_UDP
 
+            rm cs policy PLH_CSP_IPFILTER_TENANT_IPV6_UDP
+            rm cs policy PLH_CSP_IPFILTER_TENANT_IPV4_UDP
+            rm cs policy PLH_CSP_IPFILTER_TENANT_NOT_ENABLED_UDP
             rm cs policy PLH_CSP_IPFILTER_TENANT_NOT_CONFIGURED_UDP
             rm cs policy PLH_CSP_GOTO_CSL_IPFILTER_TENANT_UDP
-
-
-
-
-      # - name: CSP_IPFILTER_TENANT_IPV4_HTTP
-      #   references:
-      #     - PLH_CSP_IPFILTER_TENANT_IPV4_HTTP
-      #     - PLH_CSL_IPFILTER_TENANT_HTTP
-      #   dependencies:
-      #     - CSL_IPFILTER_TENANT_HTTP
-      #   expressions:
-      #     install: |
-      #       add cs policy PLH_CSP_IPFILTER_TENANT_IPV4_HTTP -rule q{!CLIENT.IP.SRC.IS_IPV6}
-      #       bind cs policylabel PLH_CSL_IPFILTER_TENANT_HTTP PLH_CSP_IPFILTER_TENANT_IPV4_HTTP 10101 -gotoPriorityExpression 10201
-      #     uninstall: |
-      #       unbind cs policylabel PLH_CSL_IPFILTER_TENANT_HTTP PLH_CSP_IPFILTER_TENANT_IPV4_HTTP
-      #       rm cs policy PLH_CSP_IPFILTER_TENANT_IPV4_HTTP
-
-      # - name: CSP_IPFILTER_TENANT_IPV6_HTTP
-      #   references:
-      #     - PLH_CSP_IPFILTER_TENANT_IPV6_HTTP
-      #     - PLH_CSL_IPFILTER_TENANT_HTTP
-      #   expressions:
-      #     install: |
-      #       add cs policy PLH_CSP_IPFILTER_TENANT_IPV6_HTTP -rule q{!CLIENT.IPV6.SRC.IS_IPV4}
-      #       bind cs policylabel PLH_CSL_IPFILTER_TENANT_HTTP PLH_CSP_IPFILTER_TENANT_IPV6_HTTP 10102 -gotoPriorityExpression 10211
-      #     uninstall: |
-      #       unbind cs policylabel PLH_CSL_IPFILTER_TENANT_HTTP PLH_CSP_IPFILTER_TENANT_IPV6
-      #       rm cs policy PLH_CSP_IPFILTER_TENANT_IPV6

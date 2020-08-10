@@ -7,7 +7,7 @@ placeholders:
     expression: _V__VAR_IPFILTER_CACHE
 
 sections:
-  - name: AppExpert.Variables
+  - name: IPFILTER_CACHE
     elements:
       - name: VAR_IPFILTER_CACHE
         references:
